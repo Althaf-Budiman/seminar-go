@@ -33,7 +33,7 @@ define('BASE_URL', $base === '' ? '' : '/' . $base);
 // segment will contain  [0] -> account, [1] -> id-account-1, [2] -> edit,
 
 $noIdActions = ['create', 'store'];
-$page = $segments[0] ?: ''; // set default controller u guys right here, so if ure accessing the root or base url, will calls that controller.
+$page = $segments[0] ?: 'beranda'; // default controller
 
 if (!isset($segments[1]) || $segments[1] === '') {
     $id     = null;
