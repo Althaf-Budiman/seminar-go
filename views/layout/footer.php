@@ -59,7 +59,7 @@
 
                     // Search menu filter
                     const searchInput = document.getElementById('sidebarSearchInput');
-                    const navItems = document.querySelectorAll('#sidebarNavList .sidebar-item');
+                    const navItems = document.querySelectorAll('#sidebarNavList li');
 
                     if (searchInput) {
                         searchInput.addEventListener('input', (e) => {

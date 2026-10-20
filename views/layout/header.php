@@ -30,10 +30,10 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <a href="<?= BASE_URL ?>/beranda" class="sidebar-brand">
-                    <span class="brand-text">SeminarGo</span>
-                    <span class="brand-mini">SG</span>
+                    <span>SeminarGo</span>
+                    <span class="mini">SG</span>
                 </a>
-                <button type="button" class="sidebar-action-btn" id="sidebarToggleBtn" title="Perkecil/Buka Sidebar">
+                <button type="button" class="sidebar-toggle" id="sidebarToggleBtn" title="Perkecil/Buka Sidebar">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="3" rx="2.5"></rect>
                         <line x1="9.5" y1="3" x2="9.5" y2="21"></line>
@@ -43,44 +43,42 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
             </div>
 
             <!-- Search Bar -->
-            <div class="sidebar-search-container">
-                <div class="sidebar-search">
-                    <i class="bi bi-search search-icon"></i>
-                    <input type="text" id="sidebarSearchInput" placeholder="Search" autocomplete="off" aria-label="Search Menu">
-                </div>
+            <div class="sidebar-search">
+                <i class="bi bi-search"></i>
+                <input type="text" id="sidebarSearchInput" placeholder="Search" autocomplete="off" aria-label="Search Menu">
             </div>
 
             <!-- Nav Items -->
             <nav class="sidebar-nav-wrapper">
                 <ul class="sidebar-nav" id="sidebarNavList">
-                    <li class="sidebar-item">
-                        <a href="<?= BASE_URL ?>/beranda" class="sidebar-link <?= in_array($currentPage, ['beranda', '']) ? 'active' : '' ?>" title="Beranda">
-                            <i class="bi bi-grid sidebar-icon"></i>
-                            <span class="sidebar-text">Beranda</span>
+                    <li>
+                        <a href="<?= BASE_URL ?>/beranda" class="<?= in_array($currentPage, ['beranda', '']) ? 'active' : '' ?>" title="Beranda">
+                            <i class="bi bi-grid"></i>
+                            <span>Beranda</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="<?= BASE_URL ?>/pengajuan-dosen" class="sidebar-link <?= $currentPage === 'pengajuan-dosen' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
-                            <i class="bi bi-person-check sidebar-icon"></i>
-                            <span class="sidebar-text">Pengajuan Dosen Pembimbing</span>
+                    <li>
+                        <a href="<?= BASE_URL ?>/pengajuan-dosen" class="<?= $currentPage === 'pengajuan-dosen' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
+                            <i class="bi bi-person-check"></i>
+                            <span>Pengajuan Dosen Pembimbing</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="<?= BASE_URL ?>/logbook" class="sidebar-link <?= $currentPage === 'logbook' ? 'active' : '' ?>" title="Logbook">
-                            <i class="bi bi-journal-text sidebar-icon"></i>
-                            <span class="sidebar-text">Logbook</span>
+                    <li>
+                        <a href="<?= BASE_URL ?>/logbook" class="<?= $currentPage === 'logbook' ? 'active' : '' ?>" title="Logbook">
+                            <i class="bi bi-journal-text"></i>
+                            <span>Logbook</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="<?= BASE_URL ?>/jadwal" class="sidebar-link <?= $currentPage === 'jadwal' ? 'active' : '' ?>" title="Jadwal Seminar dan Sidang">
-                            <i class="bi bi-calendar-event sidebar-icon"></i>
-                            <span class="sidebar-text">Jadwal Seminar dan Sidang</span>
+                    <li>
+                        <a href="<?= BASE_URL ?>/jadwal" class="<?= $currentPage === 'jadwal' ? 'active' : '' ?>" title="Jadwal Seminar dan Sidang">
+                            <i class="bi bi-calendar-event"></i>
+                            <span>Jadwal Seminar dan Sidang</span>
                         </a>
                     </li>
-                    <li class="sidebar-item">
-                        <a href="<?= BASE_URL ?>/nilai-revisi" class="sidebar-link <?= $currentPage === 'nilai-revisi' ? 'active' : '' ?>" title="Nilai dan Revisi">
-                            <i class="bi bi-award sidebar-icon"></i>
-                            <span class="sidebar-text">Nilai dan Revisi</span>
+                    <li>
+                        <a href="<?= BASE_URL ?>/nilai-revisi" class="<?= $currentPage === 'nilai-revisi' ? 'active' : '' ?>" title="Nilai dan Revisi">
+                            <i class="bi bi-award"></i>
+                            <span>Nilai dan Revisi</span>
                         </a>
                     </li>
                 </ul>
@@ -88,11 +86,11 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
 
             <!-- Bottom User Profile Card -->
             <div class="sidebar-footer">
-                <div class="user-profile-card">
-                    <div class="user-avatar">sa</div>
-                    <div class="user-details">
-                        <span class="user-name">Mahasiswa</span>
-                        <span class="user-email" title="mahasiswa.rilo35@mhs.unj.ac.id">mahasiswa.rilo35@mhs.unj.ac.id</span>
+                <div class="user-card">
+                    <div class="avatar">sa</div>
+                    <div class="user-info">
+                        <strong>Mahasiswa</strong>
+                        <small title="mahasiswa.rilo35@mhs.unj.ac.id">mahasiswa.rilo35@mhs.unj.ac.id</small>
                     </div>
                 </div>
             </div>
