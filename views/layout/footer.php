@@ -50,12 +50,49 @@
 
                     // Segmented Control Switcher
                     const segmentButtons = document.querySelectorAll('.segmented-control .segment-btn');
-                    segmentButtons.forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            segmentButtons.forEach(b => b.classList.remove('active'));
-                            btn.classList.add('active');
+                    const topbarTitle    = document.querySelector('.topbar-title');
+                    const tabPanels      = document.querySelectorAll('.tab-panel');
+
+                    const tabTitles = {
+                        sempro : 'Seminar Proposal',
+                        skripsi: 'Skripsi & Sidang',
+                    };
+
+                    function switchTab(targetTab) {
+                        // Update active button
+                        segmentButtons.forEach(b => {
+                            b.classList.toggle('active', b.dataset.tab === targetTab);
                         });
+
+                        // Show / hide panels with fade
+                        tabPanels.forEach(panel => {
+                            if (panel.id === 'tab-' + targetTab) {
+                                panel.style.display = '';
+                                panel.classList.add('tab-visible');
+                            } else {
+                                panel.style.display = 'none';
+                                panel.classList.remove('tab-visible');
+                            }
+                        });
+
+                        // Update topbar title
+                        if (topbarTitle && tabTitles[targetTab]) {
+                            topbarTitle.textContent = tabTitles[targetTab];
+                        }
+
+                        // Persist choice in sessionStorage
+                        sessionStorage.setItem('activeBerandaTab', targetTab);
+                    }
+
+                    segmentButtons.forEach(btn => {
+                        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
                     });
+
+                    // Restore last active tab on page load
+                    const savedTab = sessionStorage.getItem('activeBerandaTab');
+                    if (savedTab && document.getElementById('tab-' + savedTab)) {
+                        switchTab(savedTab);
+                    }
 
                     // Search menu filter
                     const searchInput = document.getElementById('sidebarSearchInput');
