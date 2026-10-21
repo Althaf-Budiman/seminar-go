@@ -3,23 +3,26 @@ global $page;
 $currentPage = !empty($page) ? $page : 'beranda';
 $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($activeTitle) ?> - SeminarGo</title>
-    
+
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    
+
     <link href="<?= BASE_URL ?>/assets/css/style.css" rel="stylesheet">
 </head>
+
 <body>
 
     <div class="app-shell" id="appShell">
@@ -86,13 +89,13 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
 
             <!-- Bottom User Profile Card -->
             <div class="sidebar-footer">
-                <div class="user-card">
+                <a href="<?= BASE_URL ?>/profil" class="user-card">
                     <div class="avatar">sa</div>
                     <div class="user-info">
                         <strong>Mahasiswa</strong>
                         <small title="mahasiswa.rilo35@mhs.unj.ac.id">mahasiswa.rilo35@mhs.unj.ac.id</small>
                     </div>
-                </div>
+                </a>
             </div>
         </aside>
 
@@ -104,7 +107,7 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
                     <button type="button" class="btn-icon mobile-menu-toggle" id="mobileMenuBtn" aria-label="Buka Menu">
                         <i class="bi bi-list"></i>
                     </button>
-                    
+
                     <div class="topbar-navigation">
                         <button type="button" class="nav-arrow-btn" onclick="window.history.back()" title="Kembali">
                             <i class="bi bi-chevron-left"></i>
@@ -118,17 +121,18 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
 
                     <h1 class="topbar-title"><?= htmlspecialchars($activeTitle) ?></h1>
                 </div>
-
                 <div class="topbar-right">
-                    <!-- Segmented Switcher Pill -->
-                    <div class="segmented-control" role="tablist" aria-label="Jenis Program">
-                        <button type="button" class="segment-btn active" data-tab="sempro">
-                            Seminar Proposal
-                        </button>
-                        <button type="button" class="segment-btn" data-tab="skripsi">
-                            Skripsi
-                        </button>
-                    </div>
+                    <?php if ($currentPage === 'beranda'): ?>
+                        <!-- Segmented Switcher Pill -->
+                        <div class="segmented-control" role="tablist" aria-label="Jenis Program">
+                            <button type="button" class="segment-btn active" data-tab="sempro">
+                                Seminar Proposal
+                            </button>
+                            <button type="button" class="segment-btn" data-tab="skripsi">
+                                Skripsi
+                            </button>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Notification Button -->
                     <button type="button" class="notification-btn" title="Notifikasi" aria-label="Notifikasi">
