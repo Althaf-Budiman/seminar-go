@@ -25,9 +25,9 @@
         </div>
 
         <div class="steps-list">
-            <?php 
+            <?php
             $steps = $progres['steps'] ?? [];
-            foreach ($steps as $step): 
+            foreach ($steps as $step):
                 $isCurrentActive = ($step['status'] ?? '') === 'active';
                 $isConditional = ($step['status'] ?? '') === 'conditional';
             ?>
@@ -124,7 +124,7 @@
                 <h2>Catatan Bimbingan Terkini</h2>
                 <p>Riwayat asistensi naskah bersama dosen pembimbing</p>
             </div>
-            <span class="icon-badge" title="Terkunci"><i class="bi bi-lock"></i></span>
+            <span class="badge neutral"><i class="bi bi-lock"></i> Terkunci</span>
         </div>
 
         <?php if (empty($catatanBimbingan)): ?>
