@@ -641,6 +641,9 @@ body.overflow-hidden {
 }
 
 .btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     background-color: var(--color-primary);
     color: white;
     border: none;
@@ -1336,4 +1339,361 @@ i {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+/* ==========================================================================
+   Logbook table
+   ========================================================================== */
+
+.logbook-toolbar {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: 0 1.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.logbook-search {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    flex: 1;
+    min-width: 200px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-full);
+    padding: .45rem 1rem;
+    box-shadow: var(--shadow-inner);
+    transition: all .15s ease;
+}
+
+.logbook-search:focus-within {
+    background: #fff;
+    border-color: #cbd5e1;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .08), var(--shadow-inner);
+}
+
+.logbook-search i {
+    color: #94a3b8;
+    font-size: .9rem;
+    flex-shrink: 0;
+}
+
+.logbook-search input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: .85rem;
+    color: #1e293b;
+    width: 100%;
+}
+
+.logbook-search input::placeholder {
+    color: #94a3b8;
+}
+
+.logbook-filter-group {
+    position: relative;
+}
+
+.logbook-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-full);
+    padding: .45rem 1rem;
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: var(--shadow-inner);
+    transition: all .15s ease;
+}
+
+.logbook-filter-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0b132b;
+}
+
+.logbook-filter-btn.active-filter {
+    border-color: #bfdbfe;
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.logbook-filter-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    min-width: 190px;
+    z-index: 200;
+    display: none;
+    overflow: hidden;
+}
+
+.logbook-filter-dropdown.open {
+    display: block;
+}
+
+.filter-option {
+    padding: .55rem 1rem;
+    font-size: .82rem;
+    color: #475569;
+    cursor: pointer;
+    transition: background .12s ease;
+}
+
+.filter-option:hover {
+    background: #f8fafc;
+    color: #0b132b;
+}
+
+.filter-option.active {
+    color: #2563eb;
+    font-weight: 600;
+    background: #eff6ff;
+}
+
+.logbook-table-wrap {
+    overflow-x: auto;
+    border: 1px solid #f1f5f9;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: var(--radius-md);
+}
+
+.logbook-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    font-size: .83rem;
+    color: #334155;
+}
+
+.logbook-table thead tr {
+    background: #f8fafc;
+}
+
+.logbook-table thead th {
+    padding: .75rem 1.1rem;
+    text-align: left;
+    font-size: .68rem;
+    font-weight: 700;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    white-space: nowrap;
+}
+
+.logbook-table tbody tr {
+    transition: background .12s ease;
+}
+
+.logbook-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.logbook-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.logbook-table td {
+    padding: .85rem 1.1rem;
+    vertical-align: middle;
+}
+
+.td-no {
+    font-size: .78rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-align: center;
+}
+
+.td-jenis {
+    display: block;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+}
+
+.td-file {
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    font-size: .75rem;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.td-file:hover {
+    text-decoration: underline;
+}
+
+.td-date {
+    display: block;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.td-time {
+    display: block;
+    font-size: .75rem;
+    color: #94a3b8;
+    margin-top: 1px;
+}
+
+.btn-unduh {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: .4rem .85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .15s ease;
+}
+
+.btn-unduh:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+.logbook-empty {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .75rem;
+}
+
+.logbook-empty i {
+    font-size: 2rem;
+    color: #cbd5e1;
+}
+
+.logbook-empty p {
+    font-size: .9rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.logbook-pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .85rem 1.75rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.pag-left {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+}
+
+.pag-label {
+    font-size: .78rem;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.pag-perpage-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.pag-perpage-wrap select {
+    appearance: none;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    background: #f8fafc;
+    padding: .3rem 2rem .3rem .75rem;
+    font-family: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    outline: none;
+}
+
+.pag-select-arrow {
+    position: absolute;
+    right: .55rem;
+    font-size: .65rem;
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.pag-center {
+    font-size: .78rem;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.pag-right {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+.pag-btn {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 .45rem;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-sm);
+    background: #f8fafc;
+    color: #475569;
+    font-family: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .12s ease;
+}
+
+.pag-btn:hover:not(:disabled) {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    color: #0b132b;
+}
+
+.pag-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.pag-btn.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 128, 247, .3);
+}
+
+.pag-numbers {
+    display: flex;
+    gap: .25rem;
 }

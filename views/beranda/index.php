@@ -5,7 +5,7 @@
     <!-- Status Seminar Proposal Banner -->
     <div class="content-card">
         <div class="card-header">
-            <h2>Status Seminar Proposal</h2>
+            <h1>Status Seminar Proposal</h1>
             <span class="badge warning">
                 <span class="dot"></span>
                 <?= htmlspecialchars($sempro['status'] ?? 'Tahap Pengajuan Topik') ?>
