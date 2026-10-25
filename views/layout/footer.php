@@ -10,6 +10,19 @@
                     const sidebarBackdrop = document.getElementById('sidebarBackdrop');
                     const appShell = document.getElementById('appShell');
 
+                    // Topbar
+                    const topbar = document.querySelector('.topbar');
+
+                    function updateTopbar() {
+                        topbar.classList.toggle('scrolled', window.scrollY > 20);
+                    }
+
+                    window.addEventListener('scroll', updateTopbar, {
+                        passive: true
+                    });
+
+                    updateTopbar();
+
                     // Toggle Sidebar
                     function toggleMobileSidebar() {
                         sidebar.classList.toggle('open');
@@ -50,11 +63,11 @@
 
                     // Segmented Control Switcher
                     const segmentButtons = document.querySelectorAll('.segmented-control .segment-btn');
-                    const topbarTitle    = document.querySelector('.topbar-title');
-                    const tabPanels      = document.querySelectorAll('.tab-panel');
+                    const topbarTitle = document.querySelector('.topbar-title');
+                    const tabPanels = document.querySelectorAll('.tab-panel');
 
                     const tabTitles = {
-                        sempro : 'Seminar Proposal',
+                        sempro: 'Seminar Proposal',
                         skripsi: 'Skripsi & Sidang',
                     };
 
