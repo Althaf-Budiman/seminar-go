@@ -61,7 +61,7 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
                         </a>
                     </li>
                     <li>
-                        <a href="<?= BASE_URL ?>/pengajuan-dosen" class="<?= $currentPage === 'pengajuan-dosen' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
+                        <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="<?= $currentPage === 'pengajuan-dosen-pembimbing' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
                             <i class="bi bi-person-check"></i>
                             <span>Pengajuan Dosen Pembimbing</span>
                         </a>

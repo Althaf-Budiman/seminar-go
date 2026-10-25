@@ -893,10 +893,17 @@ body.overflow-hidden {
     color: #94a3b8;
 }
 
-.list-item.active .list-item-num {
+.list-item.active .list-item-num,
+.progress-step.active .list-item-num {
     background-color: var(--color-primary);
     border-color: var(--color-primary);
     color: #ffffff;
+}
+
+.list-item.done .list-item-num,
+.progress-step.done .list-item-num {
+    background-color: #DCFCE7;
+    color: green;
 }
 
 .list-item h3 {
@@ -929,12 +936,22 @@ body.overflow-hidden {
     margin-top: 1.25rem;
 }
 
-.detail-item {
+.detail-item,
+.detail-item-row {
     display: flex;
+}
+
+.detail-item {
     flex-direction: column;
 }
 
-.detail-item label {
+.detail-item-row {
+    flex-direction: row;
+    gap: 3rem;
+}
+
+.detail-item label,
+.detail-item-row label {
     font-size: 0.68rem;
     font-weight: 700;
     color: #94a3b8;
@@ -943,7 +960,8 @@ body.overflow-hidden {
     margin-bottom: 0.35rem;
 }
 
-.detail-item h4 {
+.detail-item h4,
+.detail-item-row h4 {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-primary);
@@ -952,26 +970,31 @@ body.overflow-hidden {
 }
 
 .detail-item p,
-.detail-item em {
+.detail-item em,
+.detail-item-row p,
+.detail-item-row em {
     font-size: 0.85rem;
     color: #334155;
     line-height: 1.5;
     margin: 0;
 }
 
-.detail-item em {
+.detail-item em,
+.detail-item-row em {
     font-style: italic;
     color: #475569;
     font-weight: 500;
 }
 
-.detail-item small {
+.detail-item small,
+.detail-item-row small {
     font-size: 0.75rem;
     color: #94a3b8;
     margin-top: 0.15rem;
 }
 
-.detail-item .desc {
+.detail-item .desc,
+.detail-item-row .desc {
     color: #475569;
     line-height: 1.6;
 }
@@ -1309,12 +1332,6 @@ i {
     color: #1e293b;
 }
 
-/* Step "done" state */
-.list-item.done .list-item-num {
-    background-color: #0080F7;
-    border-color: #0080F7;
-    color: #ffffff;
-}
 
 /* ==========================================================================
    Bimbingan List (Riwayat Bimbingan)
@@ -1710,4 +1727,28 @@ i {
 .pag-numbers {
     display: flex;
     gap: .25rem;
+}
+
+/* ==========================================================================
+   Pengajuan Dosen Pembimbing
+   ========================================================================== */
+
+
+.progress-steps {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-evenly;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+    padding: 0.65rem 0.95rem;
+}
+
+.progress-step.active {
+    font-weight: 700;
 }
