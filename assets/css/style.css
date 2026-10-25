@@ -287,6 +287,202 @@ body.overflow-hidden {
     text-overflow: ellipsis;
 }
 
+.nav-group-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0.85rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+ 
+.nav-group-toggle:hover {
+    background-color: var(--nav-hover-bg);
+    color: var(--text-primary);
+}
+ 
+.nav-group-toggle:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+ 
+.nav-group-toggle i {
+    width: 14px;
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+ 
+.nav-group.is-open > .nav-group-toggle i {
+    transform: rotate(90deg);
+}
+ 
+.nav-group-toggle span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+ 
+/* Buka-tutup halus lewat grid-template-rows */
+.nav-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
+}
+ 
+.nav-group.is-open > .nav-submenu {
+    grid-template-rows: 1fr;
+}
+ 
+.nav-submenu > ul {
+    min-height: 0;
+    overflow: hidden;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+ 
+/* ==========================================================================
+   Halaman Pengajuan Topik & Pembimbing
+   ========================================================================== */
+ 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+ 
+/* Badge kecil persegi */
+.badge.sm {
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+}
+ 
+.badge.warning.sm {
+    background-color: #fffbeb;
+}
+ 
+/* List lebih lega + baris aktif disorot */
+.list.list-lg .list-item {
+    padding: 1.1rem 1rem;
+}
+ 
+.list.list-lg .list-item.active {
+    background-color: var(--color-primary-light);
+    border-color: #bfdbfe;
+}
+ 
+.list.list-lg .list-item h3 {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+ 
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.3rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 100ms ease;
+    text-decoration: none;
+}
+ 
+.btn-secondary:hover {
+    background-color: #f8fafc;
+    border-color: #cbd5e1;
+}
+ 
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+}
+ 
+/* ==========================================================================
+   Form
+   ========================================================================== */
+ 
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+    margin-top: 1.25rem;
+}
+ 
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+ 
+.form-field.full {
+    grid-column: 1 / -1;
+}
+ 
+.form-field label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+ 
+.form-input {
+    width: 100%;
+    padding: 0.6rem 0.85rem;
+    background-color: var(--bg-surface);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+ 
+.form-input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+ 
+textarea.form-input {
+    min-height: 110px;
+    line-height: 1.5;
+    resize: vertical;
+}
+ 
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+ 
+    .header-actions {
+        flex-wrap: wrap;
+    }
+}
+ 
+
 /* Sidebar Footer */
 .sidebar-footer {
     padding: 0.8rem 1rem;
@@ -682,6 +878,7 @@ body.overflow-hidden {
     font-weight: 600;
     cursor: pointer;
     transition: 100ms ease;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
@@ -2077,5 +2274,118 @@ i {
         flex-direction: row-reverse;
         align-items: center;
         justify-content: space-between;
+    }
+}
+
+
+/* =========================================
+   Formulir Pengajuan Topik
+   ========================================= */
+
+.formulir-topik-page {
+    width: 100%;
+    min-width: 0;
+}
+
+.topik-form-card {
+    padding: 1.35rem 1.5rem 1.5rem;
+}
+
+/* Header card */
+.topik-form-card .topik-form-header {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.topik-form-card .topik-form-header h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Grid form */
+.topik-form-grid {
+    margin-top: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 1rem;
+}
+
+/* Label */
+.topik-form-grid .form-field label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.02em;
+    margin-bottom: 0;
+}
+
+/* Input dan dropdown */
+.topik-form-grid .form-input {
+    width: 100%;
+    min-width: 0;
+    min-height: 40px;
+    padding: 0.6rem 0.85rem;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #fff;
+
+    color: #334155;
+    font-family: inherit;
+    font-size: 0.85rem;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.topik-form-grid .form-input::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
+
+.topik-form-grid .form-input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.topik-select:invalid {
+    color: #94a3b8;
+}
+
+.topik-select option {
+    color: #334155;
+}
+
+.topik-form-grid .topik-textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.topik-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .topik-form-card {
+        padding: 1.15rem 1rem;
+    }
+
+    .topik-form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .topik-form-actions {
+        flex-wrap: wrap;
     }
 }

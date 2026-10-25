@@ -2,6 +2,44 @@
 global $page;
 $currentPage = !empty($page) ? $page : 'beranda';
 $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
+
+$activeMenu = $activeMenu ?? $currentPage;
+
+$menu = [
+    ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
+    [
+        'label'    => 'Pengajuan Dosen Pembimbing',
+        'children' => [
+            ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
+            ['key' => 'formulir-topik',  'label' => 'Formulir Pengajuan Topik',     'url' => '/formulir-pengajuan-topik'],
+        ],
+    ],
+    [
+        'key' => 'logbook',
+        'label' => 'Logbook',
+        'children' => [
+            ['key' => 'logbook', 'label' => 'Logbook', 'url' => '/logbook'],
+            ['key' => 'bimbingan-proposal', 'label' => 'Bimbingan Proposal', 'url' => '/bimbingan-proposal'],
+        ],
+    ],
+    [
+        'key' => 'jadwal',
+        'label' => 'Jadwal Seminar dan Sidang',
+        'children' => [
+            ['key' => 'kelengkapan-berkas-seminar-proposal', 'label' => 'Kelengkapan Berkas Seminar Proposal', 'url' => '/kelengkapan-berkas-seminar-proposal'],
+            ['key' => 'jadwal-sidang', 'label' => 'Jadwal Sidang', 'url' => '/jadwal-sidang'],
+            ['key' => 'sidang-seminar-proposal', 'label' => 'Sidang Seminar Proposal', 'url' => '/sidang-seminar-proposal'],
+        ],
+    ],
+    [
+        'key' => 'nilai-revisi',
+        'label' => 'Nilai dan Revisi',
+        'children' => [
+            ['key' => 'nilai-seminar-proposal', 'label' => 'Nilai Seminar Proposal', 'url' => '/nilai-seminar-proposal'],
+            ['key' => 'nilai-sidang-akhir', 'label' => 'Nilai Sidang Akhir', 'url' => '/nilai-sidang-akhir'],
+        ],
+    ],
+];
 ?>
 
 <!DOCTYPE html>
@@ -53,31 +91,39 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
             <!-- Nav Items -->
             <nav class="sidebar-nav-wrapper">
                 <ul class="sidebar-nav" id="sidebarNavList">
-                    <li>
-                        <a href="<?= BASE_URL ?>/beranda" class="<?= in_array($currentPage, ['beranda', '']) ? 'active' : '' ?>" title="Beranda">
-                            <span>Beranda</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="<?= $currentPage === 'pengajuan-dosen-pembimbing' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
-                            <span>Pengajuan Dosen Pembimbing</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= BASE_URL ?>/logbook" class="<?= $currentPage === 'logbook' ? 'active' : '' ?>" title="Logbook">
-                            <span>Logbook</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= BASE_URL ?>/jadwal" class="<?= $currentPage === 'jadwal' ? 'active' : '' ?>" title="Jadwal Seminar dan Sidang">
-                            <span>Jadwal Seminar dan Sidang</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= BASE_URL ?>/nilai-revisi" class="<?= $currentPage === 'nilai-revisi' ? 'active' : '' ?>" title="Nilai dan Revisi">
-                            <span>Nilai dan Revisi</span>
-                        </a>
-                    </li>
+                    <?php foreach ($menu as $item): ?>
+                        <?php if (!empty($item['children'])):
+                            $isOpen = in_array($activeMenu, array_column($item['children'], 'key'), true);
+                        ?>
+                            <li class="nav-group<?= $isOpen ? ' is-open' : '' ?>">
+                                <button type="button" class="nav-group-toggle" aria-expanded="<?= $isOpen ? 'true' : 'false' ?>">
+                                    <i class="bi bi-chevron-right"></i>
+                                    <span><?= htmlspecialchars($item['label']) ?></span>
+                                </button>
+                                <div class="nav-submenu" <?= $isOpen ? '' : ' inert' ?>>
+                                    <ul>
+                                        <?php foreach ($item['children'] as $child): ?>
+                                            <li>
+                                                <a href="<?= BASE_URL . $child['url'] ?>"
+                                                    class="<?= $activeMenu === $child['key'] ? 'active' : '' ?>"
+                                                    title="<?= htmlspecialchars($child['label']) ?>">
+                                                    <span><?= htmlspecialchars($child['label']) ?></span>
+                                                </a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php else: ?>
+                            <li>
+                                <a href="<?= BASE_URL . $item['url'] ?>"
+                                    class="<?= $activeMenu === $item['key'] ? 'active' : '' ?>"
+                                    title="<?= htmlspecialchars($item['label']) ?>">
+                                    <span><?= htmlspecialchars($item['label']) ?></span>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </ul>
             </nav>
 
@@ -117,7 +163,7 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
                         <button type="button" class="nav-arrow-btn" onclick="window.history.back()" title="Kembali">
                             <i class="bi bi-chevron-left"></i>
                         </button>
-                        <button type="button" class="nav-arrow-btn disabled" onclick="window.history.forward()" title="Maju">
+                        <button type="button" class="nav-arrow-btn" onclick="window.history.forward()" title="Maju">
                             <i class="bi bi-chevron-right"></i>
                         </button>
                     </div>

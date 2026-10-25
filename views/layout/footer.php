@@ -49,6 +49,30 @@
             });
         });
 
+
+        // toggle
+        document.querySelectorAll('.nav-group-toggle').forEach(button => {
+            const group = button.closest('.nav-group');
+            const submenu = group?.querySelector('.nav-submenu');
+
+            if (!group || !submenu) return;
+
+            function syncSubmenu() {
+                const isOpen = group.classList.contains('is-open');
+
+                button.setAttribute('aria-expanded', String(isOpen));
+                submenu.toggleAttribute('inert', !isOpen);
+            }
+
+            syncSubmenu();
+
+            button.addEventListener('click', () => {
+                group.classList.toggle('is-open');
+                syncSubmenu();
+            });
+        });
+
+
         updateTopbar();
     });
 </script>
