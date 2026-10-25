@@ -34,9 +34,8 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
             <div class="sidebar-header">
                 <a href="<?= BASE_URL ?>/beranda" class="sidebar-brand">
                     <span>SeminarGo</span>
-                    <span class="mini">SG</span>
                 </a>
-                <button type="button" class="sidebar-toggle" id="sidebarToggleBtn" title="Perkecil/Buka Sidebar">
+                <button type="button" class="sidebar-toggle" title="Tutup Sidebar" aria-label="Tutup Sidebar">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="18" height="18" x="3" y="3" rx="2.5"></rect>
                         <line x1="9.5" y1="3" x2="9.5" y2="21"></line>
@@ -56,31 +55,26 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
                 <ul class="sidebar-nav" id="sidebarNavList">
                     <li>
                         <a href="<?= BASE_URL ?>/beranda" class="<?= in_array($currentPage, ['beranda', '']) ? 'active' : '' ?>" title="Beranda">
-                            <i class="bi bi-grid"></i>
                             <span>Beranda</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="<?= $currentPage === 'pengajuan-dosen-pembimbing' ? 'active' : '' ?>" title="Pengajuan Dosen Pembimbing">
-                            <i class="bi bi-person-check"></i>
                             <span>Pengajuan Dosen Pembimbing</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= BASE_URL ?>/logbook" class="<?= $currentPage === 'logbook' ? 'active' : '' ?>" title="Logbook">
-                            <i class="bi bi-journal-text"></i>
                             <span>Logbook</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= BASE_URL ?>/jadwal" class="<?= $currentPage === 'jadwal' ? 'active' : '' ?>" title="Jadwal Seminar dan Sidang">
-                            <i class="bi bi-calendar-event"></i>
                             <span>Jadwal Seminar dan Sidang</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?= BASE_URL ?>/nilai-revisi" class="<?= $currentPage === 'nilai-revisi' ? 'active' : '' ?>" title="Nilai dan Revisi">
-                            <i class="bi bi-award"></i>
                             <span>Nilai dan Revisi</span>
                         </a>
                     </li>
@@ -107,6 +101,17 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
                     <button type="button" class="btn-icon mobile-menu-toggle" id="mobileMenuBtn" aria-label="Buka Menu">
                         <i class="bi bi-list"></i>
                     </button>
+
+                    <div class="topbar-brand">
+                        <a href="<?= BASE_URL ?>/beranda" class="sidebar-brand">SeminarGo</a>
+                        <button type="button" class="sidebar-toggle" title="Buka Sidebar" aria-label="Buka Sidebar">
+                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2.5"></rect>
+                                <line x1="9.5" y1="3" x2="9.5" y2="21"></line>
+                                <polygon points="15.5,9 12,12 15.5,15" fill="currentColor"></polygon>
+                            </svg>
+                        </button>
+                    </div>
 
                     <div class="topbar-navigation">
                         <button type="button" class="nav-arrow-btn" onclick="window.history.back()" title="Kembali">

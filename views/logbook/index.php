@@ -73,32 +73,32 @@
                 </thead>
                 <tbody id="logbookTbody">
                     <?php foreach ($logbooks as $lb): ?>
-                    <tr class="logbook-row"
-                        data-jenis="<?= htmlspecialchars($lb['jenis']) ?>"
-                        data-search="<?= strtolower(htmlspecialchars($lb['jenis'] . ' ' . $lb['nama_mahasiswa'] . ' ' . $lb['file'])) ?>">
-                        <td class="td-no"><?= (int)$lb['id'] ?></td>
-                        <td>
-                            <span class="td-jenis"><?= htmlspecialchars($lb['jenis']) ?></span>
-                            <a href="#" class="td-file">
-                                <i class="bi bi-paperclip"></i>
-                                <?= htmlspecialchars($lb['file']) ?>
-                            </a>
-                        </td>
-                        <td>
-                            <span class="td-date"><?= htmlspecialchars($lb['tanggal']) ?></span>
-                            <span class="td-time"><?= htmlspecialchars($lb['jam']) ?></span>
-                        </td>
-                        <td><?= htmlspecialchars($lb['nama_mahasiswa']) ?></td>
-                        <td><?= htmlspecialchars($lb['nim']) ?></td>
-                        <td><?= htmlspecialchars($lb['prodi']) ?></td>
-                        <td><?= htmlspecialchars($lb['kelas']) ?></td>
-                        <td><?= htmlspecialchars($lb['tahun_ajaran']) ?></td>
-                        <td>
-                            <button class="btn-unduh">
-                                <i class="bi bi-download"></i> Unduh
-                            </button>
-                        </td>
-                    </tr>
+                        <tr class="logbook-row"
+                            data-jenis="<?= htmlspecialchars($lb['jenis']) ?>"
+                            data-search="<?= strtolower(htmlspecialchars($lb['jenis'] . ' ' . $lb['nama_mahasiswa'] . ' ' . $lb['file'])) ?>">
+                            <td class="td-no"><?= (int)$lb['id'] ?></td>
+                            <td>
+                                <span class="td-jenis"><?= htmlspecialchars($lb['jenis']) ?></span>
+                                <a href="#" class="td-file">
+                                    <i class="bi bi-paperclip"></i>
+                                    <?= htmlspecialchars($lb['file']) ?>
+                                </a>
+                            </td>
+                            <td>
+                                <span class="td-date"><?= htmlspecialchars($lb['tanggal']) ?></span>
+                                <span class="td-time"><?= htmlspecialchars($lb['jam']) ?></span>
+                            </td>
+                            <td><?= htmlspecialchars($lb['nama_mahasiswa']) ?></td>
+                            <td><?= htmlspecialchars($lb['nim']) ?></td>
+                            <td><?= htmlspecialchars($lb['prodi']) ?></td>
+                            <td><?= htmlspecialchars($lb['kelas']) ?></td>
+                            <td><?= htmlspecialchars($lb['tahun_ajaran']) ?></td>
+                            <td>
+                                <button class="btn-unduh">
+                                    <i class="bi bi-download"></i> Unduh
+                                </button>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -136,159 +136,176 @@
     </div>
 </div>
 <script>
-(function () {
-    var rows       = Array.from(document.querySelectorAll('#logbookTbody .logbook-row'));
-    var searchEl   = document.getElementById('logbookSearch');
-    var filterBtn  = document.getElementById('filterDropdownBtn');
-    var filterLbl  = document.getElementById('filterLabel');
-    var filterDD   = document.getElementById('filterDropdown');
-    var filterOpts = document.querySelectorAll('.filter-option');
-    var sortBtn    = document.getElementById('sortBtn');
-    var sortLbl    = document.getElementById('sortLabel');
-    var rowsSel    = document.getElementById('rowsPerPage');
-    var pagInfo    = document.getElementById('pagInfo');
-    var pagFirst   = document.getElementById('pagFirst');
-    var pagPrev    = document.getElementById('pagPrev');
-    var pagNext    = document.getElementById('pagNext');
-    var pagLast    = document.getElementById('pagLast');
-    var pagNums    = document.getElementById('pagNumbers');
-    var emptyEl    = document.getElementById('logbookEmpty');
+    (() => {
+        const ELLIPSIS = '…';
 
-    var state = {
-        filter: '',
-        search: '',
-        sortAsc: false,
-        page: 1,
-        perPage: parseInt(rowsSel.value)
-    };
+        const rows = [...document.querySelectorAll('#logbookTbody .logbook-row')];
 
-    function filtered() {
-        var r = rows.filter(function(row) {
-            var jOk = !state.filter || row.dataset.jenis === state.filter;
-            var sOk = !state.search || row.dataset.search.includes(state.search);
-            return jOk && sOk;
-        });
-        if (state.sortAsc) r = r.slice().reverse();
-        return r;
-    }
+        const el = {
+            search: document.getElementById('logbookSearch'),
+            filterBtn: document.getElementById('filterDropdownBtn'),
+            filterLabel: document.getElementById('filterLabel'),
+            filterDropdown: document.getElementById('filterDropdown'),
+            filterOptions: document.querySelectorAll('#filterDropdown .filter-option'),
+            sortBtn: document.getElementById('sortBtn'),
+            sortLabel: document.getElementById('sortLabel'),
+            sortIcon: document.querySelector('#sortBtn i'),
+            rowsPerPage: document.getElementById('rowsPerPage'),
+            pageInfo: document.getElementById('pagInfo'),
+            first: document.getElementById('pagFirst'),
+            prev: document.getElementById('pagPrev'),
+            next: document.getElementById('pagNext'),
+            last: document.getElementById('pagLast'),
+            numbers: document.getElementById('pagNumbers'),
+            empty: document.getElementById('logbookEmpty'),
+        };
 
-    function pageRange(cur, max) {
-        if (max <= 7) {
-            var p = []; for (var i = 1; i <= max; i++) p.push(i); return p;
+        const state = {
+            filter: '',
+            search: '',
+            sortAsc: false,
+            page: 1,
+            perPage: Number(el.rowsPerPage.value),
+        };
+
+        /* ---------- Data ---------- */
+        function getFilteredRows() {
+            const result = rows.filter(row => {
+                const matchesFilter = !state.filter || row.dataset.jenis === state.filter;
+                const matchesSearch = row.dataset.search.includes(state.search);
+                return matchesFilter && matchesSearch;
+            });
+
+            return state.sortAsc ? result.reverse() : result;
         }
-        var pages = [];
-        if (cur <= 4) {
-            for (var i = 1; i <= 5; i++) pages.push(i);
-            pages.push('…'); pages.push(max);
-        } else if (cur >= max - 3) {
-            pages.push(1); pages.push('…');
-            for (var i = max - 4; i <= max; i++) pages.push(i);
-        } else {
-            pages.push(1); pages.push('…');
-            for (var i = cur - 1; i <= cur + 1; i++) pages.push(i);
-            pages.push('…'); pages.push(max);
+
+        const getMaxPage = (total) => Math.max(1, Math.ceil(total / state.perPage));
+
+        const range = (from, to) => Array.from({
+            length: to - from + 1
+        }, (_, i) => from + i);
+
+        function getPageNumbers(current, max) {
+            if (max <= 7) return range(1, max);
+            if (current <= 4) return [...range(1, 5), ELLIPSIS, max];
+            if (current >= max - 3) return [1, ELLIPSIS, ...range(max - 4, max)];
+            return [1, ELLIPSIS, ...range(current - 1, current + 1), ELLIPSIS, max];
         }
-        return pages;
-    }
 
-    function render() {
-        var f      = filtered();
-        var total  = f.length;
-        var maxPg  = Math.max(1, Math.ceil(total / state.perPage));
-        if (state.page > maxPg) state.page = maxPg;
-
-        var start = (state.page - 1) * state.perPage;
-        var end   = start + state.perPage;
-        var slice = f.slice(start, end);
-
-        rows.forEach(function(r) { r.style.display = 'none'; });
-        slice.forEach(function(r, i) {
-            r.style.display = '';
-            r.querySelector('.td-no').textContent = start + i + 1;
-        });
-
-        emptyEl.style.display = total === 0 ? 'flex' : 'none';
-
-        var from = total === 0 ? 0 : start + 1;
-        var to   = Math.min(end, total);
-        pagInfo.textContent = 'Menampilkan ' + from + '\u2013' + to + ' dari ' + total + ' entri';
-
-        pagFirst.disabled = state.page === 1;
-        pagPrev.disabled  = state.page === 1;
-        pagNext.disabled  = state.page === maxPg;
-        pagLast.disabled  = state.page === maxPg;
-
-        pagNums.innerHTML = '';
-        pageRange(state.page, maxPg).forEach(function(p) {
-            if (p === '…') {
-                var sp = document.createElement('span');
-                sp.className = 'pag-btn'; sp.textContent = '…';
-                sp.style.cursor = 'default'; sp.style.pointerEvents = 'none';
-                pagNums.appendChild(sp);
-            } else {
-                var btn = document.createElement('button');
-                btn.className = 'pag-btn' + (p === state.page ? ' active' : '');
-                btn.textContent = p;
-                btn.addEventListener('click', (function(pg) {
-                    return function() { state.page = pg; render(); };
-                })(p));
-                pagNums.appendChild(btn);
+        /* ---------- Render ---------- */
+        function createPageItem(page) {
+            if (page === ELLIPSIS) {
+                const dots = document.createElement('span');
+                dots.className = 'pag-btn';
+                dots.textContent = ELLIPSIS;
+                dots.style.cssText = 'cursor: default; pointer-events: none;';
+                return dots;
             }
-        });
-    }
 
-    // Search
-    searchEl.addEventListener('input', function() {
-        state.search = searchEl.value.toLowerCase().trim();
-        state.page = 1; render();
-    });
+            const button = document.createElement('button');
+            button.className = 'pag-btn';
+            button.classList.toggle('active', page === state.page);
+            button.textContent = page;
+            button.addEventListener('click', () => goToPage(page));
+            return button;
+        }
 
-    // Filter dropdown
-    filterBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        filterDD.classList.toggle('open');
-    });
-    document.addEventListener('click', function() { filterDD.classList.remove('open'); });
+        function renderRows(pageRows, start) {
+            rows.forEach(row => {
+                row.style.display = 'none';
+            });
 
-    filterOpts.forEach(function(opt) {
-        opt.addEventListener('click', function() {
-            filterOpts.forEach(function(o) { o.classList.remove('active'); });
-            opt.classList.add('active');
-            state.filter = opt.dataset.value;
-            filterLbl.textContent = opt.textContent;
-            filterDD.classList.remove('open');
-            if (state.filter) filterBtn.classList.add('active-filter');
-            else filterBtn.classList.remove('active-filter');
-            state.page = 1; render();
-        });
-    });
+            pageRows.forEach((row, index) => {
+                row.style.display = '';
+                row.querySelector('.td-no').textContent = start + index + 1;
+            });
+        }
 
-    // Sort
-    sortBtn.addEventListener('click', function() {
-        state.sortAsc = !state.sortAsc;
-        sortLbl.textContent = state.sortAsc ? 'Terlama' : 'Terbaru';
-        var icon = sortBtn.querySelector('i');
-        icon.className = state.sortAsc ? 'bi bi-sort-up-alt' : 'bi bi-sort-down-alt';
-        state.page = 1; render();
-    });
+        function renderPagination(total, maxPage, start, end) {
+            const from = total === 0 ? 0 : start + 1;
+            const to = Math.min(end, total);
+            const isFirstPage = state.page === 1;
+            const isLastPage = state.page === maxPage;
 
-    // Rows per page
-    rowsSel.addEventListener('change', function() {
-        state.perPage = parseInt(rowsSel.value);
-        state.page = 1; render();
-    });
+            el.pageInfo.textContent = `Menampilkan ${from}–${to} dari ${total} entri`;
 
-    // Pagination buttons
-    pagFirst.addEventListener('click', function() { state.page = 1; render(); });
-    pagPrev.addEventListener('click',  function() { if (state.page > 1) { state.page--; render(); } });
-    pagNext.addEventListener('click',  function() { state.page++; render(); });
-    pagLast.addEventListener('click',  function() {
-        state.page = Math.max(1, Math.ceil(filtered().length / state.perPage));
+            el.first.disabled = isFirstPage;
+            el.prev.disabled = isFirstPage;
+            el.next.disabled = isLastPage;
+            el.last.disabled = isLastPage;
+
+            el.numbers.replaceChildren(...getPageNumbers(state.page, maxPage).map(createPageItem));
+        }
+
+        function render() {
+            const filteredRows = getFilteredRows();
+            const total = filteredRows.length;
+            const maxPage = getMaxPage(total);
+
+            state.page = Math.min(Math.max(state.page, 1), maxPage);
+
+            const start = (state.page - 1) * state.perPage;
+            const end = start + state.perPage;
+
+            renderRows(filteredRows.slice(start, end), start);
+            renderPagination(total, maxPage, start, end);
+            el.empty.style.display = total === 0 ? 'flex' : 'none';
+        }
+
+        function goToPage(page) {
+            state.page = page;
+            render();
+        }
+
+        function resetAndRender() {
+            goToPage(1);
+        }
+
+        /* ---------- Events ---------- */
+        function bindEvents() {
+            el.search.addEventListener('input', () => {
+                state.search = el.search.value.toLowerCase().trim();
+                resetAndRender();
+            });
+
+            el.filterBtn.addEventListener('click', (event) => {
+                event.stopPropagation();
+                el.filterDropdown.classList.toggle('open');
+            });
+            document.addEventListener('click', () => el.filterDropdown.classList.remove('open'));
+
+            el.filterOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    el.filterOptions.forEach(other => other.classList.toggle('active', other === option));
+                    state.filter = option.dataset.value;
+                    el.filterLabel.textContent = option.textContent;
+                    el.filterBtn.classList.toggle('active-filter', Boolean(state.filter));
+                    el.filterDropdown.classList.remove('open');
+                    resetAndRender();
+                });
+            });
+
+            el.sortBtn.addEventListener('click', () => {
+                state.sortAsc = !state.sortAsc;
+                el.sortLabel.textContent = state.sortAsc ? 'Terlama' : 'Terbaru';
+                el.sortIcon.className = state.sortAsc ? 'bi bi-sort-up-alt' : 'bi bi-sort-down-alt';
+                resetAndRender();
+            });
+
+            el.rowsPerPage.addEventListener('change', () => {
+                state.perPage = Number(el.rowsPerPage.value);
+                resetAndRender();
+            });
+
+            el.first.addEventListener('click', () => goToPage(1));
+            el.prev.addEventListener('click', () => goToPage(state.page - 1));
+            el.next.addEventListener('click', () => goToPage(state.page + 1));
+            el.last.addEventListener('click', () => goToPage(getMaxPage(getFilteredRows().length)));
+        }
+
+        bindEvents();
         render();
-    });
-
-    render();
-})();
+    })();
 </script>
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

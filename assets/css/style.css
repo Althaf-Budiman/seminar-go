@@ -387,17 +387,6 @@ body.overflow-hidden {
     font-size: 0.85rem;
 }
 
-.app-shell.sidebar-collapsed .sidebar-toggle {
-    position: absolute;
-    right: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
-    font-size: 0.75rem;
-    z-index: 1040;
-}
-
 .app-shell.sidebar-collapsed .sidebar-nav-wrapper {
     padding: 0 0.5rem;
 }
@@ -443,6 +432,32 @@ body.overflow-hidden {
         box-shadow 0.25s ease,
         border-color 0.25s ease,
         backdrop-filter 0.25s ease;
+}
+
+.topbar-brand {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 0.25rem;
+}
+
+@media (min-width: 992px) {
+    .app-shell.sidebar-collapsed .sidebar {
+        transform: translateX(-100%);
+        visibility: hidden;
+        box-shadow: none;
+        transition:
+            transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+            visibility 0s linear 0.25s;
+    }
+
+    .app-shell.sidebar-collapsed .main {
+        margin-left: 0;
+    }
+
+    .app-shell.sidebar-collapsed .topbar-brand {
+        display: flex;
+    }
 }
 
 .topbar.scrolled {

@@ -5,7 +5,7 @@
     <!-- Status Seminar Proposal Banner -->
     <div class="content-card">
         <div class="card-header">
-            <h1>Status Seminar Proposal</h1>
+            <h2>Status Seminar Proposal</h2>
             <span class="badge warning">
                 <span class="dot"></span>
                 <?= htmlspecialchars($sempro['status'] ?? 'Tahap Pengajuan Topik') ?>
@@ -349,4 +349,68 @@
 
 </div>
 
+<script>
+    (() => {
+        const STORAGE_KEY = 'activeBerandaTab';
+
+        const TAB_TITLES = {
+            sempro: 'Seminar Proposal',
+            skripsi: 'Skripsi & Sidang',
+        };
+
+        const el = {
+            tabButtons: document.querySelectorAll('.segmented-control .segment-btn'),
+            tabPanels: document.querySelectorAll('.tab-panel'),
+            topbarTitle: document.querySelector('.topbar-title'),
+            sidebarSearch: document.getElementById('sidebarSearchInput'),
+            sidebarItems: document.querySelectorAll('#sidebarNavList li'),
+        };
+
+        /* ---------- Tabs ---------- */
+        function switchTab(tab) {
+            el.tabButtons.forEach(button => {
+                button.classList.toggle('active', button.dataset.tab === tab);
+            });
+
+            el.tabPanels.forEach(panel => {
+                panel.style.display = panel.id === `tab-${tab}` ? '' : 'none';
+            });
+
+            if (el.topbarTitle && TAB_TITLES[tab]) {
+                el.topbarTitle.textContent = TAB_TITLES[tab];
+            }
+
+            sessionStorage.setItem(STORAGE_KEY, tab);
+        }
+
+        function restoreSavedTab() {
+            const savedTab = sessionStorage.getItem(STORAGE_KEY);
+            if (savedTab && document.getElementById(`tab-${savedTab}`)) {
+                switchTab(savedTab);
+            }
+        }
+
+        /* ---------- Sidebar search ---------- */
+        function filterSidebarMenu(query) {
+            el.sidebarItems.forEach(item => {
+                const matches = item.textContent.toLowerCase().includes(query);
+                item.style.display = matches ? '' : 'none';
+            });
+        }
+
+        /* ---------- Events ---------- */
+        function bindEvents() {
+            el.tabButtons.forEach(button => {
+                button.addEventListener('click', () => switchTab(button.dataset.tab));
+            });
+
+            el.sidebarSearch?.addEventListener('input', (event) => {
+                filterSidebarMenu(event.target.value.toLowerCase().trim());
+            });
+        }
+
+        bindEvents();
+        restoreSavedTab();
+    })();
+</script>
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>
