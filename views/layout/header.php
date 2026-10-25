@@ -28,7 +28,7 @@ $menu = [
         'children' => [
             ['key' => 'kelengkapan-berkas-seminar-proposal', 'label' => 'Kelengkapan Berkas Seminar Proposal', 'url' => '/kelengkapan-berkas-seminar-proposal'],
             ['key' => 'jadwal-sidang', 'label' => 'Jadwal Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'sidang-seminar-proposal', 'label' => 'Sidang Seminar Proposal', 'url' => '/sidang-seminar-proposal'],
+            ['key' => 'sidang', 'label' => 'Sidang', 'url' => '/sidang'],
         ],
     ],
     [
