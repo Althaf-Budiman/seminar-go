@@ -18,7 +18,7 @@ $menu = [
         'key' => 'logbook',
         'label' => 'Logbook',
         'children' => [
-            ['key' => 'logbook', 'label' => 'Logbook', 'url' => '/logbook'],
+            ['key' => 'dokumen-logbook', 'label' => 'Dokumen Logbook', 'url' => '/dokumen-logbook'],
             ['key' => 'bimbingan-proposal', 'label' => 'Bimbingan Proposal', 'url' => '/bimbingan-proposal'],
         ],
     ],

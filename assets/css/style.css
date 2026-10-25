@@ -304,17 +304,17 @@ body.overflow-hidden {
     cursor: pointer;
     transition: all 0.15s ease;
 }
- 
+
 .nav-group-toggle:hover {
     background-color: var(--nav-hover-bg);
     color: var(--text-primary);
 }
- 
+
 .nav-group-toggle:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: -2px;
 }
- 
+
 .nav-group-toggle i {
     width: 14px;
     flex-shrink: 0;
@@ -323,29 +323,29 @@ body.overflow-hidden {
     text-align: center;
     transition: transform 0.2s ease;
 }
- 
-.nav-group.is-open > .nav-group-toggle i {
+
+.nav-group.is-open>.nav-group-toggle i {
     transform: rotate(90deg);
 }
- 
+
 .nav-group-toggle span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
- 
+
 /* Buka-tutup halus lewat grid-template-rows */
 .nav-submenu {
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.2s ease;
 }
- 
-.nav-group.is-open > .nav-submenu {
+
+.nav-group.is-open>.nav-submenu {
     grid-template-rows: 1fr;
 }
- 
-.nav-submenu > ul {
+
+.nav-submenu>ul {
     min-height: 0;
     overflow: hidden;
     list-style: none;
@@ -353,44 +353,44 @@ body.overflow-hidden {
     flex-direction: column;
     gap: 2px;
 }
- 
+
 /* ==========================================================================
    Halaman Pengajuan Topik & Pembimbing
    ========================================================================== */
- 
+
 .header-actions {
     display: flex;
     align-items: center;
     gap: 0.6rem;
 }
- 
+
 /* Badge kecil persegi */
 .badge.sm {
     padding: 0.2rem 0.6rem;
     border-radius: var(--radius-sm);
     font-size: 0.72rem;
 }
- 
+
 .badge.warning.sm {
     background-color: #fffbeb;
 }
- 
+
 /* List lebih lega + baris aktif disorot */
 .list.list-lg .list-item {
     padding: 1.1rem 1rem;
 }
- 
+
 .list.list-lg .list-item.active {
     background-color: var(--color-primary-light);
     border-color: #bfdbfe;
 }
- 
+
 .list.list-lg .list-item h3 {
     font-size: 0.9rem;
     color: var(--text-primary);
 }
 
- 
+
 .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -407,39 +407,39 @@ body.overflow-hidden {
     transition: 100ms ease;
     text-decoration: none;
 }
- 
+
 .btn-secondary:hover {
     background-color: #f8fafc;
     border-color: #cbd5e1;
 }
- 
+
 .form-actions {
     display: flex;
     justify-content: flex-end;
     gap: 0.6rem;
 }
- 
+
 /* ==========================================================================
    Form
    ========================================================================== */
- 
+
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.15rem;
     margin-top: 1.25rem;
 }
- 
+
 .form-field {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
 }
- 
+
 .form-field.full {
     grid-column: 1 / -1;
 }
- 
+
 .form-field label {
     font-size: 0.68rem;
     font-weight: 700;
@@ -447,7 +447,7 @@ body.overflow-hidden {
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
- 
+
 .form-input {
     width: 100%;
     padding: 0.6rem 0.85rem;
@@ -459,29 +459,29 @@ body.overflow-hidden {
     color: var(--text-primary);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
- 
+
 .form-input:focus {
     outline: none;
     border-color: #93c5fd;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
- 
+
 textarea.form-input {
     min-height: 110px;
     line-height: 1.5;
     resize: vertical;
 }
- 
+
 @media (max-width: 640px) {
     .form-grid {
         grid-template-columns: 1fr;
     }
- 
+
     .header-actions {
         flex-wrap: wrap;
     }
 }
- 
+
 
 /* Sidebar Footer */
 .sidebar-footer {
@@ -2366,14 +2366,6 @@ i {
     line-height: 1.5;
 }
 
-.topik-form-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-}
-
 /* Responsive */
 @media (max-width: 640px) {
     .topik-form-card {
@@ -2384,8 +2376,100 @@ i {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
+}
 
-    .topik-form-actions {
-        flex-wrap: wrap;
+
+/* =========================================
+   Bimbingan Proposal
+   ========================================= */
+
+
+/* Stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.stat-card {
+    min-width: 0;
+    padding: 1rem;
+    background: #f8fafc;
+    border: 1px solid #dfe7f1;
+    border-radius: 13px;
+}
+
+.stat-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #94a3b8;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    display: block;
+    color: #0f172a;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 700;
+}
+
+.stat-value.success {
+    color: #15803d;
+}
+
+.stat-value.warning {
+    color: #c2410c;
+}
+
+.stat-card p {
+    margin: 0.15rem 0 0;
+    color: #64748b;
+    font-size: 0.73rem;
+    line-height: 1.5;
+}
+
+.bimbingan-progress-track {
+    width: 100%;
+    height: 8px;
+    margin: 1rem 0;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e2e8f0;
+}
+
+.bimbingan-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: #2f63ed;
+    transition: width 0.3s ease;
+}
+
+/* =========================================
+   Kelengkapan Berkas Seminar Proposal
+   ========================================= */
+
+.berkas-rules {
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+.berkas-file-input {
+    display: none;
+}
+
+.berkas-rules .detail-item {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 640px) {
+
+
+    .berkas-rules {
+        flex-direction: column;
+        gap: 0.75rem;
     }
 }

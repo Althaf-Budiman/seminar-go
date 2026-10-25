@@ -43,7 +43,7 @@
             <span class="badge primary sm"><?= count($usulan) ?> usulan</span>
         </div>
 
-        <div class="list list-lg">
+        <div class="list">
             <?php foreach ($usulan as $item):
                 $isFirst = $item['prioritas'] === 1;
             ?>

@@ -1,7 +1,7 @@
 <?php
 
 
-class Logbook
+class DokumenLogbook
 {
     private $load;
 
@@ -159,7 +159,7 @@ class Logbook
             ],
         ];
 
-        $this->load->view('views/logbook/index.php', [
+        $this->load->view('views/dokumen-logbook/index.php', [
             'pageTitle' => 'Logbook',
             'logbooks'  => $logbooks,
         ]);
