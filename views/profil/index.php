@@ -21,7 +21,7 @@
                     </span>
                 </div>
             </div>
-            <button class="btn-primary">Edit</button>
+            <a href="<?= BASE_URL ?>/profil/edit" class="btn-primary">Edit</a>
         </div>
     </div>
 

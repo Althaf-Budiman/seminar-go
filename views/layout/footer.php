@@ -72,6 +72,36 @@
             });
         });
 
+        /* ---------- Browser History Navigation ---------- */
+        const backBtn = document.getElementById('historyBackBtn');
+        const forwardBtn = document.getElementById('historyForwardBtn');
+
+        function updateHistoryButtons() {
+            // Navigation API
+            if ('navigation' in window) {
+                backBtn.disabled = !window.navigation.canGoBack;
+                forwardBtn.disabled = !window.navigation.canGoForward;
+            } else {
+                backBtn.disabled = window.history.length <= 1;
+                forwardBtn.disabled = true;
+            }
+
+            backBtn.classList.toggle('disabled', backBtn.disabled);
+            forwardBtn.classList.toggle('disabled', forwardBtn.disabled);
+        }
+
+        updateHistoryButtons();
+
+        window.addEventListener('pageshow', updateHistoryButtons);
+        window.addEventListener('popstate', updateHistoryButtons);
+
+        if ('navigation' in window) {
+            window.navigation.addEventListener(
+                'currententrychange',
+                updateHistoryButtons
+            );
+        }
+
 
         updateTopbar();
     });

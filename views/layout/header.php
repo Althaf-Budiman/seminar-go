@@ -160,10 +160,25 @@ $menu = [
                     </div>
 
                     <div class="topbar-navigation">
-                        <button type="button" class="nav-arrow-btn" onclick="window.history.back()" title="Kembali">
+                        <button
+                            type="button"
+                            class="nav-arrow-btn"
+                            id="historyBackBtn"
+                            onclick="window.history.back()"
+                            title="Kembali"
+                            aria-label="Kembali"
+                            disabled>
                             <i class="bi bi-chevron-left"></i>
                         </button>
-                        <button type="button" class="nav-arrow-btn" onclick="window.history.forward()" title="Maju">
+
+                        <button
+                            type="button"
+                            class="nav-arrow-btn"
+                            id="historyForwardBtn"
+                            onclick="window.history.forward()"
+                            title="Maju"
+                            aria-label="Maju"
+                            disabled>
                             <i class="bi bi-chevron-right"></i>
                         </button>
                     </div>

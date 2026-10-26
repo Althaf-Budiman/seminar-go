@@ -32,7 +32,7 @@ define('BASE_URL', $base === '' ? '' : '/' . $base);
 // path will contain /account/id-account-1/edit
 // segment will contain  [0] -> account, [1] -> id-account-1, [2] -> edit,
 
-$noIdActions = ['create', 'store'];
+$noIdActions = ['create', 'store', 'edit', 'update'];
 $page = $segments[0] ?: 'beranda'; // default controller
 
 if (!isset($segments[1]) || $segments[1] === '') {
@@ -78,6 +78,16 @@ if (($expectsPost && $method !== 'POST') || (!$expectsPost && $method !== 'GET')
 $controller = new $controllerName();
 
 if (!method_exists($controller, $action)) {
+    http_response_code(404);
+    echo '404 - Action not found';
+    exit;
+}
+
+$reflection = new ReflectionMethod($controller, $action);
+$argCount   = $id === null ? 0 : 1;
+
+if ($reflection->getNumberOfRequiredParameters() > $argCount
+    || $reflection->getNumberOfParameters() < $argCount) {
     http_response_code(404);
     echo '404 - Action not found';
     exit;
