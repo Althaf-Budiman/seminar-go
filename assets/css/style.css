@@ -2520,3 +2520,234 @@ i {
 .upload-area:hover {
     border-color: #2563eb;
 }
+
+
+/* ==========================================================================
+   Notifikasi
+   ========================================================================== */
+
+.notif-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.notif-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.notif-tabs {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.notif-tab {
+    padding: 0.85rem 0;
+    margin-bottom: -1px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #64748b;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.notif-tab:hover {
+    color: var(--text-primary);
+}
+
+.notif-tab.active {
+    font-weight: 700;
+    color: var(--text-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.notif-mark-all {
+    padding: 0.25rem 0;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.notif-mark-all:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.notif-mark-all:disabled {
+    color: var(--text-muted);
+    cursor: default;
+}
+
+.notif-tab:focus-visible,
+.notif-mark-all:focus-visible,
+.notif-item:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+.notif-list {
+    list-style: none;
+}
+
+.notif-list>li:not([hidden])~li:not([hidden]) {
+    border-top: 1px solid var(--border-subtle);
+}
+
+.notif-item {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    column-gap: 1rem;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--bg-surface);
+    border: none;
+    font-family: inherit;
+    text-align: left;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.12s ease;
+}
+
+.notif-item:hover {
+    background-color: #f1f5f9;
+}
+
+.notif-item.is-unread {
+    background-color: var(--bg-body);
+}
+
+.notif-item.is-unread:hover {
+    background-color: #f1f5f9;
+}
+
+.notif-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f1f5f9;
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.notif-icon i {
+    color: inherit;
+}
+
+.is-unread .notif-icon {
+    background-color: var(--color-primary-border);
+    color: var(--color-primary);
+}
+
+.notif-body {
+    min-width: 0;
+}
+
+.notif-title,
+.notif-message {
+    display: block;
+}
+
+.notif-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+.is-unread .notif-title {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.notif-message {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.notif-meta {
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+}
+
+.notif-time {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.notif-dot {
+    display: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+}
+
+.is-unread .notif-dot {
+    display: block;
+}
+
+.notif-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 3rem 1.5rem;
+}
+
+.notif-empty[hidden] {
+    display: none;
+}
+
+.notif-empty i {
+    font-size: 2rem;
+    color: var(--text-light);
+}
+
+.notif-empty p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+a.notification-btn {
+    text-decoration: none;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 640px) {
+    .notif-toolbar {
+        padding: 0 1rem;
+    }
+
+    .notif-tabs {
+        gap: 1rem;
+    }
+
+    .notif-item {
+        padding: 0.9rem 1rem;
+        column-gap: 0.75rem;
+    }
+
+    .notif-icon {
+        width: 36px;
+        height: 36px;
+    }
+}

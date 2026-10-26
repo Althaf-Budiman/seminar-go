@@ -185,11 +185,11 @@ $menu = [
                         </div>
                     <?php endif; ?>
 
-                    <!-- Notification Button -->
-                    <button type="button" class="notification-btn" title="Notifikasi" aria-label="Notifikasi">
+                    <!-- Notification -->
+                    <a href="<?= BASE_URL ?>/notifikasi" class="notification-btn" title="Notifikasi" aria-label="Notifikasi">
                         <i class="bi bi-bell"></i>
                         <span class="notification-dot"></span>
-                    </button>
+                    </a>
                 </div>
             </header>
 
