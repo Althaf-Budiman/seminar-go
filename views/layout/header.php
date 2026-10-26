@@ -35,8 +35,8 @@ $menu = [
         'key' => 'nilai-revisi',
         'label' => 'Nilai dan Revisi',
         'children' => [
-            ['key' => 'nilai-seminar-proposal', 'label' => 'Nilai Seminar Proposal', 'url' => '/nilai-seminar-proposal'],
-            ['key' => 'nilai-sidang-akhir', 'label' => 'Nilai Sidang Akhir', 'url' => '/nilai-sidang-akhir'],
+            ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
+            ['key' => 'revisi', 'label' => 'Revisi', 'url' => '/revisi'],
         ],
     ],
 ];
