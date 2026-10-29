@@ -102,6 +102,74 @@
             );
         }
 
+        /* ---------- Real-time Clock ---------- */
+        const clockEl = document.getElementById('topbarClock');
+        if (clockEl) {
+            const pad = n => String(n).padStart(2, '0');
+            const tickClock = () => {
+                const now = new Date();
+                clockEl.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+            };
+            setInterval(tickClock, 1000);
+            tickClock();
+        }
+
+        /* ---------- Unified Program Switcher (Sempro / Skripsi) ---------- */
+        const STORAGE_KEY = 'seminargo_active_program';
+        const segmentButtons = document.querySelectorAll('.segmented-control .segment-btn');
+
+        function getActiveProgram() {
+            const params = new URLSearchParams(window.location.search);
+            const queryProgram = params.get('program');
+            if (queryProgram === 'skripsi' || queryProgram === 'sempro') {
+                return queryProgram;
+            }
+            return localStorage.getItem(STORAGE_KEY) || sessionStorage.getItem('activeBerandaTab') || 'sempro';
+        }
+
+        function switchProgram(tab) {
+            localStorage.setItem(STORAGE_KEY, tab);
+            sessionStorage.setItem('activeBerandaTab', tab);
+
+            segmentButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tab);
+            });
+
+            const panelSempro = document.getElementById('tab-sempro');
+            const panelSkripsi = document.getElementById('tab-skripsi');
+            const topbarTitle = document.querySelector('.topbar-title');
+
+            if (panelSempro && panelSkripsi) {
+                panelSempro.style.display = tab === 'sempro' ? '' : 'none';
+                panelSkripsi.style.display = tab === 'skripsi' ? '' : 'none';
+
+                const activePanel = tab === 'sempro' ? panelSempro : panelSkripsi;
+                if (activePanel && activePanel.dataset.title && topbarTitle) {
+                    topbarTitle.textContent = activePanel.dataset.title;
+                    document.title = `${activePanel.dataset.title} - SeminarGo`;
+                }
+            }
+        }
+
+        if (segmentButtons.length > 0) {
+            segmentButtons.forEach(btn => {
+                btn.addEventListener('click', () => switchProgram(btn.dataset.tab));
+            });
+            switchProgram(getActiveProgram());
+        }
+
+        /* ---------- Sidebar Menu Search ---------- */
+        const sidebarSearch = document.getElementById('sidebarSearchInput');
+        const sidebarNavItems = document.querySelectorAll('#sidebarNavList li');
+        if (sidebarSearch) {
+            sidebarSearch.addEventListener('input', (e) => {
+                const q = e.target.value.toLowerCase().trim();
+                sidebarNavItems.forEach(item => {
+                    const match = item.textContent.toLowerCase().includes(q);
+                    item.style.display = match ? '' : 'none';
+                });
+            });
+        }
 
         updateTopbar();
     });

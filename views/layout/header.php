@@ -5,6 +5,16 @@ $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
 
 $activeMenu = $activeMenu ?? $currentPage;
 
+$pagesWithSegmentedPill = [
+    'beranda',
+    'bimbingan',
+    'kelengkapan-berkas',
+    'jadwal-sidang',
+    'hasil-penilaian',
+    'revisi',
+];
+$showSegmentedControl = in_array($currentPage, $pagesWithSegmentedPill, true);
+
 $menu = [
     ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
     [
@@ -19,16 +29,16 @@ $menu = [
         'label' => 'Logbook',
         'children' => [
             ['key' => 'dokumen-logbook', 'label' => 'Dokumen Logbook', 'url' => '/dokumen-logbook'],
-            ['key' => 'bimbingan-proposal', 'label' => 'Bimbingan Proposal', 'url' => '/bimbingan-proposal'],
+            ['key' => 'bimbingan',       'label' => 'Bimbingan',       'url' => '/bimbingan'],
         ],
     ],
     [
         'key' => 'jadwal',
         'label' => 'Jadwal Seminar dan Sidang',
         'children' => [
-            ['key' => 'kelengkapan-berkas-seminar-proposal', 'label' => 'Kelengkapan Berkas Seminar Proposal', 'url' => '/kelengkapan-berkas-seminar-proposal'],
-            ['key' => 'jadwal-sidang', 'label' => 'Jadwal Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'sidang', 'label' => 'Sidang', 'url' => '/sidang'],
+            ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'url' => '/kelengkapan-berkas'],
+            ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'url' => '/jadwal-sidang'],
+            ['key' => 'sidang',             'label' => 'Sidang',             'url' => '/sidang'],
         ],
     ],
     [
@@ -36,7 +46,7 @@ $menu = [
         'label' => 'Nilai dan Revisi',
         'children' => [
             ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
-            ['key' => 'revisi', 'label' => 'Revisi', 'url' => '/revisi'],
+            ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],
         ],
     ],
 ];
@@ -188,7 +198,7 @@ $menu = [
                     <h1 class="topbar-title"><?= htmlspecialchars($activeTitle) ?></h1>
                 </div>
                 <div class="topbar-right">
-                    <?php if ($currentPage === 'beranda'): ?>
+                    <?php if (!empty($showSegmentedControl)): ?>
                         <!-- Segmented Switcher Pill -->
                         <div class="segmented-control" role="tablist" aria-label="Jenis Program">
                             <button type="button" class="segment-btn active" data-tab="sempro">
@@ -199,6 +209,11 @@ $menu = [
                             </button>
                         </div>
                     <?php endif; ?>
+
+                    <!-- Digital Clock -->
+                    <div class="topbar-clock" id="topbarClock" aria-label="Waktu Sekarang">
+                        <?= date('H:i:s') ?>
+                    </div>
 
                     <!-- Notification -->
                     <a href="<?= BASE_URL ?>/notifikasi" class="notification-btn" title="Notifikasi" aria-label="Notifikasi">
