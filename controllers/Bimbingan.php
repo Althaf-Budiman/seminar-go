@@ -142,4 +142,39 @@ class Bimbingan
             'skripsi'    => $skripsi,
         ]);
     }
+
+    public function create()
+    {
+        $dosenList = [
+            'Dr. Eng. Resbob, M.Kom.',
+            'Dosen Pembimbing, M.T.',
+            'Dosen Pembimbing 2, M.Cs.',
+        ];
+
+        $metodeList = [
+            'Tatap Muka (Luring)',
+            'Daring (Online / Video Conference)',
+            'Asinkron (Email / Catatan Dokumen)',
+        ];
+
+        $programList = [
+            'Skripsi',
+            'Seminar Proposal',
+        ];
+
+        $this->load->view('views/bimbingan/form.php', [
+            'pageTitle'   => 'Tambah Catatan Bimbingan',
+            'activeMenu'  => 'bimbingan',
+            'dosenList'   => $dosenList,
+            'metodeList'  => $metodeList,
+            'programList' => $programList,
+        ]);
+    }
+
+    public function store()
+    {
+        header('Location: ' . BASE_URL . '/bimbingan');
+        exit;
+    }
 }
+

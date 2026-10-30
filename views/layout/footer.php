@@ -172,6 +172,25 @@
         }
 
         updateTopbar();
+
+
+        // form file
+        function getFileLabel(files, placeholder) {
+            if (files.length === 0) return placeholder;
+            if (files.length === 1) return files[0].name;
+            return `${files.length} berkas dipilih`;
+        }
+
+        document.querySelectorAll('.form-file').forEach(field => {
+            const input = field.querySelector('.form-file-input');
+            const text = field.querySelector('.form-file-text');
+            const placeholder = text.textContent;
+
+            input.addEventListener('change', () => {
+                text.textContent = getFileLabel(input.files, placeholder);
+                field.classList.toggle('has-file', input.files.length > 0);
+            });
+        });
     });
 </script>
 </body>

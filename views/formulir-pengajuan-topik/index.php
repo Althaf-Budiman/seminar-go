@@ -1,29 +1,21 @@
-
 <?php
 require_once __DIR__ . '/../layout/header.php';
 
-$old = $_POST ?? [];
-$judul = $old['judul'] ?? '';
-$topik = $old['topik'] ?? '';
-$bidangTerpilih = $old['bidang'] ?? '';
-$ringkasan = $old['ringkasan'] ?? '';
 ?>
 
-<div class="formulir-topik-page">
-
+<div>
     <form
         action="<?= BASE_URL ?>/formulir-pengajuan-topik"
         method="POST"
-        id="formulirTopikForm"
-    >
+        id="formulirTopikForm">
         <!-- Card Data Topik Penelitian -->
-        <section class="content-card topik-form-card">
+        <section class="content-card -card">
 
-            <div class="card-header topik-form-header">
+            <div class="card-header -header">
                 <h2>Data Topik Penelitian</h2>
             </div>
 
-            <div class="form-grid topik-form-grid">
+            <div class="form-grid -grid">
 
                 <!-- Judul Proposal -->
                 <div class="form-field full">
@@ -37,9 +29,7 @@ $ringkasan = $old['ringkasan'] ?? '';
                         name="judul"
                         class="form-input"
                         placeholder="Masukkan judul proposal penelitian"
-                        value="<?= htmlspecialchars($judul) ?>"
-                        required
-                    >
+                        required>
                 </div>
 
                 <!-- Topik Penelitian -->
@@ -54,9 +44,7 @@ $ringkasan = $old['ringkasan'] ?? '';
                         name="topik"
                         class="form-input"
                         placeholder="Masukkan topik penelitian"
-                        value="<?= htmlspecialchars($topik) ?>"
-                        required
-                    >
+                        required>
                 </div>
 
                 <!-- Bidang Peminatan -->
@@ -68,22 +56,17 @@ $ringkasan = $old['ringkasan'] ?? '';
                     <select
                         id="bidang"
                         name="bidang"
-                        class="form-input topik-select"
-                        required
-                    >
+                        class="form-input "
+                        required>
                         <option
                             value=""
-                            disabled
-                            <?= $bidangTerpilih === '' ? 'selected' : '' ?>
-                        >
+                            disabled>
                             Pilih bidang peminatan
                         </option>
 
                         <?php foreach (($bidang ?? []) as $opsiBidang): ?>
                             <option
-                                value="<?= htmlspecialchars($opsiBidang) ?>"
-                                <?= $bidangTerpilih === $opsiBidang ? 'selected' : '' ?>
-                            >
+                                value="<?= htmlspecialchars($opsiBidang) ?>">
                                 <?= htmlspecialchars($opsiBidang) ?>
                             </option>
                         <?php endforeach; ?>
@@ -99,22 +82,20 @@ $ringkasan = $old['ringkasan'] ?? '';
                     <textarea
                         id="ringkasan"
                         name="ringkasan"
-                        class="form-input topik-textarea"
+                        class="form-input "
                         placeholder="Tuliskan ringkasan latar belakang, tujuan, dan metode penelitian"
-                        required
-                    ><?= htmlspecialchars($ringkasan) ?></textarea>
+                        required></textarea>
                 </div>
 
             </div>
         </section>
 
         <!-- Action Buttons -->
-        <div class="form-actions topik-form-actions">
+        <div class="form-actions">
 
             <a
                 href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing"
-                class="btn-secondary"
-            >
+                class="btn-secondary">
                 Batal
             </a>
 

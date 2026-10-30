@@ -92,9 +92,9 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-primary" id="btnTambahBimbinganSempro">
+        <a href="<?= BASE_URL ?>/bimbingan/create?program=sempro" class="btn-primary" id="btnTambahBimbinganSempro">
             Tambah Catatan Bimbingan
-        </button>
+        </a>
     </div>
 
 </div>
@@ -188,9 +188,9 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-primary" id="btnTambahBimbinganSkripsi">
+        <a href="<?= BASE_URL ?>/bimbingan/create?program=skripsi" class="btn-primary" id="btnTambahBimbinganSkripsi">
             Tambah Catatan Bimbingan
-        </button>
+        </a>
     </div>
 
 </div>
