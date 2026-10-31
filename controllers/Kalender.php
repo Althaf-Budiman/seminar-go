@@ -1,7 +1,7 @@
 <?php
 
 
-class Jadwal
+class Kalender
 {
     private $load;
 
@@ -125,7 +125,7 @@ class Jadwal
 
         $today = date('Y-m-d');
 
-        $this->load->view('views/jadwal/index.php', [
+        $this->load->view('views/kalender/index.php', [
             'pageTitle' => 'Jadwal Seminar dan Sidang',
             'jadwal'    => $jadwal,
             'today'     => $today,
