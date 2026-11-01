@@ -19,6 +19,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config/database.php';
 require_once __DIR__ . '/core/Loader.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // parser URL, this line will divide the uri into several parts
 $uri      = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $base     = trim(dirname($_SERVER['SCRIPT_NAME']), '/');
@@ -32,8 +36,15 @@ define('BASE_URL', $base === '' ? '' : '/' . $base);
 // path will contain /account/id-account-1/edit
 // segment will contain  [0] -> account, [1] -> id-account-1, [2] -> edit,
 
-$noIdActions = ['create', 'store', 'edit', 'update'];
+$noIdActions = ['create', 'store', 'edit', 'update', 'login', 'logout'];
 $page = $segments[0] ?: 'beranda'; // default controller
+
+// Auth guard protect pages
+$publicPages = ['login', 'logout'];
+if (!in_array($page, $publicPages, true) && !isset($_SESSION['user'])) {
+    header('Location: ' . BASE_URL . '/login');
+    exit;
+}
 
 if (!isset($segments[1]) || $segments[1] === '') {
     $id     = null;
@@ -49,7 +60,7 @@ if (!isset($segments[1]) || $segments[1] === '') {
 $method = $_SERVER['REQUEST_METHOD'];
 
 // actions that must come from a form submission (POST), not a plain link/URL (GET)
-$postOnlyActions = ['store', 'update', 'delete'];
+$postOnlyActions = ['store', 'update', 'delete', 'login'];
 $expectsPost     = in_array($action, $postOnlyActions, true);
 
 $controllerName = str_replace('-', '', ucwords($page, '-'));

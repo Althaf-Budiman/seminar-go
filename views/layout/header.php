@@ -2,9 +2,93 @@
 global $page;
 $currentPage = !empty($page) ? $page : 'beranda';
 $activeTitle = $pageTitle ?? $title ?? 'Seminar Proposal';
+$activeMenu  = $activeMenu ?? $currentPage;
 
-$activeMenu = $activeMenu ?? $currentPage;
+// User session data
+$sessionUser     = $_SESSION['user'] ?? [];
+$currentRole     = $sessionUser['role'] ?? 'mahasiswa';
+$displayName     = $sessionUser['nama_lengkap'] ?? ucfirst($currentRole);
+$displayEmail    = $sessionUser['email'] ?? '';
+$displayInitials = mb_strtolower(mb_substr($displayName, 0, 2));
 
+// Menu Sidebar based on role
+if ($currentRole === 'admin') {
+    $menu = [
+        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
+        [
+            'label'    => 'Manajemen Akun',
+            'children' => [
+                ['key' => 'manajemen-mahasiswa', 'label' => 'Akun Mahasiswa', 'url' => '/beranda'],
+                ['key' => 'manajemen-dosen',     'label' => 'Akun Dosen',     'url' => '/beranda'],
+            ],
+        ],
+        ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/kalender'],
+        ['key' => 'dokumen',          'label' => 'Dokumen',          'url' => '/dokumen-logbook'],
+    ];
+} elseif ($currentRole === 'dosen') {
+    $menu = [
+        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
+        [
+            'label'    => 'Bimbingan',
+            'children' => [
+                ['key' => 'bimbingan',       'label' => 'Daftar Bimbingan',  'url' => '/bimbingan'],
+                ['key' => 'dokumen-logbook', 'label' => 'Logbook Mahasiswa', 'url' => '/dokumen-logbook'],
+            ],
+        ],
+        [
+            'label'    => 'Seminar & Sidang',
+            'children' => [
+                ['key' => 'jadwal-sidang', 'label' => 'Jadwal Sidang', 'url' => '/jadwal-sidang'],
+                ['key' => 'sidang',        'label' => 'Sidang',        'url' => '/sidang'],
+            ],
+        ],
+        [
+            'label'    => 'Penilaian',
+            'children' => [
+                ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
+            ],
+        ],
+    ];
+} else {
+    // Role Mahasiswa
+    $menu = [
+        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
+        [
+            'label'    => 'Pengajuan Dosen Pembimbing',
+            'children' => [
+                ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
+                ['key' => 'formulir-topik',  'label' => 'Formulir Pengajuan Topik',     'url' => '/formulir-pengajuan-topik'],
+            ],
+        ],
+        [
+            'key'      => 'logbook',
+            'label'    => 'Logbook',
+            'children' => [
+                ['key' => 'dokumen-logbook', 'label' => 'Dokumen Logbook', 'url' => '/dokumen-logbook'],
+                ['key' => 'bimbingan',       'label' => 'Bimbingan',       'url' => '/bimbingan'],
+            ],
+        ],
+        [
+            'key'      => 'jadwal',
+            'label'    => 'Jadwal Seminar dan Sidang',
+            'children' => [
+                ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'url' => '/kelengkapan-berkas'],
+                ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'url' => '/jadwal-sidang'],
+                ['key' => 'sidang',             'label' => 'Sidang',             'url' => '/sidang'],
+            ],
+        ],
+        [
+            'key'      => 'nilai-revisi',
+            'label'    => 'Nilai dan Revisi',
+            'children' => [
+                ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
+                ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],
+            ],
+        ],
+    ];
+}
+
+// Segmented pill for mahasiswa only
 $pagesWithSegmentedPill = [
     'beranda',
     'bimbingan',
@@ -13,43 +97,8 @@ $pagesWithSegmentedPill = [
     'hasil-penilaian',
     'revisi',
 ];
-$showSegmentedControl = in_array($currentPage, $pagesWithSegmentedPill, true);
-
-$menu = [
-    ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-    [
-        'label'    => 'Pengajuan Dosen Pembimbing',
-        'children' => [
-            ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
-            ['key' => 'formulir-topik',  'label' => 'Formulir Pengajuan Topik',     'url' => '/formulir-pengajuan-topik'],
-        ],
-    ],
-    [
-        'key' => 'logbook',
-        'label' => 'Logbook',
-        'children' => [
-            ['key' => 'dokumen-logbook', 'label' => 'Dokumen Logbook', 'url' => '/dokumen-logbook'],
-            ['key' => 'bimbingan',       'label' => 'Bimbingan',       'url' => '/bimbingan'],
-        ],
-    ],
-    [
-        'key' => 'jadwal',
-        'label' => 'Jadwal Seminar dan Sidang',
-        'children' => [
-            ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'url' => '/kelengkapan-berkas'],
-            ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'url' => '/jadwal-sidang'],
-            ['key' => 'sidang',             'label' => 'Sidang',             'url' => '/sidang'],
-        ],
-    ],
-    [
-        'key' => 'nilai-revisi',
-        'label' => 'Nilai dan Revisi',
-        'children' => [
-            ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
-            ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],
-        ],
-    ],
-];
+$showSegmentedControl = ($currentRole === 'mahasiswa')
+    && in_array($currentPage, $pagesWithSegmentedPill, true);
 ?>
 
 <!DOCTYPE html>
@@ -140,11 +189,14 @@ $menu = [
             <!-- Bottom User Profile Card -->
             <div class="sidebar-footer">
                 <a href="<?= BASE_URL ?>/profil" class="user-card">
-                    <div class="avatar">sa</div>
+                    <div class="avatar"><?= htmlspecialchars($displayInitials) ?></div>
                     <div class="user-info">
-                        <strong>Mahasiswa</strong>
-                        <small title="mahasiswa.rilo35@mhs.unj.ac.id">mahasiswa.rilo35@mhs.unj.ac.id</small>
+                        <strong><?= htmlspecialchars($displayName) ?></strong>
+                        <small title="<?= htmlspecialchars($displayEmail) ?>"><?= htmlspecialchars($displayEmail) ?></small>
                     </div>
+                </a>
+                <a href="<?= BASE_URL ?>/logout" class="sidebar-logout-btn" title="Logout" aria-label="Logout">
+                    <i class="bi bi-box-arrow-right"></i>
                 </a>
             </div>
         </aside>

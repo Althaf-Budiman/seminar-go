@@ -30,10 +30,20 @@
         <span class="brand">SeminarGO</span>
         <h1>Selamat Datang!</h1>
 
+        <?php if (!empty($errors['login'])): ?>
+            <div class="login-error">
+                <i class="bi bi-exclamation-circle"></i>
+                <?= htmlspecialchars($errors['login']) ?>
+            </div>
+        <?php endif; ?>
+
         <form action="<?= BASE_URL ?>/login/store" method="POST">
             <div class="form-group">
                 <label for="identification_number">NIM/NIP/EMAIL</label>
-                <input type="identification_number" id="identification_number" name="identification_number" required autocomplete="identification_number">
+                <input type="text" id="identification_number" name="identification_number" value="<?= htmlspecialchars($values['identification_number'] ?? '') ?>" required autocomplete="username">
+                <?php if (!empty($errors['identification_number'])): ?>
+                    <small style="color: #ef4444; font-size: 0.8rem; margin-top: 4px; display: block;"><?= htmlspecialchars($errors['identification_number']) ?></small>
+                <?php endif; ?>
             </div>
 
             <div class="form-group">
