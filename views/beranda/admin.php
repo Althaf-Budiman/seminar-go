@@ -11,11 +11,11 @@
 
     <!-- Overview Cards -->
     <div class="content-card">
-        <div class="card-header">
+        <div class="card-header border-b">
             <h2>Overview</h2>
         </div>
 
-        <div class="stats">
+        <div class="stats" style="margin-top: 16px;">
             <div class="stat-card">
                 <span class="stat-label">AKUN MAHASISWA</span>
                 <strong class="stat-value"><?= (int)($totalMahasiswa ?? 0) ?></strong>

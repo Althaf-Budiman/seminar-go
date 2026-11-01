@@ -22,7 +22,7 @@ if ($currentRole === 'admin') {
                 ['key' => 'manajemen-dosen',     'label' => 'Akun Dosen',     'url' => '/beranda'],
             ],
         ],
-        ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/kalender'],
+        ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/manajemen-jadwal'],
         ['key' => 'dokumen',          'label' => 'Dokumen',          'url' => '/dokumen-logbook'],
     ];
 } elseif ($currentRole === 'dosen') {
