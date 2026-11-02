@@ -525,6 +525,7 @@ textarea.form-input {
 }
 
 .sidebar-footer .user-card {
+    width: 100%;
     background-color: white;
     padding: 1rem 1rem;
     border-radius: var(--radius-md);
@@ -786,6 +787,7 @@ textarea.form-input {
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: all 0.15s ease;
+    text-decoration: none;
 }
 
 .segment-btn:hover {
@@ -2751,27 +2753,9 @@ a.notification-btn {
 .sidebar-footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
+    width: 100%;
 }
 
-.sidebar-logout-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.sidebar-logout-btn:hover {
-    background-color: #fee2e2;
-    color: #ef4444;
-}
 
 .login-error {
     background: #fee2e2;

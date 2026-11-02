@@ -20,29 +20,52 @@ if ($currentRole === 'admin') {
         ['key' => 'rekapitulasi-dokumen-mahasiswa',          'label' => 'Dokumen',          'url' => '/rekapitulasi-dokumen-mahasiswa'],
     ];
 } elseif ($currentRole === 'dosen') {
-    $menu = [
-        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-        [
-            'label'    => 'Bimbingan',
-            'children' => [
-                ['key' => 'bimbingan',       'label' => 'Daftar Bimbingan',  'url' => '/bimbingan'],
-                ['key' => 'dokumen-logbook', 'label' => 'Logbook Mahasiswa', 'url' => '/dokumen-logbook'],
-            ],
-        ],
-        [
-            'label'    => 'Seminar & Sidang',
-            'children' => [
-                ['key' => 'jadwal-sidang', 'label' => 'Jadwal Sidang', 'url' => '/jadwal-sidang'],
-                ['key' => 'sidang',        'label' => 'Sidang',        'url' => '/sidang'],
-            ],
-        ],
-        [
-            'label'    => 'Penilaian',
-            'children' => [
-                ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
-            ],
-        ],
-    ];
+    $dosenTypeRaw = $sessionUser['profile']['dosen_type'] ?? $sessionUser['dosen_type'] ?? '';
+    $dosenTypeLower = strtolower((string)$dosenTypeRaw);
+
+    $isPembimbing = str_contains($dosenTypeLower, 'pembimbing');
+    $isPenguji    = str_contains($dosenTypeLower, 'penguji');
+
+    if (!$isPembimbing && !$isPenguji) {
+        $isPembimbing = true;
+        $isPenguji    = true;
+    }
+
+    $canSwitchDosenRole = ($isPembimbing && $isPenguji);
+
+    // Switch role jika ada parameter ?switch_dosen_role=
+    if (isset($_GET['switch_dosen_role']) && in_array($_GET['switch_dosen_role'], ['pembimbing', 'penguji'], true)) {
+        if ($_GET['switch_dosen_role'] === 'pembimbing' && $isPembimbing) {
+            $_SESSION['dosen_active_role'] = 'pembimbing';
+        } elseif ($_GET['switch_dosen_role'] === 'penguji' && $isPenguji) {
+            $_SESSION['dosen_active_role'] = 'penguji';
+        }
+        $redirectUrl = strtok($_SERVER['REQUEST_URI'], '?');
+        header('Location: ' . $redirectUrl);
+        exit;
+    }
+
+    if (!isset($_SESSION['dosen_active_role'])) {
+        $_SESSION['dosen_active_role'] = $isPembimbing ? 'pembimbing' : 'penguji';
+    }
+    $activeDosenRole = $_SESSION['dosen_active_role'];
+    if (!$isPembimbing) $activeDosenRole = 'penguji';
+    if (!$isPenguji)    $activeDosenRole = 'pembimbing';
+
+    if ($activeDosenRole === 'penguji') {
+        $menu = [
+            ['key' => 'beranda',       'label' => 'Beranda',                   'url' => '/beranda'],
+            ['key' => 'jadwal-sidang', 'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
+            ['key' => 'nilai-revisi',  'label' => 'Nilai dan Revisi',          'url' => '/hasil-penilaian'],
+        ];
+    } else {
+        $menu = [
+            ['key' => 'beranda',         'label' => 'Beranda',                   'url' => '/beranda'],
+            ['key' => 'dokumen-logbook', 'label' => 'Logbook Mahasiswa',         'url' => '/dokumen-logbook'],
+            ['key' => 'jadwal-sidang',   'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
+            ['key' => 'nilai-revisi',    'label' => 'Nilai dan Revisi',          'url' => '/hasil-penilaian'],
+        ];
+    }
 } else {
     // Role Mahasiswa
     $menu = [
@@ -189,9 +212,6 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                         <small title="<?= htmlspecialchars($displayEmail) ?>"><?= htmlspecialchars($displayEmail) ?></small>
                     </div>
                 </a>
-                <a href="<?= BASE_URL ?>/logout" class="sidebar-logout-btn" title="Logout" aria-label="Logout">
-                    <i class="bi bi-box-arrow-right"></i>
-                </a>
             </div>
         </aside>
 
@@ -245,7 +265,7 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                 </div>
                 <div class="topbar-right">
                     <?php if (!empty($showSegmentedControl)): ?>
-                        <!-- Segmented Switcher Pill -->
+                        <!-- Segmented Switcher Pill (Mahasiswa) -->
                         <div class="segmented-control" role="tablist" aria-label="Jenis Program">
                             <button type="button" class="segment-btn active" data-tab="sempro">
                                 Seminar Proposal
@@ -253,6 +273,19 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                             <button type="button" class="segment-btn" data-tab="skripsi">
                                 Skripsi
                             </button>
+                        </div>
+                    <?php elseif (!empty($canSwitchDosenRole)): ?>
+                        <div class="segmented-control" role="tablist" aria-label="Peran Dosen">
+                            <a
+                                href="?switch_dosen_role=pembimbing"
+                                class="segment-btn <?= $activeDosenRole === 'pembimbing' ? 'active' : '' ?>">
+                                Pembimbing
+                            </a>
+                            <a
+                                href="?switch_dosen_role=penguji"
+                                class="segment-btn <?= $activeDosenRole === 'penguji' ? 'active' : '' ?>">
+                                Penguji
+                            </a>
                         </div>
                     <?php endif; ?>
 

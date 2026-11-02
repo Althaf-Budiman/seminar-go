@@ -46,16 +46,102 @@ class Beranda
 
     private function dosenView()
     {
-        $profile = $_SESSION['user']['profile'] ?? [];
+        $dosenTypeRaw = $_SESSION['user']['profile']['dosen_type'] ?? '';
+        $dosenTypeLower = strtolower((string)$dosenTypeRaw);
 
+        $isPembimbing = str_contains($dosenTypeLower, 'pembimbing');
+        $isPenguji    = str_contains($dosenTypeLower, 'penguji');
+
+        if (!$isPembimbing && !$isPenguji) {
+            $isPembimbing = true;
+            $isPenguji    = true;
+        }
+
+        $activeRole = $_SESSION['dosen_active_role'] ?? ($isPembimbing ? 'pembimbing' : 'penguji');
+        if (!$isPembimbing) $activeRole = 'penguji';
+        if (!$isPenguji)    $activeRole = 'pembimbing';
+
+        if ($activeRole === 'penguji') {
+            $this->dosenPengujiView();
+        } else {
+            $this->dosenPembimbingView();
+        }
+    }
+
+    private function dosenPembimbingView()
+    {
         $data = [
-            'pageTitle'          => 'Beranda',
-            'dosenName'          => $_SESSION['user']['nama_lengkap'] ?? 'Dosen',
-            'quotaLeft'          => $profile['quota_left'] ?? 5,
-            'mahasiswaBimbingan' => [
-                ['nama' => 'Si Mahasiswa',       'nim' => '2507411000', 'topik' => 'Aplikasi Pencatatan Menu MBG',            'status' => 'Bimbingan'],
-                ['nama' => 'Sakha Ibadil Kirom', 'nim' => '2207411024', 'topik' => 'Sistem Monitoring Jaringan Kampus',       'status' => 'Seminar'],
-                ['nama' => 'Althaf',             'nim' => '2207411036', 'topik' => 'E-Learning Platform Berbasis Gamifikasi', 'status' => 'Pengajuan'],
+            'pageTitle'      => 'Beranda',
+            'dosenRole'      => 'pembimbing',
+            'dosenName'      => $_SESSION['user']['nama_lengkap'],
+            'pendingLogbook' => 5,
+            'pendingForm'    => 5,
+            'timeline'       => [
+                ['step' => 1, 'title' => 'Bimbingan Seminar Proposal', 'status' => 'Berlangsung', 'badge' => 'active'],
+                ['step' => 2, 'title' => 'Seminar Proposal',           'status' => 'Terjadwal',   'badge' => 'scheduled'],
+                ['step' => 3, 'title' => 'Penilaian Seminar Proposal', 'status' => 'Menunggu',    'badge' => 'waiting'],
+            ],
+        ];
+
+        $this->load->view('views/beranda/dosen.php', $data);
+    }
+
+    private function dosenPengujiView()
+    {
+        $data = [
+            'pageTitle'   => 'Beranda',
+            'dosenRole'   => 'penguji',
+            'dosenName'   => $_SESSION['user']['nama_lengkap'],
+            'agendaUjian' => [
+                [
+                    'nama'    => 'Muhammad Desra Zaidaan',
+                    'nim'     => '2207411017',
+                    'jenis'   => 'Seminar Proposal',
+                    'judul'   => 'Sistem Monitoring Kualitas Udara Berbasis Internet of Things',
+                    'peran'   => 'Penguji 2',
+                    'status'  => 'Selesai',
+                    'tanggal' => 'Jumat, 16 Okt 2026',
+                    'waktu'   => '09.00–10.00 WIB',
+                    'ruang'   => 'R. PUT TIK 5',
+                ],
+                [
+                    'nama'    => 'Sakha Ibadil Kirom',
+                    'nim'     => '2207411024',
+                    'jenis'   => 'Seminar Proposal',
+                    'judul'   => 'Sistem Informasi Pengelolaan Bank Sampah Berbasis Web',
+                    'peran'   => 'Penguji 1',
+                    'status'  => 'Terkonfirmasi',
+                    'tanggal' => 'Senin, 19 Okt 2026',
+                    'waktu'   => '09.00–10.00 WIB',
+                    'ruang'   => 'R. PUT TIK 3',
+                ],
+                [
+                    'nama'    => 'Althaf',
+                    'nim'     => '2207411036',
+                    'jenis'   => 'Seminar Proposal',
+                    'judul'   => 'Penerapan Machine Learning untuk Prediksi Penjualan UMKM',
+                    'peran'   => 'Penguji 2',
+                    'status'  => 'Terkonfirmasi',
+                    'tanggal' => 'Senin, 19 Okt 2026',
+                    'waktu'   => '13.00–14.00 WIB',
+                    'ruang'   => 'R. PUT TIK 5',
+                ],
+                [
+                    'nama'    => 'Si Mahasiswa',
+                    'nim'     => '2207411008',
+                    'jenis'   => 'Sidang Skripsi',
+                    'judul'   => 'Perancangan UI/UX Aplikasi Layanan Kesehatan Kampus',
+                    'peran'   => 'Penguji 1',
+                    'status'  => 'Terkonfirmasi',
+                    'tanggal' => 'Selasa, 20 Okt 2026',
+                    'waktu'   => '10.00–11.00 WIB',
+                    'ruang'   => 'R. PUT TIK 3',
+                ],
+            ],
+            'timeline' => [
+                ['step' => 1, 'title' => 'Jadwal Seminar Proposal',     'status' => 'Berlangsung', 'badge' => 'active'],
+                ['step' => 2, 'title' => 'Pelaksanaan Sidang Proposal', 'status' => 'Terjadwal',   'badge' => 'scheduled'],
+                ['step' => 3, 'title' => 'Input Nilai Penguji',         'status' => 'Menunggu',    'badge' => 'waiting'],
             ],
         ];
 

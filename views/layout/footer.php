@@ -116,7 +116,7 @@
 
         /* ---------- Unified Program Switcher (Sempro / Skripsi) ---------- */
         const STORAGE_KEY = 'seminargo_active_program';
-        const segmentButtons = document.querySelectorAll('.segmented-control .segment-btn');
+        const segmentButtons = document.querySelectorAll('.segmented-control .segment-btn[data-tab]');
 
         function getActiveProgram() {
             const params = new URLSearchParams(window.location.search);
