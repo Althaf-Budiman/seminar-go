@@ -2823,3 +2823,100 @@ a.notification-btn {
         max-height: calc(100vh - 24px);
     }
 }
+
+
+/* =========================================
+   Delete Confirmation Modal
+   ========================================= */
+
+.action-confirm-dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+
+    width: min(260px, calc(100vw - 32px));
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 26px;
+
+    background: rgba(245, 245, 245, 0.82);
+    color: var(--text-primary);
+
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.16),
+        inset 0 1px 1px rgba(255, 255, 255, 0.8);
+
+    overflow: hidden;
+}
+
+.action-confirm-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.42);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.action-confirm-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 18px 16px 15px;
+}
+
+.action-confirm-dialog h3 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.action-confirm-dialog p {
+    font-size: 0.68rem;
+    line-height: 1.4;
+    color: #475569;
+}
+
+/* button modal */
+.action-confirm-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+}
+
+.action-cancel-btn,
+.action-delete-btn {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: 0.55rem 0.75rem;
+
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+/* Batal */
+.action-cancel-btn {
+    background: rgba(120, 120, 128, 0.22);
+    color: #1e293b;
+}
+
+.action-cancel-btn:hover {
+    background: rgba(120, 120, 128, 0.32);
+}
+
+/* Hapus */
+.action-delete-btn {
+    background: rgba(255, 59, 48, 0.32);
+    color: #dc2626;
+}
+
+.action-delete-btn:hover {
+    background: rgba(255, 59, 48, 0.45);
+}

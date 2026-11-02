@@ -14,6 +14,10 @@
         tbody: document.getElementById('detailTbody'),
         closeBtn: document.getElementById('detailModalClose'),
         openButtons: document.querySelectorAll('[data-open-detail]'),
+
+        deleteModal: document.getElementById('deleteConfirmModal'),
+        deleteForm: document.getElementById('deleteConfirmForm'),
+        cancelDeleteBtn: document.getElementById('cancelDeleteBtn'),
     };
 
     /* ---------- Table ---------- */
@@ -36,22 +40,20 @@
         return cell;
     }
 
-    // TODO: tambahkan token CSRF di form ini
-    function createDeleteForm(id) {
-        const form = document.createElement('form');
-        form.method = 'post';
-        form.action = `${baseUrl}/manajemen-jadwal/${id}/delete`;
-        form.addEventListener('submit', (event) => {
-            if (!confirm('Hapus jadwal ini?')) event.preventDefault();
-        });
-
+    /* ---------- Delete Confirmation ---------- */
+    function createDeleteButton(id) {
         const button = document.createElement('button');
-        button.type = 'submit';
+
+        button.type = 'button';
         button.className = 'btn-danger';
         button.textContent = 'Hapus';
 
-        form.append(button);
-        return form;
+        button.addEventListener('click', () => {
+            el.deleteForm.action = `${baseUrl}/manajemen-jadwal/${id}/delete`;
+            el.deleteModal.showModal();
+        });
+
+        return button;
     }
 
     function createEditLink(id) {
@@ -65,7 +67,7 @@
     function createRow(item, index) {
         const actions = document.createElement('div');
         actions.className = 'header-actions';
-        actions.append(createDeleteForm(item.id), createEditLink(item.id));
+        actions.append(createDeleteButton(item.id), createEditLink(item.id));
 
         const row = document.createElement('tr');
         row.append(
@@ -106,6 +108,16 @@
     });
 
     el.closeBtn.addEventListener('click', closeDetail);
+
+    el.cancelDeleteBtn.addEventListener('click', () => {
+        el.deleteModal.close();
+    });
+
+    el.deleteModal.addEventListener('click', (event) => {
+        if (event.target === el.deleteModal) {
+            el.deleteModal.close();
+        }
+    });
 
     // Close modal popup
     modal.addEventListener('click', (event) => {

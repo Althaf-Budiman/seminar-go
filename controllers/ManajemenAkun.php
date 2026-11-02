@@ -27,4 +27,12 @@ class ManajemenAkun
             'accounts'  => $accounts,
         ]);
     }
+
+    public function create()
+    {
+        $this->load->view('views/manajemen-akun/form.php', [
+            'pageTitle'   => 'Tambah Akun',
+            'activeMenu'  => 'manajemen-akun',
+        ]);
+    }
 }

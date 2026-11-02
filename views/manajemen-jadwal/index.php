@@ -193,6 +193,34 @@ foreach ($jadwal as $tgl => $grup) {
     </div>
 </dialog>
 
+<!-- Popup Konfirmasi Hapus -->
+<dialog class="action-confirm-dialog" id="deleteConfirmModal">
+    <form id="deleteConfirmForm" method="POST">
+
+        <h3>Hapus kegiatan ini?</h3>
+
+        <p>
+            Kegiatan yang dihapus tidak dapat dikembalikan.
+        </p>
+
+        <div class="action-confirm-actions">
+            <button
+                type="button"
+                class="action-cancel-btn"
+                id="cancelDeleteBtn">
+                Batal
+            </button>
+
+            <button
+                type="submit"
+                class="action-delete-btn">
+                Hapus
+            </button>
+        </div>
+
+    </form>
+</dialog>
+
 <script type="application/json" id="jadwalDetailData">
     <?= json_encode($detailData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>
 </script>

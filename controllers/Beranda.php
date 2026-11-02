@@ -197,6 +197,6 @@ class Beranda
             ]
         ];
 
-        $this->load->view('views/beranda/index.php', $data);
+        $this->load->view('views/beranda/mahasiswa.php', $data);
     }
 }

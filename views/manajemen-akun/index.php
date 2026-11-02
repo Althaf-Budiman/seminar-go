@@ -5,20 +5,21 @@
     <!-- Header halaman -->
     <div style="display: flex; justify-content: space-between; ">
         <h1>Manajemen Akun</h1>
-        <button class="btn-primary" id="btnTambahAkun">
+        <a
+            href="<?= BASE_URL ?>/manajemen-akun/create"
+            class="btn-primary">
             Tambah Akun
-        </button>
+        </a>
     </div>
 
     <!-- Dokumen  Table Card -->
     <div class="content-card" style="padding: 1rem 0; overflow: hidden;">
 
-
         <!-- Table -->
         <div class="documents-toolbar">
             <div class="documents-search">
                 <i class="bi bi-search"></i>
-                <input type="text" id="documentSearch" placeholder="Cari jenis dokumen atau nama...">
+                <input type="text" id="documentSearch" placeholder="Cari nama, nim, atau email...">
             </div>
             <div class="documents-filter-group">
                 <button class="documents-filter-btn" id="filterDropdownBtn" data-value="">

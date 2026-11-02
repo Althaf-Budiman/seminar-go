@@ -21,7 +21,7 @@ class UserModel
             LIMIT 1
         ");
         $stmt->execute([$identificationNumber]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch();
         return $row === false ? null : $row;
     }
 
@@ -38,7 +38,7 @@ class UserModel
         }
 
         $stmt->execute([$userId]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch();
         return $row === false ? [] : $row;
     }
 
@@ -52,5 +52,26 @@ class UserModel
     {
         $stmt = $this->db->query("SELECT COUNT(*) FROM DOSEN");
         return (int) $stmt->fetchColumn();
+    }
+
+    public function update($id, $data)
+    {
+        // TODO
+        // $stmt = $this->db->prepare(
+        //     "UPDATE accounts
+        //          SET name = ?, username = ?, email = ?, password = ?, account_type_id = ?, status = ?, identification_type = ?, identification_number = ?
+        //          WHERE id = ?"
+        // );
+        // return $stmt->execute([
+        //     $data['name'],
+        //     $data['username'],
+        //     $data['email'],
+        //     password_hash($data['password'], PASSWORD_DEFAULT),
+        //     $data['account_type_id'],
+        //     $data['status'],
+        //     $data['identification_type'],
+        //     $data['identification_number'],
+        //     $id,
+        // ]);
     }
 }
