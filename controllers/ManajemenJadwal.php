@@ -38,14 +38,11 @@ class ManajemenJadwal
                 'nama' => "Fakhrul",
                 'nim' => "2207411035",
                 'jenis' => "Seminar Proposal",
-                'syarat-terpenuhi' => true,
             ],
             [
                 'nama' => "Andrey",
                 'nim' => "2207411036",
                 'jenis' => "Sidang Skripsi",
-                'syarat-terpenuhi' => false,
-
             ],
         ];
     }

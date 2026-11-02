@@ -39,19 +39,16 @@ foreach ($jadwal as $tgl => $grup) {
             <?php
             foreach ($mahasiswaSiapDijadwalkan as $index => $mhs):
             ?>
-                <div class="list-item active">
+                <div class="list-item <?= htmlspecialchars($index + 1) == 1 ? 'active' : '' ?>">
                     <div class="list-item-left">
                         <span class="list-item-num"><?= htmlspecialchars($index + 1) ?></span>
                         <div>
-                            <h3><?= htmlspecialchars($mhs['nama']) ?></h3>
-                            <?php if (!empty($mhs['nim'])): ?>
-                                <p><?= htmlspecialchars($mhs['nim']) ?></p>
-                            <?php endif; ?>
+                            <h3><?= htmlspecialchars($mhs['nama']) ?> (<?= htmlspecialchars($mhs['nim']) ?>) <?= htmlspecialchars($mhs['jenis']) ?></h3>
                         </div>
                     </div>
 
                     <div style="display: flex; gap: 1rem; align-items: center;">
-                        <div class="badge primary">Syarat Terpenuhi</div>
+                        <div class="badge <?= htmlspecialchars($index + 1) == 1 ? 'primary' : 'neutral' ?>">Syarat Terpenuhi</div>
                         <button class="btn-primary" type="button">Buat Jadwal</button>
                     </div>
                 </div>
@@ -92,16 +89,16 @@ foreach ($jadwal as $tgl => $grup) {
         </div>
 
         <div class="jadwal-toolbar">
-            <div class="logbook-search jadwal-search">
+            <div class="documents-search jadwal-search">
                 <i class="bi bi-search"></i>
                 <input type="text" id="jadwalSearch" placeholder="Cari nama atau NIM mahasiswa">
             </div>
 
-            <div class="logbook-filter-group">
+            <div class="documents-filter-group">
                 <button type="button" class="jadwal-btn" id="rangeBtn">
                     <span id="rangeLabel">30 Hari ke Depan</span>
                 </button>
-                <div class="logbook-filter-dropdown" id="rangeDropdown">
+                <div class="documents-filter-dropdown" id="rangeDropdown">
                     <div class="filter-option" data-value="7">7 Hari ke Depan</div>
                     <div class="filter-option active" data-value="30">30 Hari ke Depan</div>
                     <div class="filter-option" data-value="0">Semua Jadwal</div>
@@ -139,7 +136,7 @@ foreach ($jadwal as $tgl => $grup) {
                                 <div class="jadwal-info">
                                     <span><i class="bi bi-clock"></i> <?= htmlspecialchars($j['mulai']) ?>&ndash;<?= htmlspecialchars($j['selesai']) ?> WIB</span>
                                     <span><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($j['ruang']) ?></span>
-                                    <strong class="jadwal-role<?= (int)$j['penguji'] === 1 ? ' is-primary' : '' ?>">
+                                    <strong class="jadwal-role ">
                                         Penguji <?= (int)$j['penguji'] ?>
                                     </strong>
                                 </div>
@@ -171,12 +168,12 @@ foreach ($jadwal as $tgl => $grup) {
     <div class="content-card tab-panel">
         <div class="card-header border-b">
             <h2 id="detailModalTitle"></h2>
-            <button type="button" class="jadwal-btn" id="detailModalClose">Tutup</button>
+            <button type="button" class="jadwal-btn" id="detailModalClose"><i class="bi bi-x" style="font-size: 1.2rem;"></i></button>
         </div>
 
         <div class="detail-list">
-            <div class="logbook-table-wrap">
-                <table class="logbook-table">
+            <div class="documents-table-wrap">
+                <table class="documents-table">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -196,8 +193,9 @@ foreach ($jadwal as $tgl => $grup) {
     </div>
 </dialog>
 
-<script type="application/json" id="jadwalDetailData"><?= json_encode($detailData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
-
+<script type="application/json" id="jadwalDetailData">
+    <?= json_encode($detailData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?>
+</script>
 <script src="<?= BASE_URL ?>/scripts/jadwal-timeline.js"></script>
 <script src="<?= BASE_URL ?>/scripts/jadwal-detail.js"></script>
 

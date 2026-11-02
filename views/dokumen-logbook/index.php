@@ -27,37 +27,37 @@
         </div>
 
         <!-- Toolbar -->
-        <div class="logbook-toolbar">
-            <div class="logbook-search">
+        <div class="documents-toolbar">
+            <div class="documents-search">
                 <i class="bi bi-search"></i>
-                <input type="text" id="logbookSearch" placeholder="Cari jenis dokumen atau nama...">
+                <input type="text" id="documentSearch" placeholder="Cari jenis dokumen atau nama...">
             </div>
-            <div class="logbook-filter-group">
-                <button class="logbook-filter-btn" id="filterDropdownBtn" data-value="">
+            <div class="documents-filter-group">
+                <button class="documents-filter-btn" id="filterDropdownBtn" data-value="">
                     <i class="bi bi-funnel"></i>
                     <span id="filterLabel">Semua Jenis</span>
                     <i class="bi bi-chevron-down" style="font-size:0.7rem;"></i>
                 </button>
-                <div class="logbook-filter-dropdown" id="filterDropdown">
+                <div class="documents-filter-dropdown" id="filterDropdown">
                     <div class="filter-option active" data-value="">Semua Jenis</div>
                     <div class="filter-option" data-value="Bimbingan Proposal">Bimbingan Proposal</div>
                     <div class="filter-option" data-value="Logbook Mingguan">Logbook Mingguan</div>
                     <div class="filter-option" data-value="Bimbingan Skripsi">Bimbingan Skripsi</div>
                 </div>
             </div>
-            <button class="logbook-filter-btn" id="sortBtn">
+            <button class="documents-filter-btn" id="sortBtn">
                 <i class="bi bi-sort-down-alt"></i>
                 <span id="sortLabel">Terbaru</span>
             </button>
-            <button class="logbook-filter-btn" id="btnUnduhSemua">
+            <button class="documents-filter-btn" id="btnUnduhSemua">
                 <i class="bi bi-download"></i>
                 Unduh Semua
             </button>
         </div>
 
         <!-- Table -->
-        <div class="logbook-table-wrap">
-            <table class="logbook-table">
+        <div class="documents-table-wrap">
+            <table class="documents-table">
                 <thead>
                     <tr>
                         <th style="width:48px;">NO</th>
@@ -71,12 +71,12 @@
                         <th style="width:100px;">AKSI</th>
                     </tr>
                 </thead>
-                <tbody id="logbookTbody">
-                    <?php foreach ($logbooks as $lb): ?>
-                        <tr class="logbook-row"
+                <tbody>
+                    <?php foreach ($logbooks as $index => $lb): ?>
+                        <tr class="documents-row"
                             data-jenis="<?= htmlspecialchars($lb['jenis']) ?>"
                             data-search="<?= strtolower(htmlspecialchars($lb['jenis'] . ' ' . $lb['nama_mahasiswa'] . ' ' . $lb['file'])) ?>">
-                            <td class="td-no"><?= (int)$lb['id'] ?></td>
+                            <td class="td-no"><?= $index + 1 ?></td>
                             <td>
                                 <span class="td-jenis"><?= htmlspecialchars($lb['jenis']) ?></span>
                                 <a href="#" class="td-file">
@@ -102,14 +102,14 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <div class="logbook-empty" id="logbookEmpty" style="display:none;">
+            <div class="documents-empty" id="logbookEmpty" style="display:none;">
                 <i class="bi bi-inbox"></i>
                 <p>Tidak ada data yang ditemukan</p>
             </div>
         </div>
 
         <!-- Pagination Footer -->
-        <div class="logbook-pagination-bar">
+        <div class="documents-pagination-bar">
             <div class="pag-left">
                 <span class="pag-label">Baris per halaman:</span>
                 <div class="pag-perpage-wrap">
@@ -139,10 +139,10 @@
     (() => {
         const ELLIPSIS = '…';
 
-        const rows = [...document.querySelectorAll('#logbookTbody .logbook-row')];
+        const rows = [...document.querySelectorAll('#logbookTbody .documents-row')];
 
         const el = {
-            search: document.getElementById('logbookSearch'),
+            search: document.getElementById('documentSearch'),
             filterBtn: document.getElementById('filterDropdownBtn'),
             filterLabel: document.getElementById('filterLabel'),
             filterDropdown: document.getElementById('filterDropdown'),

@@ -15,15 +15,9 @@ $displayInitials = mb_strtolower(mb_substr($displayName, 0, 2));
 if ($currentRole === 'admin') {
     $menu = [
         ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-        [
-            'label'    => 'Manajemen Akun',
-            'children' => [
-                ['key' => 'manajemen-mahasiswa', 'label' => 'Akun Mahasiswa', 'url' => '/beranda'],
-                ['key' => 'manajemen-dosen',     'label' => 'Akun Dosen',     'url' => '/beranda'],
-            ],
-        ],
+        ['key' => 'manajemen-akun', 'label' => 'Manajemen Akun', 'url' => '/manajemen-akun'],
         ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/manajemen-jadwal'],
-        ['key' => 'dokumen',          'label' => 'Dokumen',          'url' => '/dokumen-logbook'],
+        ['key' => 'rekapitulasi-dokumen-mahasiswa',          'label' => 'Dokumen',          'url' => '/rekapitulasi-dokumen-mahasiswa'],
     ];
 } elseif ($currentRole === 'dosen') {
     $menu = [
