@@ -149,13 +149,13 @@ require_once __DIR__ . '/../layout/header.php';
         <div class="form-actions">
 
             <a
-                href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing"
+                href="<?= BASE_URL ?>/manajemen-akun-mahasiswa"
                 class="btn-secondary">
                 Batal
             </a>
 
             <button type="submit" class="btn-primary">
-                Kirim Pengajuan
+                Buat
             </button>
 
         </div>

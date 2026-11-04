@@ -4,11 +4,11 @@
 
     <!-- Header halaman -->
     <div style="display: flex; justify-content: space-between; ">
-        <h1>Manajemen Akun</h1>
+        <h1>Manajemen Akun Mahasiswa</h1>
         <a
-            href="<?= BASE_URL ?>/manajemen-akun/create"
+            href="<?= BASE_URL ?>/manajemen-akun-mahasiswa/create"
             class="btn-primary">
-            Tambah Akun
+            Tambah Akun Mahasiswa
         </a>
     </div>
 
@@ -24,24 +24,18 @@
             <div class="documents-filter-group">
                 <button class="documents-filter-btn" id="filterDropdownBtn" data-value="">
                     <i class="bi bi-funnel"></i>
-                    <span id="filterLabel">Semua Role</span>
+                    <span id="filterLabel">Semua Status</span>
                     <i class="bi bi-chevron-down" style="font-size:0.7rem;"></i>
                 </button>
                 <div class="documents-filter-dropdown" id="filterDropdown">
-                    <div class="filter-option active" data-value="">Semua Role</div>
-                    <div class="filter-option" data-value="Mahasiswa">Mahasiswa</div>
-                    <div class="filter-option" data-value="Dosen Pembimbing">Dosen Pembimbing</div>
-                    <div class="filter-option" data-value="Dosen Penguji">Dosen Penguji</div>
-                    <div class="filter-option" data-value="Admin">Admin</div>
+                    <div class="filter-option active" data-value="">Semua Status</div>
+                    <div class="filter-option" data-value="aktif">Aktif</div>
+                    <div class="filter-option" data-value="nonaktif">Nonaktif</div>
                 </div>
             </div>
             <button class="documents-filter-btn" id="sortBtn">
                 <i class="bi bi-sort-down-alt"></i>
                 <span id="sortLabel">Terbaru</span>
-            </button>
-            <button class="documents-filter-btn" id="btnUnduhSemua">
-                <i class="bi bi-download"></i>
-                Unduh Semua
             </button>
         </div>
 
@@ -50,10 +44,12 @@
             <table class="documents-table" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th>NO</th>
-                        <th>NIM/NIP</th>
-                        <th>NAMA</th>
-                        <th>EMAIL</th>
+                        <th>No.</th>
+                        <th>NIM</th>
+                        <th>Nama</th>
+                        <th>Prodi</th>
+                        <th>Kelas</th>
+                        <th>Email</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +63,8 @@
                             <td>
                                 <span class="td-date"><?= htmlspecialchars($account['nama']) ?></span>
                             </td>
+                            <td><?= htmlspecialchars($account['prodi']) ?></td>
+                            <td><?= htmlspecialchars($account['kelas']) ?></td>
                             <td><?= htmlspecialchars($account['email']) ?></td>
 
                         </tr>
@@ -106,5 +104,7 @@
         </div>
     </div>
 </div>
+<script src="<?= BASE_URL ?>/scripts/table.js"></script>
+
 
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

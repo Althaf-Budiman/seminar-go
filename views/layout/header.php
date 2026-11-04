@@ -15,7 +15,14 @@ $displayInitials = mb_strtolower(mb_substr($displayName, 0, 2));
 if ($currentRole === 'admin') {
     $menu = [
         ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-        ['key' => 'manajemen-akun', 'label' => 'Manajemen Akun', 'url' => '/manajemen-akun'],
+        [
+            'label'    => 'Manajemen Akun',
+            'children' => [
+                ['key' => 'manajemen-akun-mahasiswa', 'label' => 'Manajemen Akun Mahasiswa', 'url' => '/manajemen-akun-mahasiswa'],
+                ['key' => 'manajemen-akun-dosen-pembimbing',  'label' => 'Manajemen Akun Dosen Pembimbing',     'url' => '/manajemen-akun-dosen-pembimbing'],
+                ['key' => 'manajemen-akun-dosen-penguji',  'label' => 'Manajemen Akun Dosen Penguji',     'url' => '/manajemen-akun-dosen-penguji'],
+            ],
+        ],
         ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/manajemen-jadwal'],
         ['key' => 'rekapitulasi-dokumen-mahasiswa',          'label' => 'Dokumen',          'url' => '/rekapitulasi-dokumen-mahasiswa'],
     ];
