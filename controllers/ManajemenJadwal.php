@@ -202,4 +202,54 @@ class ManajemenJadwal
             'mahasiswaSiapDijadwalkan' => $this->getMahasiswaSiapDijadwalkan(),
         ]);
     }
+
+    public function create() 
+    {
+        $dosenPembimbing = [
+            'Dosen, M.T.',
+            'Dosen, M.Kom.',
+            'Dosen, M.Eng.',
+        ];
+
+        $dosenPenguji = [
+            'Dosen, M.Kom.',
+            'Dosen, M.Eng.',
+            'Dosen, M.T.',
+        ];
+
+        $mahasiswaList = [
+            ['nama' => 'Fakhrul', 'nim' => '2207411035'],
+            ['nama' => 'Andrey', 'nim' => '2207411036'],
+            ['nama' => 'Muhammad Desra Zaidaan', 'nim' => '2207411017'],
+            ['nama' => 'Sakha Ibadil Kirom', 'nim' => '2207411024'],
+            ['nama' => 'Nadia Putri Ramadhani', 'nim' => '2207411059'],
+            ['nama' => 'Bagas Pratama', 'nim' => '2207411063'],
+        ];
+
+        $selectedNim = $_GET['nim'] ?? '';
+        $namaMahasiswa = $_GET['nama'] ?? '';
+        if ($selectedNim && !$namaMahasiswa) {
+            foreach ($mahasiswaList as $m) {
+                if ($m['nim'] === $selectedNim) {
+                    $namaMahasiswa = $m['nama'];
+                    break;
+                }
+            }
+        }
+
+        $this->load->view('views/manajemen-jadwal/form.php', [
+            'pageTitle'        => 'Tambah Kegiatan',
+            'activeMenu'       => 'manajemen-jadwal',
+            'dosenPembimbing'  => $dosenPembimbing,
+            'dosenPenguji'     => $dosenPenguji,
+            'namaMahasiswa'    => $namaMahasiswa,
+            'selectedNim'      => $selectedNim,
+        ]);
+    }
+
+    public function store()
+    {
+        header('Location: ' . BASE_URL . '/manajemen-jadwal');
+        exit;
+    }
 }

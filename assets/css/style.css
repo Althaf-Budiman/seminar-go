@@ -503,6 +503,60 @@ textarea.form-input {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
+/* Time Range Input & Select Stack */
+.time-range-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.time-range-group .time-box {
+    width: 54px;
+    max-width: 54px;
+    min-width: 54px;
+    flex: 0 0 54px;
+    height: 40px;
+    padding: 0.5rem 0.25rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.time-range-group .time-box::placeholder {
+    color: #94a3b8;
+}
+
+.time-range-group .time-box:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.time-range-group .time-separator {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    user-select: none;
+}
+
+.time-range-group .time-delimiter {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0 0.4rem;
+    user-select: none;
+}
+
+.select-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
 
 @media (max-width: 640px) {
     .form-grid {

@@ -55,10 +55,6 @@
                 <i class="bi bi-sort-down-alt"></i>
                 <span id="sortLabel">Terbaru</span>
             </button>
-            <button class="documents-filter-btn" id="btnUnduhSemua">
-                <i class="bi bi-download"></i>
-                Unduh Semua
-            </button>
         </div>
 
         <!-- Table -->
@@ -137,5 +133,5 @@
     </div>
 </div>
 
-
+<script src="<?= BASE_URL ?>/scripts/table.js"></script>
 <?php require_once __DIR__ . '/../layout/footer.php'; ?>

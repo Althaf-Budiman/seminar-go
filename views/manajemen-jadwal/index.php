@@ -49,7 +49,7 @@ foreach ($jadwal as $tgl => $grup) {
 
                     <div style="display: flex; gap: 1rem; align-items: center;">
                         <div class="badge <?= htmlspecialchars($index + 1) == 1 ? 'primary' : 'neutral' ?>">Syarat Terpenuhi</div>
-                        <button class="btn-primary" type="button">Buat Jadwal</button>
+                        <a href="<?= BASE_URL ?>/manajemen-jadwal/create" class="btn-primary" type="button">Buat Jadwal</a>
                     </div>
                 </div>
             <?php endforeach; ?>
