@@ -68,7 +68,7 @@ if ($currentRole === 'admin') {
     } else {
         $menu = [
             ['key' => 'beranda',         'label' => 'Beranda',                   'url' => '/beranda'],
-            ['key' => 'dokumen-logbook', 'label' => 'Logbook Mahasiswa',         'url' => '/dokumen-logbook'],
+            ['key' => 'daftar-mahasiswa-bimbingan', 'label' => 'Daftar Mahasiswa Bimbingan', 'url' => '/daftar-mahasiswa-bimbingan'],
             ['key' => 'jadwal-sidang',   'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
             ['key' => 'nilai-revisi',    'label' => 'Nilai dan Revisi',          'url' => '/hasil-penilaian'],
         ];

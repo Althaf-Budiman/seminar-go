@@ -1,6 +1,5 @@
 (() => {
         const ELLIPSIS = '…';
-
         const rows = [...document.querySelectorAll('.documents-row')];
 
         const el = {
