@@ -64,9 +64,50 @@ $postOnlyActions = ['store', 'update', 'delete', 'login'];
 $expectsPost     = in_array($action, $postOnlyActions, true);
 
 $controllerName = str_replace('-', '', ucwords($page, '-'));
-$controllerFile = __DIR__ . '/controllers/' . $controllerName . '.php';
+$role = $_SESSION['user']['role'] ?? null;
+$roleAccess = [
+    'revisi' => ['mahasiswa'],
+    'manajemen-jadwal' => ['admin'],
+    'manajemen-akun-mahasiswa' => ['admin'],
+    'manajemen-akun-dosen-pembimbing' => ['admin'],
+    'manajemen-akun-dosen-penguji' => ['admin'],
+    'rekapitulasi-dokumen-mahasiswa' => ['admin'],
+    'daftar-mahasiswa-bimbingan' => ['dosen'],
+    'hasil-penilaian' => ['dosen', 'mahasiswa'],
+    'jadwal-sidang' => ['dosen', 'mahasiswa'],
+];
 
-if (!file_exists($controllerFile)) {
+if (isset($roleAccess[$page]) && $role !== null && !in_array($role, $roleAccess[$page], true)) {
+    http_response_code(403);
+    echo '403 - Forbidden';
+    exit;
+}
+
+$controllerDirs = [
+    __DIR__ . '/controllers/shared',
+];
+
+if ($role !== null) {
+    array_unshift($controllerDirs, __DIR__ . '/controllers/' . $role);
+}
+
+foreach (['admin', 'dosen', 'mahasiswa'] as $roleDir) {
+    $dir = __DIR__ . '/controllers/' . $roleDir;
+    if (!in_array($dir, $controllerDirs, true)) {
+        $controllerDirs[] = $dir;
+    }
+}
+
+$controllerFile = null;
+foreach ($controllerDirs as $dir) {
+    $candidate = $dir . '/' . $controllerName . '.php';
+    if (file_exists($candidate)) {
+        $controllerFile = $candidate;
+        break;
+    }
+}
+
+if ($controllerFile === null) {
     http_response_code(404);
     echo '404 - Page not found';
     exit;
@@ -97,8 +138,10 @@ if (!method_exists($controller, $action)) {
 $reflection = new ReflectionMethod($controller, $action);
 $argCount   = $id === null ? 0 : 1;
 
-if ($reflection->getNumberOfRequiredParameters() > $argCount
-    || $reflection->getNumberOfParameters() < $argCount) {
+if (
+    $reflection->getNumberOfRequiredParameters() > $argCount
+    || $reflection->getNumberOfParameters() < $argCount
+) {
     http_response_code(404);
     echo '404 - Action not found';
     exit;

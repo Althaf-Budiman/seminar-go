@@ -63,14 +63,14 @@ if ($currentRole === 'admin') {
         $menu = [
             ['key' => 'beranda',       'label' => 'Beranda',                   'url' => '/beranda'],
             ['key' => 'jadwal-sidang', 'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'nilai-revisi',  'label' => 'Nilai dan Revisi',          'url' => '/hasil-penilaian'],
+            ['key' => 'nilai-revisi',  'label' => 'Nilai dan Revisi',          'url' => '/nilai-revisi'],
         ];
     } else {
         $menu = [
             ['key' => 'beranda',         'label' => 'Beranda',                   'url' => '/beranda'],
             ['key' => 'daftar-mahasiswa-bimbingan', 'label' => 'Daftar Mahasiswa Bimbingan', 'url' => '/daftar-mahasiswa-bimbingan'],
             ['key' => 'jadwal-sidang',   'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'nilai-revisi',    'label' => 'Nilai dan Revisi',          'url' => '/hasil-penilaian'],
+            ['key' => 'nilai-revisi',    'label' => 'Nilai dan Revisi',          'url' => '/nilai-revisi'],
         ];
     }
 } else {
@@ -102,8 +102,8 @@ if ($currentRole === 'admin') {
             ],
         ],
         [
-            'key'      => 'nilai-revisi',
-            'label'    => 'Nilai dan Revisi',
+            'key'      => 'hasil-penilaian',
+            'label'    => 'Hasil Penilaian',
             'children' => [
                 ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
                 ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],

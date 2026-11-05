@@ -218,7 +218,8 @@ class {{NAME}}
 EOT;
 
 $indexViewTemplate = <<<'EOT'
-<?php require_once __DIR__ . '/../layout/header.php'; ?>
+<?php require_once __DIR__ . '/../../layout/header.php'; ?>
+
 
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="mb-0">{{NAME}}</h4>
@@ -270,7 +271,7 @@ $indexViewTemplate = <<<'EOT'
     </div>
 <?php endif; ?>
 
-<?php require_once __DIR__ . '/../layout/footer.php'; ?>
+<?php require_once __DIR__ . '/../../layout/footer.php'; ?>
 
 EOT;
 
@@ -278,7 +279,7 @@ $formViewTemplate = <<<'EOT'
 <?php
 $values = ${{LOWER}} ?? [];
 
-require_once __DIR__ . '/../layout/header.php';
+require_once __DIR__ . '/../../layout/header.php';
 ?>
 
 <div class="row justify-content-center">
@@ -311,7 +312,7 @@ require_once __DIR__ . '/../layout/header.php';
     </div>
 </div>
 
-<?php require_once __DIR__ . '/../layout/footer.php'; ?>
+<?php require_once __DIR__ . '/../../layout/footer.php'; ?>
 
 EOT;
 

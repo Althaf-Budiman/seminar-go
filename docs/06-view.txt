@@ -32,11 +32,12 @@ LAYOUT BERSAMA: header.php & footer.php
 Inget masalah di Bagian 1: dulu tiap halaman punya <head>, <nav>
 sendiri-sendiri, copas berkali-kali. Sekarang:
 
-    <?php require_once __DIR__ . '/../layout/header.php'; ?>
+    <?php require_once __DIR__ . '/../../layout/header.php'; ?>
+
 
     ... isi halaman ...
 
-    <?php require_once __DIR__ . '/../layout/footer.php'; ?>
+    <?php require_once __DIR__ . '/../../layout/footer.php'; ?>
 
 header.php isinya <html><head>...<nav>... (semua yang SAMA di
 setiap halaman), footer.php isinya penutup </body></html>. Tiap

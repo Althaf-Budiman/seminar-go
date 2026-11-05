@@ -1,0 +1,255 @@
+<?php
+
+
+class ManajemenJadwal
+{
+    private $load;
+
+    public function __construct()
+    {
+        $this->load = new Loader();
+    }
+
+    private function labelTanggal($ymd)
+    {
+        $hari  = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        $bulan = [
+            1 => 'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember',
+        ];
+        $t = strtotime($ymd);
+        return $hari[(int)date('w', $t)] . ', ' . date('j', $t) . ' ' . $bulan[(int)date('n', $t)] . ' ' . date('Y', $t);
+    }
+
+    private function getMahasiswaSiapDijadwalkan()
+    {
+        return [
+            [
+                'nama' => "Fakhrul",
+                'nim' => "2207411035",
+                'jenis' => "Seminar Proposal",
+            ],
+            [
+                'nama' => "Andrey",
+                'nim' => "2207411036",
+                'jenis' => "Sidang Skripsi",
+            ],
+        ];
+    }
+
+    public function index()
+    {
+        // Data dummy
+        // status        : 'selesai' | 'terkonfirmasi'
+        // penguji       : 1 | 2 (peran dosen yang login di sidang ini)
+        // pembimbing    : nama dosen pembimbing mahasiswa
+        // dosen_penguji : daftar nama dosen penguji (untuk popup detail aktivitas)
+        $dataJadwal = [
+            [
+                'id'            => 1,
+                'tanggal'       => '2026-10-16',
+                'mulai'         => '09.00',
+                'selesai'       => '10.00',
+                'nama'          => 'Muhammad Desra Zaidaan',
+                'nim'           => '2207411017',
+                'jenis'         => 'Seminar Proposal',
+                'judul'         => 'Sistem Monitoring Kualitas Udara Berbasis Internet of Things',
+                'ruang'         => 'Ruang Sidang 2',
+                'penguji'       => 2,
+                'status'        => 'selesai',
+                'pembimbing'    => 'Dosen, M.T.',
+                'dosen_penguji' => ['Dosen, M.Kom.', 'Dosen, M.Eng.'],
+            ],
+            [
+                'id'            => 7,
+                'tanggal'       => '2026-10-16',
+                'mulai'         => '10.30',
+                'selesai'       => '11.30',
+                'nama'          => 'Nadia Putri Ramadhani',
+                'nim'           => '2207411059',
+                'jenis'         => 'Seminar Proposal',
+                'judul'         => 'Aplikasi Pencatatan Menu dan Kandungan Gizi untuk Pengelolaan Data MBG',
+                'ruang'         => 'Ruang Sidang 3',
+                'penguji'       => 1,
+                'status'        => 'selesai',
+                'pembimbing'    => 'Dosen, M.Kom.',
+                'dosen_penguji' => ['Dosen, M.T.', 'Dosen, M.Eng.'],
+            ],
+            [
+                'id'            => 8,
+                'tanggal'       => '2026-10-16',
+                'mulai'         => '13.00',
+                'selesai'       => '14.00',
+                'nama'          => 'Bagas Pratama',
+                'nim'           => '2207411063',
+                'jenis'         => 'Sidang Skripsi',
+                'judul'         => 'Sistem Rekomendasi Menu Berbasis Content-Based Filtering',
+                'ruang'         => 'Ruang Sidang 2',
+                'penguji'       => 2,
+                'status'        => 'selesai',
+                'pembimbing'    => 'Dosen, M.T.',
+                'dosen_penguji' => ['Dosen, M.Kom.'],
+            ],
+            [
+                'id'            => 2,
+                'tanggal'       => '2026-10-19',
+                'mulai'         => '09.00',
+                'selesai'       => '10.00',
+                'nama'          => 'Sakha Ibadil Kirom',
+                'nim'           => '2207411024',
+                'jenis'         => 'Seminar Proposal',
+                'judul'         => 'Sistem Informasi Pengelolaan Bank Sampah Berbasis Web',
+                'ruang'         => 'Ruang Sidang 1',
+                'penguji'       => 1,
+                'status'        => 'terkonfirmasi',
+                'pembimbing'    => 'Dosen, M.Kom.',
+                'dosen_penguji' => ['Dosen, M.T.', 'Dosen, M.Eng.'],
+            ],
+            [
+                'id'            => 3,
+                'tanggal'       => '2026-10-19',
+                'mulai'         => '13.00',
+                'selesai'       => '14.00',
+                'nama'          => 'Althaf',
+                'nim'           => '2207411036',
+                'jenis'         => 'Seminar Proposal',
+                'judul'         => 'Penerapan Machine Learning untuk Prediksi Penjualan UMKM',
+                'ruang'         => 'Ruang Sidang 2',
+                'penguji'       => 2,
+                'status'        => 'terkonfirmasi',
+                'pembimbing'    => 'Dosen, M.Eng.',
+                'dosen_penguji' => ['Dosen, M.T.', 'Dosen, M.Kom.'],
+            ],
+            [
+                'id'            => 4,
+                'tanggal'       => '2026-10-20',
+                'mulai'         => '10.00',
+                'selesai'       => '11.00',
+                'nama'          => 'Fikri',
+                'nim'           => '2207411008',
+                'jenis'         => 'Sidang Skripsi',
+                'judul'         => 'Perancangan UI/UX Aplikasi Layanan Kesehatan Kampus',
+                'ruang'         => 'Ruang Sidang 1',
+                'penguji'       => 1,
+                'status'        => 'terkonfirmasi',
+                'pembimbing'    => 'Dosen, M.T.',
+                'dosen_penguji' => ['Dosen, M.Kom.', 'Dosen, M.Eng.'],
+            ],
+            [
+                'id'            => 5,
+                'tanggal'       => '2026-11-03',
+                'mulai'         => '08.00',
+                'selesai'       => '09.00',
+                'nama'          => 'Rina Maharani',
+                'nim'           => '2207411041',
+                'jenis'         => 'Sidang Skripsi',
+                'judul'         => 'Analisis Sentimen Ulasan Aplikasi Mobile Menggunakan Naive Bayes',
+                'ruang'         => 'Ruang Sidang 3',
+                'penguji'       => 2,
+                'status'        => 'terkonfirmasi',
+                'pembimbing'    => 'Dosen, M.Kom.',
+                'dosen_penguji' => ['Dosen, M.T.', 'Dosen, M.Eng.'],
+            ],
+            [
+                'id'            => 6,
+                'tanggal'       => '2026-12-08',
+                'mulai'         => '14.00',
+                'selesai'       => '15.00',
+                'nama'          => 'Dimas Prakoso',
+                'nim'           => '2207411052',
+                'jenis'         => 'Seminar Proposal',
+                'judul'         => 'Rancang Bangun Sistem Presensi Berbasis Pengenalan Wajah',
+                'ruang'         => 'Ruang Sidang 1',
+                'penguji'       => 1,
+                'status'        => 'terkonfirmasi',
+                'pembimbing'    => 'Dosen, M.T.',
+                'dosen_penguji' => ['Dosen, M.Kom.', 'Dosen, M.Eng.'],
+            ],
+        ];
+
+        usort($dataJadwal, function ($a, $b) {
+            return strcmp($a['tanggal'] . $a['mulai'], $b['tanggal'] . $b['mulai']);
+        });
+
+        $jadwal = [];
+        foreach ($dataJadwal as $row) {
+            $tgl = $row['tanggal'];
+            if (!isset($jadwal[$tgl])) {
+                $jadwal[$tgl] = [
+                    'label' => $this->labelTanggal($tgl),
+                    'items' => [],
+                ];
+            }
+            $jadwal[$tgl]['items'][] = $row;
+        }
+
+        $today = date('Y-m-d');
+
+        $this->load->view('views/admin/manajemen-jadwal/index.php', [
+            'pageTitle' => 'Manajemen Jadwal',
+            'jadwal'    => $jadwal,
+            'today'     => $today,
+            'mahasiswaSiapDijadwalkan' => $this->getMahasiswaSiapDijadwalkan(),
+        ]);
+    }
+
+    public function create() 
+    {
+        $dosenPembimbing = [
+            'Dosen, M.T.',
+            'Dosen, M.Kom.',
+            'Dosen, M.Eng.',
+        ];
+
+        $dosenPenguji = [
+            'Dosen, M.Kom.',
+            'Dosen, M.Eng.',
+            'Dosen, M.T.',
+        ];
+
+        $mahasiswaList = [
+            ['nama' => 'Fakhrul', 'nim' => '2207411035'],
+            ['nama' => 'Andrey', 'nim' => '2207411036'],
+            ['nama' => 'Muhammad Desra Zaidaan', 'nim' => '2207411017'],
+            ['nama' => 'Sakha Ibadil Kirom', 'nim' => '2207411024'],
+            ['nama' => 'Nadia Putri Ramadhani', 'nim' => '2207411059'],
+            ['nama' => 'Bagas Pratama', 'nim' => '2207411063'],
+        ];
+
+        $selectedNim = $_GET['nim'] ?? '';
+        $namaMahasiswa = $_GET['nama'] ?? '';
+        if ($selectedNim && !$namaMahasiswa) {
+            foreach ($mahasiswaList as $m) {
+                if ($m['nim'] === $selectedNim) {
+                    $namaMahasiswa = $m['nama'];
+                    break;
+                }
+            }
+        }
+
+        $this->load->view('views/admin/manajemen-jadwal/form.php', [
+            'pageTitle'        => 'Tambah Kegiatan',
+            'activeMenu'       => 'manajemen-jadwal',
+            'dosenPembimbing'  => $dosenPembimbing,
+            'dosenPenguji'     => $dosenPenguji,
+            'namaMahasiswa'    => $namaMahasiswa,
+            'selectedNim'      => $selectedNim,
+        ]);
+    }
+
+    public function store()
+    {
+        header('Location: ' . BASE_URL . '/manajemen-jadwal');
+        exit;
+    }
+}
