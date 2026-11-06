@@ -2957,3 +2957,224 @@ a.notification-btn {
 .action-delete-btn:hover {
     background: rgba(255, 59, 48, 0.45);
 }
+
+/* Grid */
+.grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.mahasiswa-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+    color: black;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.mahasiswa-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.btn-link {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-link i {
+    color: var(--color-primary);
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+/* Detail Nilai dan revisi */
+
+.nilai-mahasiswa-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 18px;
+    justify-self: center;
+    overflow: hidden;
+}
+
+.nilai-mahasiswa-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Rubrik table */
+.rubrik-table-wrap {
+    width: 100%;
+    margin: 1rem 0 0;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-md);
+}
+
+.rubrik-table {
+    width: 100%;
+    min-width: 680px;
+    font-size: 0.78rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    font-size: .83rem;
+    color: #334155;
+}
+
+.rubrik-table thead th {
+    padding: 0.65rem 0.75rem;
+    background: #f8fafc;
+}
+
+
+.rubrik-table td {
+    padding: 0.5rem 0.75rem;
+}
+
+.rubrik-category-row {
+    background: var(--color-primary-light);
+}
+
+.rubrik-category-row td {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.rubrik-category-code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 0.5rem;
+    border-radius: 5px;
+    background: white;
+    color: var(--color-primary);
+}
+
+.rubrik-code {
+    width: 40px;
+}
+
+.rubrik-range {
+    text-align: center;
+    white-space: nowrap;
+    color: var(--text-muted);
+}
+
+.rubrik-score-cell {
+    width: 130px;
+}
+
+.rubrik-score-cell .nilai-input {
+    width: 100%;
+    min-width: 75px;
+    padding: 0.4rem 0.5rem;
+    border-radius: var(--radius-md);
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.rubrik-subtotal-row {
+    background: #fff;
+}
+
+.rubrik-subtotal-row td:first-child {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.rubrik-equation {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    white-space: nowrap;
+}
+
+.rubrik-subtotal-value {
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Nilai total */
+.rubrik-total-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem 1.15rem;
+    background: var(--color-primary-light);
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-md);
+}
+
+.rubrik-total-card div strong {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.rubrik-total-card div p {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.75rem;
+}
+
+.rubrik-total-card > strong {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+}
+
+/* Catatan revisi */
+.nilai-revisi-field {
+    margin-top: 1rem;
+}
+
+.nilai-revisi-field textarea {
+    min-height: 94px;
+}
+
+
+/* Validasi nilai */
+.nilai-input:invalid:not(:placeholder-shown) {
+    border-color: var(--color-danger);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .nilai-mahasiswa-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .nilai-mahasiswa-avatar {
+        grid-row: 1;
+        justify-self: start;
+    }
+
+    .nilai-mahasiswa-fields {
+        grid-row: 2;
+    }
+
+}

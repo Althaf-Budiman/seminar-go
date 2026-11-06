@@ -36,7 +36,7 @@ define('BASE_URL', $base === '' ? '' : '/' . $base);
 // path will contain /account/id-account-1/edit
 // segment will contain  [0] -> account, [1] -> id-account-1, [2] -> edit,
 
-$noIdActions = ['create', 'store', 'edit', 'update', 'login', 'logout'];
+$noIdActions = ['create', 'tambah', 'store', 'edit', 'update', 'login', 'logout'];
 $page = $segments[0] ?: 'beranda'; // default controller
 
 // Auth guard protect pages

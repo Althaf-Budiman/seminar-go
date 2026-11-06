@@ -54,24 +54,67 @@ class UserModel
         return (int) $stmt->fetchColumn();
     }
 
+    public function getAll()
+    {
+        $stmt = $this->db->query("SELECT user_id, identification_number, role FROM `USER` ORDER BY user_id ASC");
+        return $stmt->fetchAll();
+    }
+
+    public function getById($id)
+    {
+        $stmt = $this->db->prepare("SELECT user_id, identification_number, role FROM `USER` WHERE user_id = ? LIMIT 1");
+        $stmt->execute([$id]);
+        $row = $stmt->fetch();
+        return $row === false ? null : $row;
+    }
+
+    public function create($data)
+    {
+        $stmt = $this->db->prepare("INSERT INTO `USER` (identification_number, password, role) VALUES (?, ?, ?)");
+        $stmt->execute([
+            $data['identification_number'],
+            password_hash($data['password'], PASSWORD_DEFAULT),
+            $data['role'],
+        ]);
+
+        return (int) $this->db->lastInsertId();
+    }
+
     public function update($id, $data)
     {
-        // TODO
-        // $stmt = $this->db->prepare(
-        //     "UPDATE accounts
-        //          SET name = ?, username = ?, email = ?, password = ?, account_type_id = ?, status = ?, identification_type = ?, identification_number = ?
-        //          WHERE id = ?"
-        // );
-        // return $stmt->execute([
-        //     $data['name'],
-        //     $data['username'],
-        //     $data['email'],
-        //     password_hash($data['password'], PASSWORD_DEFAULT),
-        //     $data['account_type_id'],
-        //     $data['status'],
-        //     $data['identification_type'],
-        //     $data['identification_number'],
-        //     $id,
-        // ]);
+        if (!empty($data['password'])) {
+            $stmt = $this->db->prepare(
+                "UPDATE `USER` SET identification_number = ?, password = ?, role = ? WHERE user_id = ?"
+            );
+            return $stmt->execute([
+                $data['identification_number'],
+                password_hash($data['password'], PASSWORD_DEFAULT),
+                $data['role'],
+                $id,
+            ]);
+        }
+
+        $stmt = $this->db->prepare("UPDATE `USER` SET identification_number = ?, role = ? WHERE user_id = ?");
+        return $stmt->execute([$data['identification_number'], $data['role'], $id]);
+    }
+
+    public function updatePassword($userId, $newPassword)
+    {
+        $stmt = $this->db->prepare("UPDATE `USER` SET password = ? WHERE user_id = ?");
+        return $stmt->execute([password_hash($newPassword, PASSWORD_DEFAULT), $userId]);
+    }
+
+    public function verifyPassword($userId, $password)
+    {
+        $stmt = $this->db->prepare("SELECT password FROM `USER` WHERE user_id = ? LIMIT 1");
+        $stmt->execute([$userId]);
+        $hash = $stmt->fetchColumn();
+        return $hash !== false && password_verify($password, $hash);
+    }
+
+    public function delete($id)
+    {
+        $stmt = $this->db->prepare("DELETE FROM `USER` WHERE user_id = ?");
+        return $stmt->execute([$id]);
     }
 }
