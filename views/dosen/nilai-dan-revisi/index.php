@@ -26,9 +26,11 @@
         <div class="grid">
             <?php foreach ($mahasiswa as $mhs) : ?>
                 <div class="mahasiswa-card" style="margin-top: 1rem;">
-                    <img src="<?= htmlspecialchars($mhs['avatar']) ?>" alt="Avatar <?= htmlspecialchars($mhs['nama']) ?>" class="mahasiswa-avatar">
+                    <img src="<?= htmlspecialchars($mhs['foto']) ?>" alt="foto <?= htmlspecialchars($mhs['nama']) ?>" class="mahasiswa-avatar">
                     <h3 class="border-b"><?= htmlspecialchars($mhs['nama']) ?></h3>
-                    <a class="btn-link" href="<?= BASE_URL ?>/nilai-dan-revisi/detail">Lihat Rekap <i class="bi bi-arrow-right"></i></a>
+                    <a class="btn-link" href="<?= BASE_URL ?>/nilai-dan-revisi/<?= (int) $mhs['id'] ?>">
+                        Lihat Rekap <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             <?php endforeach; ?>
         </div>
