@@ -5,6 +5,8 @@
 $avatarStyle = !empty($profil['foto'])
     ? ' style="background: url(\'' . htmlspecialchars(BASE_URL . '/' . $profil['foto'], ENT_QUOTES) . '\') center / cover no-repeat"'
     : '';
+$isDosen = ($_SESSION['user']['role'] ?? '') === 'dosen';
+
 ?>
 
 <form class="dashboard-container" method="post" action="<?= BASE_URL ?>/profil/update" enctype="multipart/form-data">
@@ -56,6 +58,28 @@ $avatarStyle = !empty($profil['foto'])
                 <h3><label for="alamat">Alamat</label></h3>
                 <input type="text" id="alamat" name="alamat" class="form-input" value="<?= htmlspecialchars($profil['alamat']) ?>" maxlength="255" autocomplete="street-address" required>
             </div>
+
+
+            <?php if ($isDosen) : ?>
+                <div class="profile-setting-card">
+                    <h3>Tanda Tangan</h3>
+
+                    <div class="profile-ttd is-editable" id="profileTtd" role="button" tabindex="0" aria-label="Upload tanda tangan">
+                        <?php if (!empty($profil['ttd'])) : ?>
+                            <img src="<?= BASE_URL . '/' . htmlspecialchars($profil['ttd']) ?>" alt="Tanda tangan digital" id="ttdPreview">
+                        <?php else : ?>
+                            <span id="ttdPlaceholder">Belum ada tanda tangan digital</span>
+                        <?php endif; ?>
+
+                        <span class="profile-ttd-overlay">
+                            <i class="bi bi-camera"></i>
+                            Ubah Tanda Tangan
+                        </span>
+                    </div>
+
+                    <input type="file" id="ttdInput" name="ttd" accept="image/png,image/jpeg,image/webp" hidden>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </form>
@@ -114,6 +138,53 @@ $avatarStyle = !empty($profil['foto'])
 
         el.editPhotoBtn.addEventListener('click', () => el.photoInput.click());
         el.photoInput.addEventListener('change', handlePhotoChange);
+
+        const ttd = document.getElementById('profileTtd');
+        const ttdInput = document.getElementById('ttdInput');
+
+        if (!ttd || !ttdInput) return;
+
+        ttd.addEventListener('click', () => ttdInput.click());
+
+        ttd.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                ttdInput.click();
+            }
+        });
+
+        ttdInput.addEventListener('change', () => {
+            const file = ttdInput.files[0];
+            if (!file) return;
+
+            const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+
+            if (!allowed.includes(file.type)) {
+                alert('Format harus JPG, PNG, atau WebP.');
+                ttdInput.value = '';
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Ukuran maksimal 2 MB.');
+                ttdInput.value = '';
+                return;
+            }
+
+            const preview = document.getElementById('ttdPreview');
+
+            if (preview) {
+                preview.src = URL.createObjectURL(file);
+            } else {
+                const img = document.createElement('img');
+                img.id = 'ttdPreview';
+                img.alt = 'Preview tanda tangan';
+                img.src = URL.createObjectURL(file);
+                ttd.prepend(img);
+                document.getElementById('ttdPlaceholder')?.remove();
+            }
+        });
+
     })();
 </script>
 

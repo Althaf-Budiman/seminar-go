@@ -1,4 +1,8 @@
-<?php require_once __DIR__ . '/../../layout/header.php'; ?>
+<?php require_once __DIR__ . '/../../layout/header.php';
+
+$isDosen = ($_SESSION['user']['role'] ?? '') === 'dosen';
+
+?>
 
 
 <div class="dashboard-container">
@@ -50,6 +54,26 @@
 
         </div>
     </div>
+
+    <!-- TTD Dosen -->
+    <?php if ($isDosen) : ?>
+        <div class="content-card">
+            <div class="card-header border-b" style="width: 100%;">
+                <h2>Tanda Tangan</h2>   
+            </div>
+
+            <div class="profile-ttd">
+                <?php if (!empty($profile['ttd'])) : ?>
+                    <img src="<?= BASE_URL . '/' . htmlspecialchars($profile['ttd']) ?>" alt="Tanda tangan digital">
+                <?php else : ?>
+                    <p>Belum ada tanda tangan digital</p>
+                <?php endif; ?>
+            </div>
+
+            <div class="form-actions">
+            </div>
+        </div>
+    <?php endif; ?>
 
     <!-- Pengaturan Akun -->
     <div class="content-card">

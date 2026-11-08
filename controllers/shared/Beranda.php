@@ -138,11 +138,6 @@ class Beranda
                     'ruang'   => 'R. PUT TIK 3',
                 ],
             ],
-            'timeline' => [
-                ['step' => 1, 'title' => 'Jadwal Seminar Proposal',     'status' => 'Berlangsung', 'badge' => 'active'],
-                ['step' => 2, 'title' => 'Pelaksanaan Sidang Proposal', 'status' => 'Terjadwal',   'badge' => 'scheduled'],
-                ['step' => 3, 'title' => 'Input Nilai Penguji',         'status' => 'Menunggu',    'badge' => 'waiting'],
-            ],
         ];
 
         $this->load->view('views/shared/beranda/dosen.php', $data);
