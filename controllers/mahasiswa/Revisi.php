@@ -52,18 +52,11 @@ class Revisi
 
         $semproPersetujuan = [
             [
-                'inisial' => 'K',
                 'nama'    => 'Dosen Ketua Sidang, M.Kom.',
                 'status'  => 'Belum Diajukan',
             ],
             [
-                'inisial' => '1',
                 'nama'    => 'Dosen Penguji 1, M.T.',
-                'status'  => 'Belum Diajukan',
-            ],
-            [
-                'inisial' => '2',
-                'nama'    => 'Dosen Penguji 2, M.Kom.',
                 'status'  => 'Belum Diajukan',
             ],
         ];
@@ -79,7 +72,6 @@ class Revisi
                 'batas'        => '12 Nov 2026',
                 'sisaWaktu'    => '7 hari setelah seminar proposal',
             ],
-            'btnAksi'     => 'Kirim Revisi Seminar Proposal',
         ];
 
         // Data for Skripsi
@@ -123,28 +115,20 @@ class Revisi
 
         $skripsiPersetujuan = [
             [
-                'inisial' => 'K',
                 'nama'    => 'Dosen Ketua Sidang, M.Kom.',
-                'status'  => 'Disetujui',
-                'badgeClass' => 'success',
+                'status'  => 'Belum Diajukan',
             ],
             [
-                'inisial' => '1',
                 'nama'    => 'Dosen Penguji 1, M.T.',
-                'status'  => 'Menunggu Review',
-                'badgeClass' => 'warning',
+                'status'  => 'Belum Diajukan',
             ],
             [
-                'inisial' => '2',
                 'nama'    => 'Dosen Penguji 2, M.Cs.',
                 'status'  => 'Belum Diajukan',
-                'badgeClass' => 'neutral',
             ],
             [
-                'inisial' => 'P',
                 'nama'    => 'Dosen Pembimbing, M.T.',
-                'status'  => 'Disetujui',
-                'badgeClass' => 'success',
+                'status'  => 'Belum Diajukan',
             ],
         ];
 
@@ -159,7 +143,6 @@ class Revisi
                 'batas'        => '20 Nov 2026',
                 'sisaWaktu'    => '14 hari setelah sidang skripsi',
             ],
-            'btnAksi'     => 'Kirim Revisi Skripsi',
         ];
 
         $this->load->view(

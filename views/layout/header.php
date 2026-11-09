@@ -77,21 +77,8 @@ if ($currentRole === 'admin') {
     // Role Mahasiswa
     $menu = [
         ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-        [
-            'label'    => 'Pengajuan Dosen Pembimbing',
-            'children' => [
-                ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
-                ['key' => 'formulir-topik',  'label' => 'Formulir Pengajuan Topik',     'url' => '/formulir-pengajuan-topik'],
-            ],
-        ],
-        [
-            'key'      => 'logbook',
-            'label'    => 'Logbook',
-            'children' => [
-                ['key' => 'dokumen-logbook', 'label' => 'Dokumen Logbook', 'url' => '/dokumen-logbook'],
-                ['key' => 'bimbingan',       'label' => 'Bimbingan',       'url' => '/bimbingan'],
-            ],
-        ],
+        ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
+        ['key' => 'logbook-bimbingan',       'label' => 'Logbook Bimbingan',       'url' => '/logbook-bimbingan'],
         [
             'key'      => 'jadwal',
             'label'    => 'Jadwal Seminar dan Sidang',
@@ -99,14 +86,8 @@ if ($currentRole === 'admin') {
                 ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'url' => '/kelengkapan-berkas'],
                 ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'url' => '/jadwal-sidang'],
                 ['key' => 'sidang',             'label' => 'Sidang',             'url' => '/sidang'],
-            ],
-        ],
-        [
-            'key'      => 'hasil-penilaian',
-            'label'    => 'Hasil Penilaian',
-            'children' => [
-                ['key' => 'hasil-penilaian', 'label' => 'Hasil Penilaian', 'url' => '/hasil-penilaian'],
                 ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],
+
             ],
         ],
     ];
@@ -115,10 +96,10 @@ if ($currentRole === 'admin') {
 // Segmented pill for mahasiswa only
 $pagesWithSegmentedPill = [
     'beranda',
-    'bimbingan',
+    'logbook-bimbingan',
     'kelengkapan-berkas',
     'jadwal-sidang',
-    'hasil-penilaian',
+    'sidang',
     'revisi',
 ];
 $showSegmentedControl = ($currentRole === 'mahasiswa')
@@ -174,22 +155,20 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
             <!-- Nav Items -->
             <nav class="sidebar-nav-wrapper">
                 <ul class="sidebar-nav" id="sidebarNavList">
-                    <?php foreach ($menu as $item): ?>
-                        <?php if (!empty($item['children'])):
+                    <?php foreach ($menu as $item) : ?>
+                        <?php if (!empty($item['children'])) :
                             $isOpen = in_array($activeMenu, array_column($item['children'], 'key'), true);
                         ?>
                             <li class="nav-group<?= $isOpen ? ' is-open' : '' ?>">
                                 <button type="button" class="nav-group-toggle" aria-expanded="<?= $isOpen ? 'true' : 'false' ?>">
-                                    <i class="bi bi-chevron-right"></i>
                                     <span><?= htmlspecialchars($item['label']) ?></span>
+                                    <i class="bi bi-chevron-right"></i>
                                 </button>
                                 <div class="nav-submenu" <?= $isOpen ? '' : ' inert' ?>>
                                     <ul>
-                                        <?php foreach ($item['children'] as $child): ?>
+                                        <?php foreach ($item['children'] as $child) : ?>
                                             <li>
-                                                <a href="<?= BASE_URL . $child['url'] ?>"
-                                                    class="<?= $activeMenu === $child['key'] ? 'active' : '' ?>"
-                                                    title="<?= htmlspecialchars($child['label']) ?>">
+                                                <a href="<?= BASE_URL . $child['url'] ?>" class="<?= $activeMenu === $child['key'] ? 'active' : '' ?>" title="<?= htmlspecialchars($child['label']) ?>">
                                                     <span><?= htmlspecialchars($child['label']) ?></span>
                                                 </a>
                                             </li>
@@ -197,11 +176,9 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                                     </ul>
                                 </div>
                             </li>
-                        <?php else: ?>
+                        <?php else : ?>
                             <li>
-                                <a href="<?= BASE_URL . $item['url'] ?>"
-                                    class="<?= $activeMenu === $item['key'] ? 'active' : '' ?>"
-                                    title="<?= htmlspecialchars($item['label']) ?>">
+                                <a href="<?= BASE_URL . $item['url'] ?>" class="<?= $activeMenu === $item['key'] ? 'active' : '' ?>" title="<?= htmlspecialchars($item['label']) ?>">
                                     <span><?= htmlspecialchars($item['label']) ?></span>
                                 </a>
                             </li>
@@ -243,25 +220,11 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                     </div>
 
                     <div class="topbar-navigation">
-                        <button
-                            type="button"
-                            class="nav-arrow-btn"
-                            id="historyBackBtn"
-                            onclick="window.history.back()"
-                            title="Kembali"
-                            aria-label="Kembali"
-                            disabled>
+                        <button type="button" class="nav-arrow-btn" id="historyBackBtn" onclick="window.history.back()" title="Kembali" aria-label="Kembali" disabled>
                             <i class="bi bi-chevron-left"></i>
                         </button>
 
-                        <button
-                            type="button"
-                            class="nav-arrow-btn"
-                            id="historyForwardBtn"
-                            onclick="window.history.forward()"
-                            title="Maju"
-                            aria-label="Maju"
-                            disabled>
+                        <button type="button" class="nav-arrow-btn" id="historyForwardBtn" onclick="window.history.forward()" title="Maju" aria-label="Maju" disabled>
                             <i class="bi bi-chevron-right"></i>
                         </button>
                     </div>
@@ -271,7 +234,7 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                     <h1 class="topbar-title"><?= htmlspecialchars($activeTitle) ?></h1>
                 </div>
                 <div class="topbar-right">
-                    <?php if (!empty($showSegmentedControl)): ?>
+                    <?php if (!empty($showSegmentedControl)) : ?>
                         <!-- Segmented Switcher Pill (Mahasiswa) -->
                         <div class="segmented-control" role="tablist" aria-label="Jenis Program">
                             <button type="button" class="segment-btn active" data-tab="sempro">
@@ -281,16 +244,12 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                                 Skripsi
                             </button>
                         </div>
-                    <?php elseif (!empty($canSwitchDosenRole)): ?>
+                    <?php elseif (!empty($canSwitchDosenRole)) : ?>
                         <div class="segmented-control" role="tablist" aria-label="Peran Dosen">
-                            <a
-                                href="?switch_dosen_role=pembimbing"
-                                class="segment-btn <?= $activeDosenRole === 'pembimbing' ? 'active' : '' ?>">
+                            <a href="?switch_dosen_role=pembimbing" class="segment-btn <?= $activeDosenRole === 'pembimbing' ? 'active' : '' ?>">
                                 Pembimbing
                             </a>
-                            <a
-                                href="?switch_dosen_role=penguji"
-                                class="segment-btn <?= $activeDosenRole === 'penguji' ? 'active' : '' ?>">
+                            <a href="?switch_dosen_role=penguji" class="segment-btn <?= $activeDosenRole === 'penguji' ? 'active' : '' ?>">
                                 Penguji
                             </a>
                         </div>

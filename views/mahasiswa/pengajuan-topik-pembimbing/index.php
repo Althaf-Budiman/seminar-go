@@ -6,10 +6,10 @@
     <!-- Formulir Pengajuan Topik -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2>Formulir Pengajuan Topik</h2>
+            <h2>Data Pengajuan</h2>
             <div class="header-actions">
                 <span class="badge neutral sm"><?= htmlspecialchars($formulir['status']) ?></span>
-                <a href="<?= BASE_URL ?>/pengajuan-topik-pembimbing/formulir" class="btn-primary">Isi Formulir</a>
+                <a href="<?= BASE_URL ?>/formulir-pengajuan-topik" class="btn-primary">Isi Formulir</a>
             </div>
         </div>
 
@@ -37,10 +37,10 @@
         </div>
     </div>
 
-    <!-- Usulan Dosen Pembimbing -->
+    <!-- Calon Dosen Pembimbing -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2>Usulan Dosen Pembimbing</h2>
+            <h2>Calon Dosen Pembimbing</h2>
             <span class="badge primary sm"><?= count($usulan) ?> usulan</span>
         </div>
 
@@ -59,14 +59,14 @@
         </div>
     </div>
 
-    <!-- Status Penelaahan -->
+    <!-- Status Pengajuan -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2>Status Penelaahan</h2>
+            <h2>Status Pengajuan</h2>
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($penelaahan as $i => $step) : ?>
+            <?php foreach ($pengajuan as $i => $step) : ?>
                 <div class="list-item <?= htmlspecialchars($step['state']) ?>">
                     <div class="list-item-left">
                         <span class="list-item-num"><?= $i + 1 ?></span>
@@ -81,7 +81,6 @@
     <!-- Aksi -->
     <div class="form-actions">
         <!-- TODO: sambungkan ke proses simpan draft / kirim pengajuan -->
-        <button type="button" class="btn-secondary" id="btnSimpanDraft">Simpan Draft</button>
         <button type="button" class="btn-primary" id="btnKirimPengajuan">Kirim Pengajuan</button>
     </div>
 </div>

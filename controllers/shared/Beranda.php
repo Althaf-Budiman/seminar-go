@@ -143,41 +143,70 @@ class Beranda
         $this->load->view('views/shared/beranda/dosen.php', $data);
     }
 
+    private function getProgressAnggotaKelompok(): array
+    {
+        // $profile = $_SESSION['user']['profile'] ?? [];
+        // $kelompokId = $profile['kelompok_id'] ?? null;
+
+        // if (empty($kelompokId)) {
+        //     return [];
+        // }
+
+        // Data dummy untuk slicing.
+        return [
+            [
+                'nama' => 'Sakha Ibadil Kirom',
+                'nim' => '2207411024',
+                'tahap' => 'Logbook Bimbingan',
+                'tahapSelesai' => 2,
+                'totalTahap' => 6,
+                'status' => 'Dalam Proses',
+                'badgeClass' => 'primary',
+            ],
+            [
+                'nama' => 'Althaf',
+                'nim' => '2207411036',
+                'tahap' => 'Pengajuan Topik & Pembimbing',
+                'tahapSelesai' => 1,
+                'totalTahap' => 6,
+                'status' => 'Dalam Proses',
+                'badgeClass' => 'warning',
+            ],
+        ];
+    }
+
     private function mahasiswaView()
     {
         $data = [
             'pageTitle' => 'Seminar Proposal',
             'sempro' => [
                 'status'  => 'Tahap Pengajuan Topik',
-                'progres' => [
+                'anggotaKelompok' => $this->getProgressAnggotaKelompok(),
+                'progress' => [
                     'currentStep' => 1,
                     'totalSteps'  => 7,
                     'steps'       => [
                         [
                             'number'    => 1,
                             'title'     => 'Pengajuan Topik & Pembimbing',
-                            'subtitle'  => 'Proses Pengajuan & Penelaahan',
                             'status'    => 'active',
                             'badgeText' => 'Tahap Aktif',
                         ],
                         [
                             'number'    => 2,
-                            'title'     => 'Bimbingan Proposal',
-                            'subtitle'  => null,
+                            'title'     => 'Lohgbook Bimbingan',
                             'status'    => 'locked',
                             'badgeText' => 'Terkunci',
                         ],
                         [
                             'number'    => 3,
-                            'title'     => 'Kelengkapan Berkas Seminar Proposal',
-                            'subtitle'  => null,
+                            'title'     => 'Kelengkapan Berkas',
                             'status'    => 'locked',
                             'badgeText' => 'Terkunci',
                         ],
                         [
                             'number'    => 4,
-                            'title'     => 'Jadwal Sidang',
-                            'subtitle'  => null,
+                            'title'     => 'Jadwal Sidang Seminar Proposal',
                             'status'    => 'locked',
                             'badgeText' => 'Terkunci',
                         ],
@@ -190,15 +219,7 @@ class Beranda
                         ],
                         [
                             'number'    => 6,
-                            'title'     => 'Hasil Penilaian',
-                            'subtitle'  => null,
-                            'status'    => 'locked',
-                            'badgeText' => 'Terkunci',
-                        ],
-                        [
-                            'number'    => 7,
-                            'title'     => 'Revisi Sempro',
-                            'subtitle'  => null,
+                            'title'     => 'Revisi Seminar Proposal (Kondisional)',
                             'status'    => 'conditional',
                             'badgeText' => 'Kondisional',
                         ],
@@ -215,67 +236,80 @@ class Beranda
                 'jadwal'             => null,
                 'catatanBimbingan'   => null,
                 'pendaftaranDokumen' => null,
-                'hasilPenilaian'     => [
-                    'statusKalkulasi' => 'Dalam Proses Penilaian',
-                ],
-                'revisi'             => [
-                    'status' => 'Belum Ada Catatan Revisi',
+                'hasilSidang'     => null,
+                'revisi'             => null,
+                'kalender' => [
+                    [
+                        'judul' => 'Pengajuan Dosen Pembimbing',
+                        'tanggal_mulai' => '2026-10-19',
+                        'tanggal_selesai' => '2026-10-20',
+                        'periode' => '19 Oktober 08.00 - 20 Oktober 08.00',
+                        'jenis' => 'Pengajuan',
+                    ],
+                    [
+                        'judul' => 'Bimbingan Seminar Proposal',
+                        'tanggal_mulai' => '2026-10-16',
+                        'tanggal_selesai' => '2026-10-16',
+                        'periode' => '16 Oktober 09.00 - 10.00',
+                        'jenis' => 'Bimbingan',
+                    ],
+                    [
+                        'judul' => 'Seminar Proposal',
+                        'tanggal_mulai' => '2026-10-10',
+                        'tanggal_selesai' => '2026-10-10',
+                        'periode' => '10 Oktober 10.00 - 11.00',
+                        'jenis' => 'Sidang',
+                    ],
                 ],
             ],
             'skripsi' => [
                 'judul'           => 'Aplikasi Pencatatan Menu dan Kandungan Gizi untuk Pengelolaan Data MBG',
                 'dosenPembimbing' => 'Dr. Eng. Resbob, M.Kom.',
                 'mahasiswa'       => 'Mahasiswa',
-                'sesiTerpenuhi'   => 0,
-                'totalSesi'       => 8,
+                'logbookDisetujui'   => 0,
+                'totalPersetujuan'       => 8,
+                'anggotaKelompok' => $this->getProgressAnggotaKelompok(),
                 'steps'           => [
                     [
                         'number'    => 1,
-                        'title'     => 'Bimbingan Skripsi',
-                        'subtitle'  => null,
+                        'title'     => 'Logbook Bimbingan',
                         'status'    => 'active',
                         'badgeText' => 'Tahap Aktif',
                     ],
                     [
                         'number'    => 2,
                         'title'     => 'Kelengkapan Berkas Skripsi',
-                        'subtitle'  => null,
                         'status'    => 'next',
                         'badgeText' => 'Berikutnya',
                     ],
                     [
                         'number'    => 3,
-                        'title'     => 'Jadwal Sidang',
-                        'subtitle'  => null,
+                        'title'     => 'Jadwal Sidang Skripsi',
                         'status'    => 'locked',
                         'badgeText' => 'Terkunci',
                     ],
                     [
                         'number'    => 4,
-                        'title'     => 'Penilaian Penguji',
-                        'subtitle'  => null,
+                        'title'     => 'Sidang Skripsi',
                         'status'    => 'locked',
                         'badgeText' => 'Terkunci',
                     ],
                     [
                         'number'    => 5,
-                        'title'     => 'Hasil Kelulusan',
+                        'title'     => 'Revisi Skripsi (Kondisional)',
                         'subtitle'  => null,
                         'status'    => 'locked',
                         'badgeText' => 'Terkunci',
                     ],
                 ],
-                'riwayatBimbingan'    => [],
-                'pendaftaranTerkunci' => 'Lengkapi 2 sesi konsultasi tertulis dengan dosen pembimbing untuk membuka akses pengunggahan berkas pendaftaran sidang.',
-                'jadwalSidang'        => null,
-                'jadwalSidangInfo'    => 'Jadwal sidang akan ditentukan oleh koordinator sidang setelah pendaftaran skripsi disetujui dan seluruh penguji ditetapkan.',
-                'hasilSidang'         => [
-                    ['icon' => 'bi bi-person-badge', 'label' => 'Ketua Penguji',   'value' => 'Pending'],
-                    ['icon' => 'bi bi-people',       'label' => 'Anggota Penguji', 'value' => 'Pending'],
-                    ['icon' => 'bi bi-star',         'label' => 'Nilai',           'value' => 'Nilai belum keluar (-)'],
-                ],
-                'revisi'              => 'Revisi belum tersedia',
-            ]
+                'jadwal'             => null,
+                'catatanBimbingan'   => null,
+                'pendaftaranDokumen' => null,
+                'hasilSidang'     => null,
+                'revisi'             => null,
+            ],
+            'today' => date('Y-m-d'),
+
         ];
 
         $this->load->view('views/shared/beranda/mahasiswa.php', $data);

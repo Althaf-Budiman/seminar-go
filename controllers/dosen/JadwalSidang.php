@@ -42,35 +42,25 @@ class JadwalSidang
         // Data for Seminar Proposal (Mahasiswa)
         $sempro = [
             'title'        => 'Jadwal Seminar Proposal',
-            'subHeader'    => 'Jadwal Seminar Proposal Anda',
             'jadwal'       => [
                 'status'  => 'Terkonfirmasi',
                 'tanggal' => 'Rabu, 22 Oktober 2026',
-                'waktu'   => '10.00 - 11.00 WIB',
-                'ruangan' => 'Ruang Seminar 1 (Gd. TIK Lt. 2)',
-                'mode'    => 'Luring (tatap muka)',
+                'waktu'   => '09.00 - 10.00 WIB',
+                'link' => 'https://meet.google.com/abc-defg-hij',
+                'mode'    => 'Daring',
             ],
             'dewanPenguji' => [
                 [
-                    'inisial'    => 'K',
                     'nama'       => 'Dosen Ketua Penguji, M.Kom.',
                     'peran'      => 'Ketua Penguji',
-                    'state'      => 'active',
-                    'badgeClass' => 'primary',
                 ],
                 [
-                    'inisial'    => '1',
                     'nama'       => 'Dosen Pembahas 1, M.T.',
-                    'peran'      => 'Dosen Pembahas',
-                    'state'      => '',
-                    'badgeClass' => 'neutral',
+                    'peran'      => 'Dosen Penguji',
                 ],
                 [
-                    'inisial'    => 'P',
                     'nama'       => 'Dosen Pembimbing, M.T.',
                     'peran'      => 'Pembimbing',
-                    'state'      => '',
-                    'badgeClass' => 'neutral',
                 ],
             ],
             'btnUnduh'     => 'Unduh Undangan Seminar',
@@ -89,35 +79,22 @@ class JadwalSidang
             ],
             'dewanPenguji' => [
                 [
-                    'inisial'    => 'K',
                     'nama'       => 'Dosen Ketua Sidang, M.Kom.',
                     'peran'      => 'Ketua Sidang',
-                    'state'      => 'active',
-                    'badgeClass' => 'primary',
                 ],
                 [
-                    'inisial'    => '1',
                     'nama'       => 'Dosen Penguji 1, M.T.',
                     'peran'      => 'Penguji 1',
-                    'state'      => '',
-                    'badgeClass' => 'neutral',
                 ],
                 [
-                    'inisial'    => '2',
                     'nama'       => 'Dosen Penguji 2, M.Cs.',
                     'peran'      => 'Penguji 2',
-                    'state'      => '',
-                    'badgeClass' => 'neutral',
                 ],
                 [
-                    'inisial'    => 'P',
                     'nama'       => 'Dosen Pembimbing, M.T.',
                     'peran'      => 'Pembimbing',
-                    'state'      => '',
-                    'badgeClass' => 'neutral',
                 ],
             ],
-            'btnUnduh'     => 'Unduh Undangan Sidang',
         ];
 
         $this->load->view(

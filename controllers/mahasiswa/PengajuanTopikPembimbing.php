@@ -31,9 +31,9 @@ class PengajuanTopikPembimbing
         ];
 
         // state: done | active | locked
-        $penelaahan = [
+        $pengajuan = [
             ['judul' => 'Pengajuan Terkirim',          'state' => 'done',   'badge' => 'Selesai',   'badgeClass' => 'success'],
-            ['judul' => 'Review Koordinator',          'state' => 'active', 'badge' => 'Menunggu',  'badgeClass' => 'warning'],
+            ['judul' => 'Tinjauan Calon Dosen Pembimbing',          'state' => 'active', 'badge' => 'Menunggu',  'badgeClass' => 'warning'],
             ['judul' => 'Penetapan Dosen Pembimbing',  'state' => 'locked', 'badge' => 'Terkunci',  'badgeClass' => 'neutral'],
         ];
 
@@ -42,7 +42,7 @@ class PengajuanTopikPembimbing
             'activeMenu' => 'pengajuan-topik',
             'formulir'   => $this->getFormulir(),
             'usulan'     => $usulan,
-            'penelaahan' => $penelaahan,
+            'pengajuan' => $pengajuan,
         ]);
     }
 }

@@ -1,4 +1,3 @@
-
 <?php
 
 class Sidang
@@ -12,74 +11,112 @@ class Sidang
 
     public function index()
     {
-        // State: done | active | locked
-        $persiapan = [
-            [
-                'judul'      => 'Slide Presentasi',
-                'state'      => 'done',
-                'status'     => 'Siap',
-                'badgeClass' => 'success',
+        // Data for Seminar Proposal
+        $sempro = [
+            'title'               => 'Hasil Penilaian Seminar Proposal',
+            'nilaiAkhir'          => 82.5,
+            'keputusan'           => 'Lulus',
+            'keteranganKeputusan' => 'Dengan revisi minor proposal',
+            'labelKeputusan'      => 'Lulus dengan Revisi',
+            'dewanPenguji' => [
+                [
+                    'nama'       => 'Dosen Ketua Penguji, M.Kom.',
+                    'peran'      => 'Ketua Penguji',
+                    'nilai'   => 84,
+                ],
+                [
+                    'nama'       => 'Dosen Pembahas 1, M.T.',
+                    'peran'      => 'Dosen Penguji',
+                    'nilai'   => 84,
+                ],
+                [
+                    'nama'       => 'Dosen Pembimbing, M.T.',
+                    'peran'      => 'Pembimbing',
+                    'nilai'   => 84,
+                ],
             ],
-            [
-                'judul'      => 'Naskah Proposal Final',
-                'state'      => 'done',
-                'status'     => 'Siap',
-                'badgeClass' => 'success',
+            'komponenPenilaian'   => [
+                [
+                    'nama'  => 'Penguasaan materi',
+                    'nilai' => 85,
+                ],
+                [
+                    'nama'  => 'Kualitas naskah proposal',
+                    'nilai' => 80,
+                ],
+                [
+                    'nama'  => 'Presentasi & tanya jawab',
+                    'nilai' => 82,
+                ],
+                [
+                    'nama'  => 'Kesesuaian metodologi',
+                    'nilai' => 83,
+                ],
             ],
-            [
-                'judul'      => 'Uji Coba Perangkat & Demo',
-                'state'      => 'active',
-                'status'     => 'Belum',
-                'badgeClass' => 'warning',
+            'jadwal'       => [
+                'status'  => 'Terkonfirmasi',
+                'tanggal' => 'Rabu, 22 Oktober 2026',
+                'waktu'   => '09.00 - 10.00 WIB',
+                'link' => 'https://meet.google.com/abc-defg-hij',
+                'mode'    => 'Daring',
             ],
-            [
-                'judul'      => 'Kelengkapan Berpakaian',
-                'state'      => 'locked',
-                'status'     => 'Belum',
-                'badgeClass' => 'warning',
-            ],
+            'catatanUmum'         => 'Topik dinilai relevan dan layak dilanjutkan. Mahasiswa wajib memperbaiki rumusan masalah, diagram alir sistem, dan skenario pengujian sebelum tenggat revisi.',
         ];
 
-        // State active menandakan agenda yang sedang disorot.
-        $susunanAcara = [
-            [
-                'judul' => 'Pembukaan oleh Ketua Sidang',
-                'state' => '',
+        // Data for Skripsi
+        $skripsi = [
+            'title'               => 'Hasil Penilaian Skripsi',
+            'nilaiAkhir'          => 86.0,
+            'predikat'            => 'A',
+            'keputusan'           => 'Lulus',
+            'keteranganKeputusan' => 'Dengan revisi minor skripsi',
+            'labelKeputusan'      => 'Lulus dengan Revisi Minor',
+            'dewanPenguji'        => [
+                [
+                    'nama'    => 'Dosen Ketua Sidang, M.Kom.',
+                    'nilai'   => 88,
+                ],
+                [
+                    'nama'    => 'Dosen Penguji 1, M.T.',
+                    'nilai'   => 85,
+                ],
+                [
+                    'nama'    => 'Dosen Penguji 2, M.Cs.',
+                    'nilai'   => 86,
+                ],
+                [
+                    'nama'    => 'Dosen Pembimbing, M.T.',
+                    'nilai'   => 85,
+                ],
             ],
-            [
-                'judul' => 'Presentasi Mahasiswa',
-                'state' => 'active',
+            'komponenPenilaian'   => [
+                [
+                    'nama'  => 'Penguasaan naskah skripsi',
+                    'nilai' => 88,
+                ],
+                [
+                    'nama'  => 'Implementasi sistem / produk',
+                    'nilai' => 90,
+                ],
+                [
+                    'nama'  => 'Presentasi & tanya jawab',
+                    'nilai' => 84,
+                ],
+                [
+                    'nama'  => 'Kesesuaian metodologi & analisis',
+                    'nilai' => 82,
+                ],
             ],
-            [
-                'judul' => 'Tanya Jawab Dewan Penguji',
-                'state' => '',
-            ],
-            [
-                'judul' => 'Penilaian & Penutupan',
-                'state' => '',
-            ],
+            'catatanUmum'         => 'Mahasiswa dinyatakan lulus sidang skripsi dengan revisi, revisi wajib diselesaikan sebelum tenggat revisi.',
         ];
-
-        $beritaAcara = [
-            'status'     => 'Terkunci',
-            'tersedia'   => false,
-            'keterangan' => '',
-        ];
-
-        $jumlahSiap = count(array_filter(
-            $persiapan,
-            fn($item) => $item['state'] === 'done'
-        ));
 
         $this->load->view(
             'views/mahasiswa/sidang/index.php',
             [
                 'pageTitle'    => 'Sidang',
                 'activeMenu'   => 'sidang',
-                'persiapan'    => $persiapan,
-                'jumlahSiap'   => $jumlahSiap,
-                'susunanAcara' => $susunanAcara,
-                'beritaAcara'  => $beritaAcara,
+                'sempro'       => $sempro,
+                'skripsi'      => $skripsi,
             ]
         );
     }

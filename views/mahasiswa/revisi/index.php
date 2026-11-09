@@ -81,10 +81,10 @@
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($sempro['persetujuan'] as $item) : ?>
+            <?php foreach ($sempro['persetujuan'] as $index => $item) : ?>
                 <div class="list-item locked">
                     <div class="list-item-left">
-                        <span class="list-item-num"><?= htmlspecialchars($item['inisial']) ?></span>
+                        <span class="list-item-num"><?= $index + 1 ?></span>
                         <h3><?= htmlspecialchars($item['nama']) ?></h3>
                     </div>
                     <span class="badge neutral sm">
@@ -97,11 +97,8 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-secondary" id="btnSimpanRevisiSempro">
-            Simpan Draft
-        </button>
         <button type="button" class="btn-primary" id="btnKirimRevisiSempro">
-            <?= htmlspecialchars($sempro['btnAksi']) ?>
+            Kirim Revisi untuk Persetujuan
         </button>
     </div>
 
@@ -166,7 +163,7 @@
     <!-- Unggah Lembar Revisi Skripsi -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2>Unggah Lembar Pengesahan Revisi Skripsi</h2>
+            <h2>Unggah Lembar Revisi Skripsi</h2>
         </div>
 
         <form id="formUnggahRevisiSkripsi" enctype="multipart/form-data">
@@ -187,13 +184,13 @@
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($skripsi['persetujuan'] as $item) : ?>
-                <div class="list-item <?= ($item['status'] === 'Disetujui' ? 'done' : ($item['status'] === 'Menunggu Review' ? 'active' : 'locked')) ?>">
+            <?php foreach ($skripsi['persetujuan'] as $index => $item) : ?>
+                <div class="list-item locked">
                     <div class="list-item-left">
-                        <span class="list-item-num"><?= htmlspecialchars($item['inisial']) ?></span>
+                        <span class="list-item-num"><?= $index + 1 ?></span>
                         <h3><?= htmlspecialchars($item['nama']) ?></h3>
                     </div>
-                    <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
+                    <span class="badge neutral sm">
                         <?= htmlspecialchars($item['status']) ?>
                     </span>
                 </div>
@@ -203,11 +200,8 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-secondary" id="btnSimpanRevisiSkripsi">
-            Simpan Draft
-        </button>
         <button type="button" class="btn-primary" id="btnKirimRevisiSkripsi">
-            <?= htmlspecialchars($skripsi['btnAksi']) ?>
+            Kirim Revisi untuk Persetujuan
         </button>
     </div>
 

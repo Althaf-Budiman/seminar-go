@@ -9,7 +9,7 @@
     <!-- Jadwal Seminar Proposal Anda -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2><?= htmlspecialchars($sempro['subHeader']) ?></h2>
+            <h2>Jadwal Sidang Sempro Anda</h2>
             <span class="badge success sm">
                 <?= htmlspecialchars($sempro['jadwal']['status']) ?>
             </span>
@@ -31,8 +31,8 @@
             <!-- Ruangan dan Mode Pelaksanaan -->
             <div class="detail-item-row">
                 <div class="detail-item" style="flex: 1;">
-                    <label>Ruangan</label>
-                    <p><?= htmlspecialchars($sempro['jadwal']['ruangan']) ?></p>
+                    <label>TEMPAT</label>
+                    <a href="<?= htmlspecialchars($sempro['jadwal']['link']) ?>" style="width: fit-content" class="btn-primary">Link Sidang</a>
                 </div>
                 <div class="detail-item" style="flex: 1;">
                     <label>Mode Pelaksanaan</label>
@@ -52,30 +52,19 @@
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($sempro['dewanPenguji'] as $dosen) : ?>
-                <div class="list-item <?= htmlspecialchars($dosen['state']) ?>">
+            <?php foreach ($sempro['dewanPenguji'] as $index => $dosen) : ?>
+                <div class="list-item">
                     <div class="list-item-left">
-                        <span class="list-item-num"><?= htmlspecialchars($dosen['inisial']) ?></span>
+                        <span class="list-item-num"><?= htmlspecialchars($index + 1) ?></span>
                         <h3><?= htmlspecialchars($dosen['nama']) ?></h3>
                     </div>
-                    <span class="badge <?= htmlspecialchars($dosen['badgeClass']) ?> sm">
+                    <span class="badge neutral sm">
                         <?= htmlspecialchars($dosen['peran']) ?>
                     </span>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
-
-    <!-- Aksi -->
-    <div class="form-actions">
-        <!-- <a href="<?= BASE_URL ?>/jadwal-sidang/perubahan" class="btn-secondary">
-            Ajukan Perubahan Jadwal
-        </a> -->
-        <a href="<?= BASE_URL ?>/jadwal-sidang/unduh-undangan" class="btn-primary">
-            <?= htmlspecialchars($sempro['btnUnduh']) ?>
-        </a>
-    </div>
-
 </div>
 
 <!-- =========================================================================
@@ -86,7 +75,7 @@
     <!-- Jadwal Sidang Skripsi Anda -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2><?= htmlspecialchars($skripsi['subHeader']) ?></h2>
+            <h2>Jadwal Sidang Skripsi Anda</h2>
             <span class="badge success sm">
                 <?= htmlspecialchars($skripsi['jadwal']['status']) ?>
             </span>
@@ -129,30 +118,19 @@
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($skripsi['dewanPenguji'] as $dosen) : ?>
-                <div class="list-item <?= htmlspecialchars($dosen['state']) ?>">
+            <?php foreach ($skripsi['dewanPenguji'] as $index => $dosen) : ?>
+                <div class="list-item">
                     <div class="list-item-left">
-                        <span class="list-item-num"><?= htmlspecialchars($dosen['inisial']) ?></span>
+                        <span class="list-item-num"><?= $index + 1 ?></span>
                         <h3><?= htmlspecialchars($dosen['nama']) ?></h3>
                     </div>
-                    <span class="badge <?= htmlspecialchars($dosen['badgeClass']) ?> sm">
+                    <span class="badge neutral sm">
                         <?= htmlspecialchars($dosen['peran']) ?>
                     </span>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
-
-    <!-- Aksi -->
-    <div class="form-actions">
-        <a href="<?= BASE_URL ?>/jadwal-sidang/perubahan" class="btn-secondary">
-            Ajukan Perubahan Jadwal
-        </a>
-        <a href="<?= BASE_URL ?>/jadwal-sidang/unduh-undangan" class="btn-primary">
-            <?= htmlspecialchars($skripsi['btnUnduh']) ?>
-        </a>
-    </div>
-
 </div>
 
 <?php require_once __DIR__ . '/../../layout/footer.php'; ?>

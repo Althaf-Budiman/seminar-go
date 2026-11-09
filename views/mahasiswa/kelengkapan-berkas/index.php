@@ -6,6 +6,33 @@
      ========================================================================= -->
 <div id="tab-sempro" class="tab-panel dashboard-container" data-title="Kelengkapan Berkas Seminar Proposal">
 
+    <!-- Syarat Pendaftaran -->
+    <div class="content-card">
+        <div class="card-header border-b">
+            <h2>Syarat Pendaftaran</h2>
+            <span class="badge success sm">
+                Diperiksa oleh sistem
+            </span>
+        </div>
+
+        <div class="list list-lg">
+            <?php foreach ($sempro['syarat_pendaftaran'] as $i => $item) : ?>
+                <div class="list-item <?= htmlspecialchars($item['state']) ?>">
+                    <div class="list-item-left">
+                        <span class="list-item-num"><?= $i + 1 ?></span>
+                        <h3><?= htmlspecialchars($item['nama']) ?></h3>
+                    </div>
+
+                    <div>
+                        <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
+                            <?= htmlspecialchars($item['status']) ?>
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
     <!-- Daftar Berkas Wajib Sempro -->
     <div class="content-card">
         <div class="card-header border-b">
@@ -13,11 +40,6 @@
             <span class="badge warning sm">
                 <?= (int) $sempro['jumlahLengkap'] ?> dari <?= count($sempro['berkas']) ?> lengkap
             </span>
-        </div>
-
-        <!-- Progress Berkas -->
-        <div class="bimbingan-progress-track" role="progressbar" aria-label="Progress kelengkapan berkas" aria-valuenow="<?= (int) $sempro['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="bimbingan-progress-fill" style="width: <?= (int) $sempro['progress'] ?>%"></div>
         </div>
 
         <div class="list list-lg">
@@ -68,11 +90,9 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-secondary" id="btnSimpanBerkasSempro">
-            Simpan
         </button>
         <button type="button" class="btn-primary" id="btnAjukanSempro">
-            <?= htmlspecialchars($sempro['actionBtn']) ?>
+            Ajukan Pendaftaran Sempro
         </button>
     </div>
 
@@ -83,6 +103,33 @@
      ========================================================================= -->
 <div id="tab-skripsi" class="tab-panel dashboard-container" data-title="Kelengkapan Berkas Skripsi" style="display: none;">
 
+    <!-- Syarat Pendaftaran -->
+    <div class="content-card">
+        <div class="card-header border-b">
+            <h2>Syarat Pendaftaran</h2>
+            <span class="badge success sm">
+                Diperiksa oleh sistem
+            </span>
+        </div>
+
+        <div class="list list-lg">
+            <?php foreach ($skripsi['syarat_pendaftaran'] as $i => $item) : ?>
+                <div class="list-item <?= htmlspecialchars($item['state']) ?>">
+                    <div class="list-item-left">
+                        <span class="list-item-num"><?= $i + 1 ?></span>
+                        <h3><?= htmlspecialchars($item['nama']) ?></h3>
+                    </div>
+
+                    <div>
+                        <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
+                            <?= htmlspecialchars($item['status']) ?>
+                        </span>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
     <!-- Daftar Berkas Wajib Skripsi -->
     <div class="content-card">
         <div class="card-header border-b">
@@ -90,11 +137,6 @@
             <span class="badge warning sm">
                 <?= (int) $skripsi['jumlahLengkap'] ?> dari <?= count($skripsi['berkas']) ?> lengkap
             </span>
-        </div>
-
-        <!-- Progress Berkas -->
-        <div class="bimbingan-progress-track" role="progressbar" aria-label="Progress kelengkapan berkas skripsi" aria-valuenow="<?= (int) $skripsi['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="bimbingan-progress-fill" style="width: <?= (int) $skripsi['progress'] ?>%"></div>
         </div>
 
         <div class="list list-lg">
@@ -145,9 +187,6 @@
 
     <!-- Aksi -->
     <div class="form-actions">
-        <button type="button" class="btn-secondary" id="btnSimpanBerkasSkripsi">
-            Simpan
-        </button>
         <button type="button" class="btn-primary" id="btnAjukanSkripsi">
             <?= htmlspecialchars($skripsi['actionBtn']) ?>
         </button>

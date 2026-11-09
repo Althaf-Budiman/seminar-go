@@ -4,7 +4,7 @@
 <!-- =========================================================================
      Tab 1: Seminar Proposal
      ========================================================================= -->
-<div id="tab-sempro" class="tab-panel dashboard-container" data-title="Bimbingan Proposal">
+<div id="tab-sempro" class="tab-panel dashboard-container" data-title="Logbook Bimbingan Proposal">
 
     <!-- Statistik Bimbingan Sempro -->
     <div class="stats">
@@ -37,14 +37,7 @@
     <div class="content-card">
         <div class="card-header border-b">
             <h2>Syarat Maju Seminar Proposal</h2>
-            <span class="badge primary sm">
-                <?= (int) $sempro['progress'] ?>%
-            </span>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="bimbingan-progress-track" role="progressbar" aria-label="Progress syarat maju seminar" aria-valuenow="<?= (int) $sempro['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="bimbingan-progress-fill" style="width: <?= (int) $sempro['progress'] ?>%"></div>
+            <a href="<?= BASE_URL ?>/logbook-bimbingan/tambah?program=sempro" class="btn-primary">Tambah Logbook</a>
         </div>
 
         <div class="list list-lg">
@@ -86,26 +79,19 @@
         </div>
     </div>
 
-    <!-- Aksi -->
-    <div class="form-actions">
-        <a href="<?= BASE_URL ?>/bimbingan/create?program=sempro" class="btn-primary" id="btnTambahBimbinganSempro">
-            Tambah Catatan Bimbingan
-        </a>
-    </div>
-
 </div>
 
 <!-- =========================================================================
      Tab 2: Skripsi (matching uploaded image)
      ========================================================================= -->
-<div id="tab-skripsi" class="tab-panel dashboard-container" data-title="Bimbingan Skripsi" style="display: none;">
+<div id="tab-skripsi" class="tab-panel dashboard-container" data-title="Logbook Bimbingan Skripsi" style="display: none;">
 
     <!-- Statistik Bimbingan Skripsi -->
     <div class="stats">
         <div class="stat-card">
             <span class="stat-label">Sesi Bimbingan</span>
             <strong class="stat-value">
-                <?= htmlspecialchars($skripsi['statistik']['sesi']) ?>
+                <?= htmlspecialchars($skripsi['statistik']['total']) ?>
             </strong>
         </div>
 
@@ -128,9 +114,7 @@
     <div class="content-card">
         <div class="card-header border-b">
             <h2>Syarat Maju Sidang</h2>
-            <span class="badge primary sm">
-                <?= (int) $skripsi['progress'] ?>%
-            </span>
+            <a href="<?= BASE_URL ?>/logbook-bimbingan/tambah?program=skripsi" class="btn-primary">Tambah Logbook</a>
         </div>
 
         <!-- Progress Bar -->
@@ -175,13 +159,6 @@
                 </div>
             <?php endforeach; ?>
         </div>
-    </div>
-
-    <!-- Aksi -->
-    <div class="form-actions">
-        <a href="<?= BASE_URL ?>/bimbingan/create?program=skripsi" class="btn-primary" id="btnTambahBimbinganSkripsi">
-            Tambah Catatan Bimbingan
-        </a>
     </div>
 
 </div>
