@@ -1,47 +1,97 @@
 <?php require_once __DIR__ . '/../../layout/header.php'; ?>
 
+<?php
+$tabs = [
+    'sempro' => [
+        'id'           => 'tab-sempro',
+        'key'          => 'Sempro',
+        'label'        => 'Proposal',
+        'dataTitle'    => 'Logbook Bimbingan Proposal',
+        'active'       => true,
+        'data'         => $sempro,
+        'statLabel'    => 'Total Bimbingan',
+        'statSubTotal' => 'Minimal 3 pertemuan sebelum sidang',
+        'statSubSetuju'=> 'Catatan sudah diverifikasi dospem',
+        'statSubTunggu'=> 'Menunggu verifikasi dospem',
+        'syaratTitle'  => 'Syarat Maju Seminar Proposal',
+        'showProgress' => false,
+        'riwayatUnit'  => 'catatan',
+    ],
+    'skripsi' => [
+        'id'           => 'tab-skripsi',
+        'key'          => 'Skripsi',
+        'label'        => 'Skripsi',
+        'dataTitle'    => 'Logbook Bimbingan Skripsi',
+        'active'       => false,
+        'data'         => $skripsi,
+        'statLabel'    => 'Sesi Bimbingan',
+        'statSubTotal' => '',
+        'statSubSetuju'=> '',
+        'statSubTunggu'=> '',
+        'syaratTitle'  => 'Syarat Maju Sidang',
+        'showProgress' => true,
+        'riwayatUnit'  => 'sesi',
+    ],
+];
+?>
 
+<?php foreach ($tabs as $programKey => $tab) : 
+    $d = $tab['data'];
+?>
 <!-- =========================================================================
-     Tab 1: Seminar Proposal
+     Tab: <?= htmlspecialchars($tab['label']) ?>
      ========================================================================= -->
-<div id="tab-sempro" class="tab-panel dashboard-container" data-title="Logbook Bimbingan Proposal">
+<div id="<?= $tab['id'] ?>" class="tab-panel dashboard-container" data-title="<?= htmlspecialchars($tab['dataTitle']) ?>" <?= !$tab['active'] ? 'style="display: none;"' : '' ?>>
 
-    <!-- Statistik Bimbingan Sempro -->
+    <!-- Statistik Bimbingan -->
     <div class="stats">
         <div class="stat-card">
-            <span class="stat-label">Total Bimbingan</span>
+            <span class="stat-label"><?= htmlspecialchars($tab['statLabel']) ?></span>
             <strong class="stat-value">
-                <?= (int) $sempro['statistik']['total'] ?>
+                <?= htmlspecialchars($d['statistik']['total'] ?? 0) ?>
             </strong>
-            <p>Minimal 3 pertemuan sebelum sidang</p>
+            <?php if (!empty($tab['statSubTotal'])) : ?>
+                <p><?= htmlspecialchars($tab['statSubTotal']) ?></p>
+            <?php endif; ?>
         </div>
 
         <div class="stat-card">
             <span class="stat-label">Disetujui</span>
             <strong class="stat-value success">
-                <?= (int) $sempro['statistik']['disetujui'] ?>
+                <?= (int) ($d['statistik']['disetujui'] ?? 0) ?>
             </strong>
-            <p>Catatan sudah diverifikasi dospem</p>
+            <?php if (!empty($tab['statSubSetuju'])) : ?>
+                <p><?= htmlspecialchars($tab['statSubSetuju']) ?></p>
+            <?php endif; ?>
         </div>
 
         <div class="stat-card">
             <span class="stat-label">Menunggu</span>
             <strong class="stat-value warning">
-                <?= (int) $sempro['statistik']['menunggu'] ?>
+                <?= (int) ($d['statistik']['menunggu'] ?? 0) ?>
             </strong>
-            <p>Menunggu verifikasi dospem</p>
+            <?php if (!empty($tab['statSubTunggu'])) : ?>
+                <p><?= htmlspecialchars($tab['statSubTunggu']) ?></p>
+            <?php endif; ?>
         </div>
     </div>
 
-    <!-- Syarat Maju Seminar Proposal -->
+    <!-- Syarat Maju -->
     <div class="content-card">
         <div class="card-header border-b">
-            <h2>Syarat Maju Seminar Proposal</h2>
-            <a href="<?= BASE_URL ?>/logbook-bimbingan/tambah?program=sempro" class="btn-primary">Tambah Logbook</a>
+            <h2><?= htmlspecialchars($tab['syaratTitle']) ?></h2>
+            <a href="<?= BASE_URL ?>/logbook-bimbingan/tambah?program=<?= $programKey ?>" class="btn-primary">Tambah Logbook</a>
         </div>
 
+        <?php if (!empty($tab['showProgress']) && isset($d['progress'])) : ?>
+            <!-- Progress Bar -->
+            <div class="bimbingan-progress-track" role="progressbar" aria-label="Progress syarat maju sidang" aria-valuenow="<?= (int) $d['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
+                <div class="bimbingan-progress-fill" style="width: <?= (int) $d['progress'] ?>%"></div>
+            </div>
+        <?php endif; ?>
+
         <div class="list list-lg">
-            <?php foreach ($sempro['persyaratan'] as $i => $item) : ?>
+            <?php foreach (($d['persyaratan'] ?? []) as $i => $item) : ?>
                 <div class="list-item <?= htmlspecialchars($item['state']) ?>">
                     <div class="list-item-left">
                         <span class="list-item-num"><?= $i + 1 ?></span>
@@ -55,17 +105,17 @@
         </div>
     </div>
 
-    <!-- Riwayat Bimbingan Sempro -->
+    <!-- Riwayat Bimbingan -->
     <div class="content-card">
         <div class="card-header border-b">
             <h2>Riwayat Bimbingan</h2>
             <span class="badge primary sm">
-                <?= count($sempro['riwayat']) ?> catatan
+                <?= count($d['riwayat'] ?? []) ?> <?= htmlspecialchars($tab['riwayatUnit']) ?>
             </span>
         </div>
 
         <div class="list list-lg">
-            <?php foreach ($sempro['riwayat'] as $item) : ?>
+            <?php foreach (($d['riwayat'] ?? []) as $item) : ?>
                 <div class="list-item <?= htmlspecialchars($item['state']) ?>">
                     <div class="list-item-left">
                         <span class="list-item-num"><?= (int) $item['nomor'] ?></span>
@@ -80,87 +130,6 @@
     </div>
 
 </div>
-
-<!-- =========================================================================
-     Tab 2: Skripsi (matching uploaded image)
-     ========================================================================= -->
-<div id="tab-skripsi" class="tab-panel dashboard-container" data-title="Logbook Bimbingan Skripsi" style="display: none;">
-
-    <!-- Statistik Bimbingan Skripsi -->
-    <div class="stats">
-        <div class="stat-card">
-            <span class="stat-label">Sesi Bimbingan</span>
-            <strong class="stat-value">
-                <?= htmlspecialchars($skripsi['statistik']['total']) ?>
-            </strong>
-        </div>
-
-        <div class="stat-card">
-            <span class="stat-label">Disetujui</span>
-            <strong class="stat-value success">
-                <?= (int) $skripsi['statistik']['disetujui'] ?>
-            </strong>
-        </div>
-
-        <div class="stat-card">
-            <span class="stat-label">Menunggu</span>
-            <strong class="stat-value warning">
-                <?= (int) $skripsi['statistik']['menunggu'] ?>
-            </strong>
-        </div>
-    </div>
-
-    <!-- Syarat Maju Sidang Skripsi -->
-    <div class="content-card">
-        <div class="card-header border-b">
-            <h2>Syarat Maju Sidang</h2>
-            <a href="<?= BASE_URL ?>/logbook-bimbingan/tambah?program=skripsi" class="btn-primary">Tambah Logbook</a>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="bimbingan-progress-track" role="progressbar" aria-label="Progress syarat maju sidang" aria-valuenow="<?= (int) $skripsi['progress'] ?>" aria-valuemin="0" aria-valuemax="100">
-            <div class="bimbingan-progress-fill" style="width: <?= (int) $skripsi['progress'] ?>%"></div>
-        </div>
-
-        <div class="list list-lg">
-            <?php foreach ($skripsi['persyaratan'] as $i => $item) : ?>
-                <div class="list-item <?= htmlspecialchars($item['state']) ?>">
-                    <div class="list-item-left">
-                        <span class="list-item-num"><?= $i + 1 ?></span>
-                        <h3><?= htmlspecialchars($item['judul']) ?></h3>
-                    </div>
-                    <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
-                        <?= htmlspecialchars($item['badge']) ?>
-                    </span>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-    <!-- Riwayat Bimbingan Skripsi -->
-    <div class="content-card">
-        <div class="card-header border-b">
-            <h2>Riwayat Bimbingan</h2>
-            <span class="badge primary sm">
-                <?= count($skripsi['riwayat']) ?> sesi
-            </span>
-        </div>
-
-        <div class="list list-lg">
-            <?php foreach ($skripsi['riwayat'] as $item) : ?>
-                <div class="list-item <?= htmlspecialchars($item['state']) ?>">
-                    <div class="list-item-left">
-                        <span class="list-item-num"><?= (int) $item['nomor'] ?></span>
-                        <h3><?= htmlspecialchars($item['judul']) ?></h3>
-                    </div>
-                    <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
-                        <?= htmlspecialchars($item['badge']) ?>
-                    </span>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-
-</div>
+<?php endforeach; ?>
 
 <?php require_once __DIR__ . '/../../layout/footer.php'; ?>
