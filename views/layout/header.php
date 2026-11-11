@@ -14,17 +14,18 @@ $displayInitials = mb_strtolower(mb_substr($displayName, 0, 2));
 // Menu Sidebar based on role
 if ($currentRole === 'admin') {
     $menu = [
-        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
+        ['key' => 'beranda', 'label' => 'Beranda', 'icon' => 'bi-house-door', 'url' => '/beranda'],
         [
             'label'    => 'Manajemen Akun',
+            'icon'     => 'bi-people',
             'children' => [
-                ['key' => 'manajemen-akun-mahasiswa', 'label' => 'Manajemen Akun Mahasiswa', 'url' => '/manajemen-akun-mahasiswa'],
-                ['key' => 'manajemen-akun-dosen-pembimbing',  'label' => 'Manajemen Akun Dosen Pembimbing',     'url' => '/manajemen-akun-dosen-pembimbing'],
-                ['key' => 'manajemen-akun-dosen-penguji',  'label' => 'Manajemen Akun Dosen Penguji',     'url' => '/manajemen-akun-dosen-penguji'],
+                ['key' => 'manajemen-akun-mahasiswa', 'label' => 'Manajemen Akun Mahasiswa', 'icon' => 'bi-mortarboard', 'url' => '/manajemen-akun-mahasiswa'],
+                ['key' => 'manajemen-akun-dosen-pembimbing', 'label' => 'Manajemen Akun Dosen Pembimbing', 'icon' => 'bi-person-workspace', 'url' => '/manajemen-akun-dosen-pembimbing'],
+                ['key' => 'manajemen-akun-dosen-penguji', 'label' => 'Manajemen Akun Dosen Penguji', 'icon' => 'bi-person-check', 'url' => '/manajemen-akun-dosen-penguji'],
             ],
         ],
-        ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'url' => '/manajemen-jadwal'],
-        ['key' => 'rekapitulasi-dokumen-mahasiswa',          'label' => 'Dokumen',          'url' => '/rekapitulasi-dokumen-mahasiswa'],
+        ['key' => 'manajemen-jadwal', 'label' => 'Manajemen Jadwal', 'icon' => 'bi-calendar-week', 'url' => '/manajemen-jadwal'],
+        ['key' => 'rekapitulasi-dokumen-mahasiswa', 'label' => 'Dokumen', 'icon' => 'bi-files', 'url' => '/rekapitulasi-dokumen-mahasiswa'],
     ];
 } elseif ($currentRole === 'dosen') {
     $dosenTypeRaw = $sessionUser['profile']['dosen_type'] ?? $sessionUser['dosen_type'] ?? '';
@@ -61,33 +62,33 @@ if ($currentRole === 'admin') {
 
     if ($activeDosenRole === 'penguji') {
         $menu = [
-            ['key' => 'beranda',       'label' => 'Beranda',                   'url' => '/beranda'],
-            ['key' => 'jadwal-sidang', 'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'nilai-dan-revisi',  'label' => 'Nilai dan Revisi',          'url' => '/nilai-dan-revisi'],
+            ['key' => 'beranda',          'label' => 'Beranda',                   'icon' => 'bi-house-door',      'url' => '/beranda'],
+            ['key' => 'jadwal-sidang',    'label' => 'Jadwal Seminar dan Sidang', 'icon' => 'bi-calendar-event',  'url' => '/jadwal-sidang'],
+            ['key' => 'nilai-dan-revisi', 'label' => 'Nilai dan Revisi',          'icon' => 'bi-clipboard-check', 'url' => '/nilai-dan-revisi'],
         ];
     } else {
         $menu = [
-            ['key' => 'beranda',         'label' => 'Beranda',                   'url' => '/beranda'],
-            ['key' => 'daftar-mahasiswa-bimbingan', 'label' => 'Daftar Mahasiswa Bimbingan', 'url' => '/daftar-mahasiswa-bimbingan'],
-            ['key' => 'jadwal-sidang',   'label' => 'Jadwal Seminar dan Sidang', 'url' => '/jadwal-sidang'],
-            ['key' => 'nilai-dan-revisi',    'label' => 'Nilai dan Revisi',          'url' => '/nilai-dan-revisi'],
+            ['key' => 'beranda',                    'label' => 'Beranda',                   'icon' => 'bi-house-door',      'url' => '/beranda'],
+            ['key' => 'daftar-mahasiswa-bimbingan', 'label' => 'Daftar Mahasiswa Bimbingan', 'icon' => 'bi-people',         'url' => '/daftar-mahasiswa-bimbingan'],
+            ['key' => 'jadwal-sidang',              'label' => 'Jadwal Seminar dan Sidang', 'icon' => 'bi-calendar-event',  'url' => '/jadwal-sidang'],
+            ['key' => 'nilai-dan-revisi',           'label' => 'Nilai dan Revisi',          'icon' => 'bi-clipboard-check', 'url' => '/nilai-dan-revisi'],
         ];
     }
 } else {
     // Role Mahasiswa
     $menu = [
-        ['key' => 'beranda', 'label' => 'Beranda', 'url' => '/beranda'],
-        ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'url' => '/pengajuan-topik-pembimbing'],
-        ['key' => 'logbook-bimbingan',       'label' => 'Logbook Bimbingan',       'url' => '/logbook-bimbingan'],
+        ['key' => 'beranda', 'label' => 'Beranda', 'icon' => 'bi-house-door', 'url' => '/beranda'],
+        ['key' => 'pengajuan-topik', 'label' => 'Pengajuan Topik & Pembimbing', 'icon' => 'bi-file-earmark-text', 'url' => '/pengajuan-topik-pembimbing'],
+        ['key' => 'logbook-bimbingan', 'label' => 'Logbook Bimbingan', 'icon' => 'bi-book', 'url' => '/logbook-bimbingan'],
         [
             'key'      => 'jadwal',
             'label'    => 'Jadwal Seminar dan Sidang',
+            'icon'     => 'bi-calendar-event',
             'children' => [
-                ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'url' => '/kelengkapan-berkas'],
-                ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'url' => '/jadwal-sidang'],
-                ['key' => 'sidang',             'label' => 'Sidang',             'url' => '/sidang'],
-                ['key' => 'revisi',          'label' => 'Revisi',          'url' => '/revisi'],
-
+                ['key' => 'kelengkapan-berkas', 'label' => 'Kelengkapan Berkas', 'icon' => 'bi-folder-check', 'url' => '/kelengkapan-berkas'],
+                ['key' => 'jadwal-sidang',      'label' => 'Jadwal Sidang',      'icon' => 'bi-calendar-check', 'url' => '/jadwal-sidang'],
+                ['key' => 'sidang',             'label' => 'Sidang',             'icon' => 'bi-easel',          'url' => '/sidang'],
+                ['key' => 'revisi',             'label' => 'Revisi',             'icon' => 'bi-pencil-square',  'url' => '/revisi'],
             ],
         ],
     ];
@@ -157,18 +158,21 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                 <ul class="sidebar-nav" id="sidebarNavList">
                     <?php foreach ($menu as $item) : ?>
                         <?php if (!empty($item['children'])) :
-                            $isOpen = in_array($activeMenu, array_column($item['children'], 'key'), true);
+                            $hasActive = in_array($activeMenu, array_column($item['children'], 'key'), true);
+                            $isOpen    = $hasActive;
                         ?>
-                            <li class="nav-group<?= $isOpen ? ' is-open' : '' ?>">
+                            <li class="nav-group<?= $isOpen ? ' is-open' : '' ?><?= $hasActive ? ' has-active' : '' ?>">
                                 <button type="button" class="nav-group-toggle" aria-expanded="<?= $isOpen ? 'true' : 'false' ?>">
+                                    <i class="bi <?= htmlspecialchars($item['icon'] ?? 'bi-circle') ?> nav-icon"></i>
                                     <span><?= htmlspecialchars($item['label']) ?></span>
-                                    <i class="bi bi-chevron-right"></i>
+                                    <i class="bi bi-chevron-right nav-chevron"></i>
                                 </button>
-                                <div class="nav-submenu" <?= $isOpen ? '' : ' inert' ?>>
+                                <div class="nav-submenu" <?= ($isOpen || $hasActive) ? '' : ' inert' ?>>
                                     <ul>
-                                        <?php foreach ($item['children'] as $child) : ?>
-                                            <li>
-                                                <a href="<?= BASE_URL . $child['url'] ?>" class="<?= $activeMenu === $child['key'] ? 'active' : '' ?>" title="<?= htmlspecialchars($child['label']) ?>">
+                                        <?php foreach ($item['children'] as $child) : $isActive = $activeMenu === $child['key']; ?>
+                                            <li class="<?= $isActive ? 'is-active-child' : '' ?>">
+                                                <a href="<?= BASE_URL . $child['url'] ?>" class="<?= $isActive ? 'active' : '' ?>" title="<?= htmlspecialchars($child['label']) ?>">
+                                                    <i class="bi <?= htmlspecialchars($child['icon'] ?? 'bi-circle') ?>"></i>
                                                     <span><?= htmlspecialchars($child['label']) ?></span>
                                                 </a>
                                             </li>
@@ -179,6 +183,7 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                         <?php else : ?>
                             <li>
                                 <a href="<?= BASE_URL . $item['url'] ?>" class="<?= $activeMenu === $item['key'] ? 'active' : '' ?>" title="<?= htmlspecialchars($item['label']) ?>">
+                                    <i class="bi <?= htmlspecialchars($item['icon'] ?? 'bi-circle') ?>"></i>
                                     <span><?= htmlspecialchars($item['label']) ?></span>
                                 </a>
                             </li>
