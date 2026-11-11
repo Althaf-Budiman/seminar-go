@@ -6,7 +6,7 @@ class MahasiswaModel extends BaseModel
 {
     protected $table = 'MAHASISWA';
     protected $primaryKey = 'mahasiswa_id';
-    protected $fillable = ['identification_type', 'email', 'no_hp_orangtua', 'nama_orangtua', 'no_hp', 'program_studi', 'nama_lengkap', 'kelas', 'alamat', 'foto', 'tahun_akademik', 'mahasiswa_aktif', 'user_id', 'kelompok_id', 'dosen_id'];
+    protected $fillable = ['email', 'no_hp_orangtua', 'nama_orangtua', 'no_hp', 'program_studi', 'nama_lengkap', 'kelas', 'alamat', 'foto', 'tahun_akademik', 'mahasiswa_aktif', 'user_id', 'kelompok_id', 'dosen_id'];
 
 
     public function getByUserId($userId)

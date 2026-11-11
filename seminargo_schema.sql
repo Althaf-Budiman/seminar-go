@@ -43,7 +43,6 @@ CREATE TABLE DOSEN (
 
 CREATE TABLE MAHASISWA (
     mahasiswa_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    identification_type TINYINT UNSIGNED NOT NULL,
     email VARCHAR(100) NOT NULL,
     no_hp_orangtua VARCHAR(20) NOT NULL,
     nama_orangtua VARCHAR(100) NOT NULL,
