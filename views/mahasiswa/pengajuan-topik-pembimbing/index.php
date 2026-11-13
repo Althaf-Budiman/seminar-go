@@ -77,12 +77,6 @@
             <?php endforeach; ?>
         </div>
     </div>
-
-    <!-- Aksi -->
-    <div class="form-actions">
-        <!-- TODO: sambungkan ke proses simpan draft / kirim pengajuan -->
-        <button type="button" class="btn-primary" id="btnKirimPengajuan">Kirim Pengajuan</button>
-    </div>
 </div>
 
 <?php require_once __DIR__ . '/../../layout/footer.php'; ?>

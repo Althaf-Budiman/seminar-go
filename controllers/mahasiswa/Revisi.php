@@ -16,37 +16,22 @@ class Revisi
             [
                 'nomor'      => 1,
                 'judul'      => 'Perjelas rumusan masalah pada Bab I',
-                'state'      => 'done',
-                'badge'      => 'Selesai',
-                'badgeClass' => 'success',
             ],
             [
                 'nomor'      => 2,
                 'judul'      => 'Tambahkan perbandingan dengan penelitian terkait',
-                'state'      => 'done',
-                'badge'      => 'Selesai',
-                'badgeClass' => 'success',
             ],
             [
                 'nomor'      => 3,
                 'judul'      => 'Perbaiki diagram alir sistem pada Bab III',
-                'state'      => 'active',
-                'badge'      => 'Dalam Proses',
-                'badgeClass' => 'primary',
             ],
             [
                 'nomor'      => 4,
                 'judul'      => 'Jelaskan skenario pengujian dan metrik evaluasi',
-                'state'      => 'locked',
-                'badge'      => 'Belum',
-                'badgeClass' => 'neutral',
             ],
             [
                 'nomor'      => 5,
                 'judul'      => 'Rapikan format sitasi sesuai standar IEEE',
-                'state'      => 'locked',
-                'badge'      => 'Belum',
-                'badgeClass' => 'neutral',
             ],
         ];
 
@@ -67,8 +52,6 @@ class Revisi
             'persetujuan' => $semproPersetujuan,
             'statistik'   => [
                 'total'        => count($semproRevisi),
-                'selesai'      => count(array_filter($semproRevisi, fn($i) => $i['state'] === 'done')),
-                'belumSelesai' => count(array_filter($semproRevisi, fn($i) => $i['state'] !== 'done')),
                 'batas'        => '12 Nov 2026',
                 'sisaWaktu'    => '7 hari setelah seminar proposal',
             ],
@@ -138,8 +121,8 @@ class Revisi
             'persetujuan' => $skripsiPersetujuan,
             'statistik'   => [
                 'total'        => count($skripsiRevisi),
-                'selesai'      => count(array_filter($skripsiRevisi, fn($i) => $i['state'] === 'done')),
-                'belumSelesai' => count(array_filter($skripsiRevisi, fn($i) => $i['state'] !== 'done')),
+                'selesai'      => count(array_filter($skripsiRevisi, fn ($i) => $i['state'] === 'done')),
+                'belumSelesai' => count(array_filter($skripsiRevisi, fn ($i) => $i['state'] !== 'done')),
                 'batas'        => '20 Nov 2026',
                 'sisaWaktu'    => '14 hari setelah sidang skripsi',
             ],

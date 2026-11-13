@@ -89,7 +89,7 @@ $esc = static fn ($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-
             </div>
 
             <!-- Field Submission -->
-            <div class="form-field full">
+            <!-- <div class="form-field full">
                 <label>Field Submission</label>
                 <div class="logbook-submission">
                     <div class="logbook-submission-row">
@@ -101,7 +101,7 @@ $esc = static fn ($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-
                         <input type="url" name="submission_link" placeholder="Type or paste a link">
                     </div>
                 </div>
-            </div>
+            </div> -->
            
         </div>
     </section>

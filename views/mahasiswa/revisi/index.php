@@ -44,14 +44,6 @@ $tabs = [
         </div>
 
         <div class="stat-card">
-            <span class="stat-label">Selesai</span>
-            <strong class="stat-value success">
-                <?= (int) ($d['statistik']['selesai'] ?? 0) ?>
-            </strong>
-            <p>Sudah diperbaiki</p>
-        </div>
-
-        <div class="stat-card">
             <span class="stat-label">Batas Revisi</span>
             <strong class="stat-value warning">
                 <?= htmlspecialchars($d['statistik']['batas'] ?? '-') ?>
@@ -71,14 +63,11 @@ $tabs = [
 
         <div class="list list-lg">
             <?php foreach ($d['revisi'] as $item) : ?>
-                <div class="list-item <?= htmlspecialchars($item['state']) ?>">
+                <div class="list-item">
                     <div class="list-item-left">
                         <span class="list-item-num"><?= (int) $item['nomor'] ?></span>
                         <h3><?= htmlspecialchars($item['judul']) ?></h3>
                     </div>
-                    <span class="badge <?= htmlspecialchars($item['badgeClass']) ?> sm">
-                        <?= htmlspecialchars($item['badge']) ?>
-                    </span>
                 </div>
             <?php endforeach; ?>
         </div>

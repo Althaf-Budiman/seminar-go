@@ -1286,6 +1286,7 @@ textarea.form-input {
 .detail-item,
 .detail-item-row {
     display: flex;
+    width: 100%;
 }
 
 .detail-item {

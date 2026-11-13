@@ -174,7 +174,7 @@ $esc = static fn ($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-
 
     <div class="form-actions">
         <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="btn-secondary">Batal</a>
-        <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="btn-secondary">List Dosen Pembimbing</a>
+        <a href="<?= BASE_URL ?>/pengajuan-dosen-pembimbing" class="btn-secondary">Simpan Draft</a>
         <button type="submit" class="btn-primary">Kirim Pengajuan</button>
     </div>
 </form>
