@@ -1,6 +1,5 @@
 -- SeminarGo - MySQL schema
 -- Only for reference
-
 SET NAMES utf8mb4;
 
 CREATE TABLE `USER` (
@@ -9,17 +8,9 @@ CREATE TABLE `USER` (
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id),
     UNIQUE KEY uq_user_identification_number (identification_number)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE KELOMPOK (
-    kelompok_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    nama_kelompok VARCHAR(50) NOT NULL,
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (kelompok_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE DOSEN (
@@ -33,12 +24,21 @@ CREATE TABLE DOSEN (
     status VARCHAR(20) NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (dosen_id),
     UNIQUE KEY uq_dosen_email (email),
     UNIQUE KEY uq_dosen_no_hp (no_hp),
     UNIQUE KEY uq_dosen_user (user_id),
     CONSTRAINT fk_dosen_user FOREIGN KEY (user_id) REFERENCES `USER` (user_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE KELOMPOK (
+    kelompok_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    nama_kelompok VARCHAR(50) NOT NULL,
+    ketua_mahasiswa_id INT UNSIGNED NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (kelompok_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE MAHASISWA (
@@ -55,10 +55,10 @@ CREATE TABLE MAHASISWA (
     tahun_akademik VARCHAR(15) NOT NULL,
     mahasiswa_aktif BOOLEAN NOT NULL DEFAULT TRUE,
     user_id INT UNSIGNED NOT NULL,
-    kelompok_id INT UNSIGNED NOT NULL,
-    dosen_id INT UNSIGNED NOT NULL,
+    kelompok_id INT UNSIGNED NULL,
+    dosen_id INT UNSIGNED NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (mahasiswa_id),
     UNIQUE KEY uq_mahasiswa_email (email),
     UNIQUE KEY uq_mahasiswa_no_hp (no_hp),
@@ -68,13 +68,17 @@ CREATE TABLE MAHASISWA (
     CONSTRAINT fk_mahasiswa_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+ALTER TABLE KELOMPOK
+    ADD CONSTRAINT fk_kelompok_ketua
+    FOREIGN KEY (ketua_mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id);
+
 CREATE TABLE ADMIN (
     admin_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     nama_lengkap VARCHAR(100) NOT NULL,
     no_hp VARCHAR(20) NOT NULL,
     user_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (admin_id),
     UNIQUE KEY uq_admin_no_hp (no_hp),
     UNIQUE KEY uq_admin_user (user_id),
@@ -92,7 +96,7 @@ CREATE TABLE TIMELINE (
     tahun_akademik VARCHAR(15) NOT NULL,
     mahasiswa_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (timeline_id),
     KEY idx_timeline_mahasiswa_program_tahun (mahasiswa_id, program, tahun_akademik),
     CONSTRAINT fk_timeline_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id)
@@ -107,7 +111,7 @@ CREATE TABLE PENDAFTARAN_SIDANG (
     mahasiswa_id INT UNSIGNED NOT NULL,
     timeline_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (pendaftaran_sidang_id),
     CONSTRAINT fk_pendaftaran_sidang_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id),
     CONSTRAINT fk_pendaftaran_sidang_timeline FOREIGN KEY (timeline_id) REFERENCES TIMELINE (timeline_id)
@@ -127,7 +131,7 @@ CREATE TABLE LOGBOOK_BIMBINGAN (
     dosen_id INT UNSIGNED NOT NULL,
     timeline_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (logbook_id),
     CONSTRAINT fk_logbook_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id),
     CONSTRAINT fk_logbook_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id),
@@ -143,7 +147,7 @@ CREATE TABLE PENDAFTARAN_SEMPRO (
     mahasiswa_id INT UNSIGNED NOT NULL,
     timeline_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (pendaftaran_sempro_id),
     CONSTRAINT fk_pendaftaran_sempro_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id),
     CONSTRAINT fk_pendaftaran_sempro_timeline FOREIGN KEY (timeline_id) REFERENCES TIMELINE (timeline_id)
@@ -151,33 +155,37 @@ CREATE TABLE PENDAFTARAN_SEMPRO (
 
 CREATE TABLE TOPIK (
     topik_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    deskripsi VARCHAR(255) NOT NULL,
+    nama_topik VARCHAR(100) NOT NULL,
+    deskripsi VARCHAR(255) NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (topik_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE PENGAJUAN_TOPIK_DOSPEM (
     pengajuan_bimbingan_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    biaya DECIMAL(15,2) NOT NULL,
+    biaya DECIMAL(15,2) NULL,
     status_pengajuan VARCHAR(25) NOT NULL,
-    studi_kasus TEXT NOT NULL,
+    studi_kasus TEXT NULL,
     sumber_referensi TEXT NOT NULL,
     abstrak TEXT NOT NULL,
     judul_skripsi VARCHAR(255) NOT NULL,
+    sub_judul VARCHAR(255) NULL,
     jenis_topik VARCHAR(30) NOT NULL,
     topik VARCHAR(100) NOT NULL,
     mahasiswa_id INT UNSIGNED NOT NULL,
     topik_id INT UNSIGNED NOT NULL,
-    dosen_id INT UNSIGNED NOT NULL,
-    timeline_id INT UNSIGNED NOT NULL,
+    dosen_id INT UNSIGNED NULL,
+    timeline_id INT UNSIGNED NULL,
+    kelompok_id INT UNSIGNED NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (pengajuan_bimbingan_id),
     CONSTRAINT fk_pengajuan_topik_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id),
     CONSTRAINT fk_pengajuan_topik_topik FOREIGN KEY (topik_id) REFERENCES TOPIK (topik_id),
     CONSTRAINT fk_pengajuan_topik_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id),
-    CONSTRAINT fk_pengajuan_topik_timeline FOREIGN KEY (timeline_id) REFERENCES TIMELINE (timeline_id)
+    CONSTRAINT fk_pengajuan_topik_timeline FOREIGN KEY (timeline_id) REFERENCES TIMELINE (timeline_id),
+    CONSTRAINT fk_pengajuan_topik_kelompok FOREIGN KEY (kelompok_id) REFERENCES KELOMPOK (kelompok_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE PENGAJUAN_BIMBINGAN_DOSEN (
@@ -186,7 +194,7 @@ CREATE TABLE PENGAJUAN_BIMBINGAN_DOSEN (
     pengajuan_bimbingan_id INT UNSIGNED NOT NULL,
     dosen_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (pengajuan_bimbingan_dosen_id),
     UNIQUE KEY uq_pengajuan_bimbingan_dosen (pengajuan_bimbingan_id, dosen_id),
     CONSTRAINT fk_pengajuan_bimbingan_dosen_pengajuan FOREIGN KEY (pengajuan_bimbingan_id) REFERENCES PENGAJUAN_TOPIK_DOSPEM (pengajuan_bimbingan_id),
@@ -209,7 +217,7 @@ CREATE TABLE PENILAIAN (
     pendaftaran_sempro_id INT UNSIGNED NULL,
     pendaftaran_sidang_id INT UNSIGNED NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (penilaian_id),
     CONSTRAINT fk_penilaian_timeline FOREIGN KEY (timeline_id) REFERENCES TIMELINE (timeline_id),
     CONSTRAINT fk_penilaian_sempro FOREIGN KEY (pendaftaran_sempro_id) REFERENCES PENDAFTARAN_SEMPRO (pendaftaran_sempro_id),
@@ -223,14 +231,13 @@ CREATE TABLE PENILAIAN (
 
 CREATE TABLE REVISI (
     revisi_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    program ENUM('SEMPRO', 'SKRIPSI') NOT NULL,
     komentar TEXT NOT NULL,
     status VARCHAR(25) NOT NULL DEFAULT 'BELUM',
     file_url VARCHAR(1000) NULL,
     tanggal_selesai DATE NULL,
     penilaian_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (revisi_id),
     CONSTRAINT fk_revisi_penilaian FOREIGN KEY (penilaian_id) REFERENCES PENILAIAN (penilaian_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -243,7 +250,7 @@ CREATE TABLE NOTIFIKASI (
     dibaca_pada DATETIME NULL,
     user_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (notifikasi_id),
     KEY idx_notifikasi_user_created (user_id, created_at),
     CONSTRAINT fk_notifikasi_user FOREIGN KEY (user_id) REFERENCES `USER` (user_id)
@@ -253,7 +260,7 @@ CREATE TABLE `YEAR` (
     year_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     tahun_akademik SMALLINT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (year_id),
     UNIQUE KEY uq_year_tahun (tahun_akademik)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -264,11 +271,11 @@ CREATE TABLE BERKAS (
     nama_file VARCHAR(255) NOT NULL,
     path VARCHAR(1000) NULL,
     url VARCHAR(1000) NULL,
-    status VARCHAR(30) NULL,
+    status VARCHAR(30) NOT NULL DEFAULT 'PENDING',
     diverifikasi_pada DATETIME NULL,
     mahasiswa_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (berkas_id),
     CONSTRAINT fk_berkas_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -281,7 +288,7 @@ CREATE TABLE PENGAJUAN_MAJU_SIDANG (
     mahasiswa_id INT UNSIGNED NOT NULL,
     dosen_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (pengajuan_maju_sidang_id),
     CONSTRAINT fk_pengajuan_maju_sidang_mahasiswa FOREIGN KEY (mahasiswa_id) REFERENCES MAHASISWA (mahasiswa_id),
     CONSTRAINT fk_pengajuan_maju_sidang_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id)
@@ -296,7 +303,7 @@ CREATE TABLE PERSETUJUAN_REVISI (
     revisi_id INT UNSIGNED NOT NULL,
     dosen_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (persetujuan_revisi),
     CONSTRAINT fk_persetujuan_revisi_revisi FOREIGN KEY (revisi_id) REFERENCES REVISI (revisi_id),
     CONSTRAINT fk_persetujuan_revisi_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id)
@@ -313,7 +320,7 @@ CREATE TABLE RUBRIK_PENILAIAN (
     urutan SMALLINT UNSIGNED NOT NULL,
     aktif BOOLEAN NOT NULL DEFAULT TRUE,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (rubrik_penilaian_id),
     UNIQUE KEY uq_rubrik_program_kode (program, kode),
     CONSTRAINT chk_rubrik_nilai_range CHECK (nilai_min <= nilai_max)
@@ -327,7 +334,7 @@ CREATE TABLE DOSEN_PENILAIAN (
     dosen_id INT UNSIGNED NOT NULL,
     penilaian_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (dosen_penilaian_id),
     UNIQUE KEY uq_dosen_penilaian_pair (penilaian_id, dosen_id),
     CONSTRAINT fk_dosen_penilaian_dosen FOREIGN KEY (dosen_id) REFERENCES DOSEN (dosen_id),
@@ -336,16 +343,32 @@ CREATE TABLE DOSEN_PENILAIAN (
 
 CREATE TABLE DETAIL_RUBRIK_NILAI (
     detail_rubrik_nilai_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    nilai DECIMAL(5,2) NOT NULL,
+    nilai DECIMAL(5,2) NULL,
     dosen_id INT UNSIGNED NOT NULL,
     rubrik_penilaian_id INT UNSIGNED NOT NULL,
     penilaian_id INT UNSIGNED NOT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (detail_rubrik_nilai_id),
     UNIQUE KEY uq_detail_nilai_rubrik (penilaian_id, dosen_id, rubrik_penilaian_id),
     CONSTRAINT fk_detail_nilai_dosen_penilaian FOREIGN KEY (penilaian_id, dosen_id)
         REFERENCES DOSEN_PENILAIAN (penilaian_id, dosen_id),
     CONSTRAINT fk_detail_nilai_rubrik FOREIGN KEY (rubrik_penilaian_id)
         REFERENCES RUBRIK_PENILAIAN (rubrik_penilaian_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE UNDANGAN_KELOMPOK (
+    undangan_kelompok_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    kelompok_id INT UNSIGNED NOT NULL,
+    mahasiswa_tujuan_id INT UNSIGNED NOT NULL,
+    status ENUM('PENDING', 'ACCEPTED', 'DECLINED') NOT NULL DEFAULT 'PENDING',
+    diundang_pada DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    direspons_pada DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (undangan_kelompok_id),
+    UNIQUE KEY uq_undangan_kelompok_mahasiswa (kelompok_id, mahasiswa_tujuan_id),
+    KEY idx_undangan_mahasiswa_status (mahasiswa_tujuan_id, status),
+    CONSTRAINT fk_undangan_kelompok FOREIGN KEY (kelompok_id) REFERENCES KELOMPOK (kelompok_id),
+    CONSTRAINT fk_undangan_mahasiswa FOREIGN KEY (mahasiswa_tujuan_id) REFERENCES MAHASISWA (mahasiswa_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
