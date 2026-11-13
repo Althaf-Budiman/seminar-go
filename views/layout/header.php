@@ -105,6 +105,83 @@ $pagesWithSegmentedPill = [
 ];
 $showSegmentedControl = ($currentRole === 'mahasiswa')
     && in_array($currentPage, $pagesWithSegmentedPill, true);
+
+// Academic Year (Tahun Akademik) detection & selection from table YEAR
+$showAcademicYearSelect = ($currentRole === 'mahasiswa');
+$academicYearsList = [];
+$activeTahunAkademik = '';
+
+if ($showAcademicYearSelect) {
+    require_once __DIR__ . '/../../models/YearModel.php';
+
+    // Deteksi semester saat ini:
+    // Semester Ganjil: Agustus (8) - Januari (1)
+    // Semester Genap:  Februari (2) - Juli (7)
+    $curMonth = (int) date('n');
+    $curYear  = (int) date('Y');
+
+    if ($curMonth >= 8) {
+        $detectedStartYear = $curYear;
+        $curSemester = 'Ganjil';
+    } else {
+        $detectedStartYear = $curYear - 1;
+        $curSemester = ($curMonth === 1) ? 'Ganjil' : 'Genap';
+    }
+
+    $detectedTahunAkademik = $detectedStartYear . '/' . ($detectedStartYear + 1);
+
+    if (isset($_GET['tahun_akademik']) && !empty($_GET['tahun_akademik'])) {
+        $_SESSION['active_tahun_akademik'] = trim($_GET['tahun_akademik']);
+    }
+
+    $activeTahunAkademik = $_SESSION['active_tahun_akademik'] ?? $detectedTahunAkademik;
+
+    try {
+        $yearModel = new YearModel();
+        $rawYears = $yearModel->getAllYears();
+
+        foreach ($rawYears as $row) {
+            $rawVal = $row['tahun_akademik'] ?? $row['tahun'] ?? null;
+            if ($rawVal === null) continue;
+
+            if (is_numeric($rawVal) && strlen((string)$rawVal) === 4) {
+                $valInt = (int)$rawVal;
+                $taCode = $valInt . '/' . ($valInt + 1);
+            } else {
+                $taCode = (string)$rawVal;
+            }
+
+            $isCurrent = ($taCode === $detectedTahunAkademik);
+            $label = $taCode;
+            if ($isCurrent) {
+                $label .= ' (' . $curSemester . ' - Aktif)';
+            }
+
+            $academicYearsList[] = [
+                'value'     => $taCode,
+                'label'     => $label,
+                'isCurrent' => $isCurrent,
+            ];
+        }
+    } catch (Throwable $e) {
+        $academicYearsList = [];
+    }
+
+    $foundCurrent = false;
+    foreach ($academicYearsList as $item) {
+        if ($item['value'] === $detectedTahunAkademik) {
+            $foundCurrent = true;
+            break;
+        }
+    }
+    if (!$foundCurrent) {
+        array_unshift($academicYearsList, [
+            'value'     => $detectedTahunAkademik,
+            'label'     => $detectedTahunAkademik . ' (' . $curSemester . ' - Aktif)',
+            'isCurrent' => true,
+        ]);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -260,10 +337,20 @@ $showSegmentedControl = ($currentRole === 'mahasiswa')
                         </div>
                     <?php endif; ?>
 
-                    <!-- Digital Clock -->
-                    <div class="topbar-clock" id="topbarClock" aria-label="Waktu Sekarang">
-                        <?= date('H:i:s') ?>
-                    </div>
+                    <?php if (!empty($showAcademicYearSelect)) : ?>
+                        <!-- Academic Year Selector (Mahasiswa) -->
+                        <div class="academic-year-picker" title="Tahun Akademik: <?= htmlspecialchars($activeTahunAkademik) ?>">
+                            <i class="bi bi-calendar3 academic-year-icon"></i>
+                            <select id="selectTahunAkademik" class="academic-year-select" aria-label="Pilih Tahun Akademik">
+                                <?php foreach ($academicYearsList as $taOption) : ?>
+                                    <option value="<?= htmlspecialchars($taOption['value']) ?>" <?= $activeTahunAkademik === $taOption['value'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($taOption['label']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <i class="bi bi-chevron-down academic-year-arrow"></i>
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Notification -->
                     <a href="<?= BASE_URL ?>/notifikasi" class="notification-btn" title="Notifikasi" aria-label="Notifikasi">

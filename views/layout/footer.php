@@ -158,6 +158,16 @@
             switchProgram(getActiveProgram());
         }
 
+        /* ---------- Academic Year Selector (Mahasiswa) ---------- */
+        const selectTA = document.getElementById('selectTahunAkademik');
+        if (selectTA) {
+            selectTA.addEventListener('change', () => {
+                const url = new URL(window.location.href);
+                url.searchParams.set('tahun_akademik', selectTA.value);
+                window.location.href = url.toString();
+            });
+        }
+
         /* ---------- Sidebar Menu Search ---------- */
         const sidebarSearch = document.getElementById('sidebarSearchInput');
         const sidebarNavItems = document.querySelectorAll('#sidebarNavList li');

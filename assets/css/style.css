@@ -872,6 +872,70 @@ textarea.form-input {
     box-shadow: var(--shadow-btn);
 }
 
+/* Academic Year Select Picker */
+.academic-year-picker {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-full);
+    padding: 2px 28px 2px 12px;
+    gap: 6px;
+    height: 33px;
+    box-shadow: var(--shadow-inner);
+    transition: all 0.15s ease;
+}
+
+.academic-year-picker:hover,
+.academic-year-picker:focus-within {
+    border-color: #cbd5e1;
+    background-color: #ffffff;
+}
+
+.academic-year-icon {
+    font-size: 0.8125rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.academic-year-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    padding: 2px 0;
+    cursor: pointer;
+    outline: none;
+    line-height: 1.2;
+    max-width: 160px;
+    text-overflow: ellipsis;
+}
+
+.academic-year-select:focus {
+    outline: none;
+}
+
+.academic-year-arrow {
+    position: absolute;
+    right: 10px;
+    font-size: 0.65rem;
+    color: #64748b;
+    pointer-events: none;
+    transition: transform 0.15s ease;
+}
+
+.academic-year-picker:focus-within .academic-year-arrow {
+    transform: rotate(180deg);
+    color: var(--color-primary);
+}
+
 /* Digital Clock */
 .topbar-clock {
     font-size: 0.8125rem;
